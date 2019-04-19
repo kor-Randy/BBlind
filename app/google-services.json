@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "558755465365",
+    "firebase_url": "https://bblind-41ed3.firebaseio.com",
+    "project_id": "bblind-41ed3",
+    "storage_bucket": "bblind-41ed3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558755465365:android:7e355205a690e3ee",
+        "android_client_info": {
+          "package_name": "com.example.moon.bblind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558755465365-htihph49q5j5a352jia6fnqdtb858imd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8mu0eo506vaPt9c7UjhwiAYW_m2Dfx7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "558755465365-htihph49q5j5a352jia6fnqdtb858imd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
