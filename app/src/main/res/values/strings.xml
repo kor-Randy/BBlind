@@ -1,3 +1,4 @@
 <resources>
+    <string name="kakao_app_key">30c2fddc2e185bee7d3dfc180037eb04</string>
     <string name="app_name">BBlind</string>
 </resources>
