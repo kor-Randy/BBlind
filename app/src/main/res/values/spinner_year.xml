@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="year">
+
+        <item>1990년</item>
+        <item>1991년</item>
+        <item>1992년</item>
+        <item>1993년</item>
+        <item>1994년</item>
+        <item>1995년</item>
+        <item>1996년</item>
+        <item>1997년</item>
+        <item>1998년</item>
+        <item>1999년</item>
+        <item>2000년</item>
+    </string-array>
+
+</resources>
