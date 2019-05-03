@@ -3,7 +3,9 @@ package com.example.moon.bblind
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import com.kakao.auth.*
 import com.kakao.auth.ApprovalType
 import com.kakao.auth.AuthType
@@ -19,6 +21,7 @@ class GlobalApplication : Application() {
         super.onCreate()
         mInstance = this
         KakaoSDK.init(KakaoSDKAdapter())
+
     }
 
     companion object {
@@ -38,6 +41,7 @@ class GlobalApplication : Application() {
                 return mInstance!!
             }
     }
+
 }
 
 class KakaoSDKAdapter : KakaoAdapter() {
