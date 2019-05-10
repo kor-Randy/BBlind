@@ -33,12 +33,6 @@ import android.support.v4.app.ActivityCompat
 class Account : AppCompatActivity()
 {
 
-    val id : Array<String> = arrayOf("id1","id2","id3")
-    // val database : FirebaseDatabase = FirebaseDatabase.getInstance()
-    val database : FirebaseDatabase = FirebaseDatabase.getInstance()
-    val myRef : DatabaseReference = database.getReference("Account")
-    val keyboard : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    var spinadapter = ArrayAdapter.createFromResource(this,R.array.year,R.layout.spinner_item)
 
 
     @SuppressLint("ObsoleteSdkInt")
@@ -46,6 +40,12 @@ class Account : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account)
 
+        val id : Array<String> = arrayOf("id1","id2","id3")
+        // val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+        val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+        val myRef : DatabaseReference = database.getReference("Account")
+        val keyboard : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        var spinadapter = ArrayAdapter.createFromResource(this,R.array.year,R.layout.spinner_item)
 
 
 
