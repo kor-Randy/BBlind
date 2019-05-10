@@ -1,5 +1,6 @@
 package com.example.moon.bblind
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
@@ -22,6 +23,7 @@ import com.kakao.usermgmt.callback.MeResponseCallback
 import com.kakao.usermgmt.UserManagement
 import java.security.MessageDigest
 import android.widget.TextView
+import com.kakao.auth.Session
 import com.squareup.picasso.Picasso
 
 
@@ -41,88 +43,45 @@ class LoginActivity :AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        tv_user_id = findViewById(R.id.tv_user_id)
-        tv_user_name = findViewById(R.id.tv_user_name)
-        iv_user_profile = findViewById(R.id.iv_user_profile)
+       // tv_user_id = findViewById(R.id.tv_user_id)
+        //tv_user_name = findViewById(R.id.tv_user_name)
+        //iv_user_profile = findViewById(R.id.iv_user_profile)
 
-        login_button = findViewById(R.id.login_button)
-        login_button.setOnClickListener{isKakaoLogin()}
-    }
-
-    private fun isKakaoLogin() {
-        // 카카오 세션을 오픈한다
-        //mKakaocallback = object : SessionCallback()
+       // login_button = findViewById(R.id.com_kakao_login)
         mKakaocallback = SessionCallback()
-        com.kakao.auth.Session.getCurrentSession().addCallback(mKakaocallback)
-        KakaorequestMe()
-        com.kakao.auth.Session.getCurrentSession().checkAndImplicitOpen()
-        com.kakao.auth.Session.getCurrentSession().open(AuthType.KAKAO_TALK_EXCLUDE_NATIVE_LOGIN, this)
+        Session.getCurrentSession().addCallback(mKakaocallback)
+    }
+    protected fun redirectSignupActivity() {       //세션 연결 성공 시 SignupActivity로 넘김
+        var intent = Intent(this,KakaoSignupActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent)
+        finish()
     }
 
-    protected fun KakaorequestMe() {
-
-        UserManagement.getInstance().requestMe(object : MeResponseCallback() {
-            override fun onFailure(errorResult: ErrorResult?) {
-                val ErrorCode = errorResult!!.errorCode
-                val ClientErrorCode = -777
-
-                if (ErrorCode == ClientErrorCode) {
-                    Toast.makeText(this@LoginActivity, "카카오톡 서버의 네트워크가 불안정합니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@LoginActivity,"오류로 로그인 실패",Toast.LENGTH_SHORT).show()
-                    Log.d("TAG", "오류로 카카오로그인 실패 ")
-                }
-            }
-
-            override fun onSessionClosed(errorResult: ErrorResult) {
-                Toast.makeText(this@LoginActivity,"오류로 로그인 실패2",Toast.LENGTH_SHORT).show()
-                Log.d("TAG", "오류로 카카오로그인 실패 ")
-            }
-
-            override fun onSuccess(userProfile: UserProfile) {
-                profileUrl = userProfile.profileImagePath
-                userId = userProfile.id.toString()
-                userName = userProfile.nickname
-                Toast.makeText(this@LoginActivity,"로그인 성공",Toast.LENGTH_SHORT).show()
-                Log.i("TAG", "prifileUrl:$profileUrl")
-                Log.i("TAG", "userId:$userId")
-                Log.i("TAG", "userName:$userName")
-
-                setLayoutText()
-            }
-
-            override fun onNotSignedUp() {
-                Toast.makeText(this@LoginActivity,"동의창",Toast.LENGTH_SHORT).show()
-                // 자동가입이 아닐경우 동의창
-            }
-        })
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)){return}
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun setLayoutText() {
-        Toast.makeText(this@LoginActivity,"레이아웃",Toast.LENGTH_SHORT).show()
-        tv_user_id.setText(userId)
-        tv_user_name.setText(userName)
-
-        Picasso.with(this)
-                .load(profileUrl)
-                .fit()
-                .into(iv_user_profile)
+    override fun onDestroy() {
+        super.onDestroy()
+        Session.getCurrentSession().removeCallback(mKakaocallback)
     }
-
-
-
     private inner class SessionCallback : ISessionCallback {
         override fun onSessionOpened() {
             Toast.makeText(this@LoginActivity,"세션오픈",Toast.LENGTH_SHORT).show()
             // 사용자 정보를 가져옴, 회원가입 미가입시 자동가입 시킴
-            KakaorequestMe()
+            redirectSignupActivity()
         }
 
         override fun onSessionOpenFailed(exception: KakaoException?) {
             if (exception != null) {
                 Toast.makeText(this@LoginActivity,"세션실패",Toast.LENGTH_SHORT).show()
                 Log.d("TAG", "Session CallBack Error > " + exception.message)
+                setContentView(R.layout.activity_login)
             }
         }
+
+
     }
 }
