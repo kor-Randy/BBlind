@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * OnActivityResult() should be overridden for Kakao Login because Kakao Login uses startActivityForResult().
      */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)
     }
