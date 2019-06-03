@@ -18,6 +18,8 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.*
 import com.google.firebase.database.*
 import com.google.firebase.iid.FirebaseInstanceId
+import com.kakao.usermgmt.UserManagement
+import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_chattingroom.*
 import org.json.JSONObject
@@ -50,17 +52,26 @@ class Chat : AppCompatActivity(), View.OnClickListener {
     private var mTxtProfileInfo: TextView? = null // 사용자 정보 표시
     private var mImgProfile: ImageView? = null // 사용자 프로필 이미지 표시
 
+    private var user : FirebaseUser? = null
     // Values
     private var mAdapter: ChatAdapter? = null
     private var userName: String? = null
+    val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var ChatRoomNum : String? = null
+
+
+
+    val ref : DatabaseReference = database.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chattingroom)
+
         initViews()
         initFirebaseDatabase()
         initFirebaseAuth()
         initValues()
+        user = mAuth!!.currentUser
     }
 
     private fun initViews() {
@@ -73,7 +84,7 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                 val editText = EditText(this@Chat)
                 AlertDialog.Builder(this@Chat)
                         .setMessage(chatData.userEmail + " 님 에게 메시지 보내기")
-                        .setView(editText)
+                        .setView(editText!!)
                         .setPositiveButton("보내기") { dialog, which -> sendPostToFCM(chatData, editText.text.toString()) }
                         .setNegativeButton("취소") { dialog, which ->
                             // not thing..
@@ -95,7 +106,10 @@ class Chat : AppCompatActivity(), View.OnClickListener {
 
     private fun initFirebaseDatabase() {
         mFirebaseDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mFirebaseDatabase!!.getReference("Chat").child("message")
+
+
+
+        mDatabaseReference =  ref.child("Chat").child(MainActivity.ChatRoomNum!!).child("message")
         mChildEventListener = object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
                 val chatData = dataSnapshot.getValue(ChatData::class.java)
@@ -126,28 +140,29 @@ class Chat : AppCompatActivity(), View.OnClickListener {
 
     private fun initFirebaseAuth() {
         mAuth = FirebaseAuth.getInstance()
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        /*val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
         mGoogleApiClient = GoogleApiClient.Builder(this)
                 .enableAutoManage(this) { }
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build()
+                .build()*/
         mAuthListener = FirebaseAuth.AuthStateListener { updateProfile() }
     }
 
     private fun initValues() {
-        val user = mAuth!!.currentUser
+
+
         if (user == null) {
             userName = "Guest" + Random().nextInt(5000)
         } else {
-            userName = user.displayName
+            userName = user!!.displayName
         }
     }
 
     private fun updateProfile() {
-        val user = mAuth!!.currentUser
+
         if (user == null) {
             // 비 로그인 상태 (메시지를 전송할 수 없다.)
             mBtnGoogleSignIn!!.visibility = View.VISIBLE
@@ -165,37 +180,40 @@ class Chat : AppCompatActivity(), View.OnClickListener {
             mImgProfile!!.visibility = View.VISIBLE
             btn_send.setVisibility(View.VISIBLE)
 
-            userName = user.displayName // 채팅에 사용 될 닉네임 설정
-            val email = user.email
+            userName = user!!.displayName // 채팅에 사용 될 닉네임 설정
+            val email = user!!.uid
             val profile = StringBuilder()
-            profile.append(userName).append("\n").append(user.email)
+            profile.append(userName).append("\n").append(user!!.uid)
             mTxtProfileInfo!!.text = profile
-            mAdapter!!.setEmail(email)
+            mAdapter!!.setEmail(user!!.uid)
             mAdapter!!.notifyDataSetChanged()
 
-            Picasso.with(this).load(user.photoUrl).into(mImgProfile)
+            Picasso.with(this).load(user!!.photoUrl).into(mImgProfile)
 
             val userData = UserData()
-            userData.userEmailID = email!!.substring(0, email.indexOf('@'))
+            userData.userEmailID = user!!.uid
             userData.fcmToken = FirebaseInstanceId.getInstance().token
 
-            mFirebaseDatabase!!.getReference("users").child(userData.userEmailID!!).setValue(userData)
+            mFirebaseDatabase!!.getReference("Account").child(user!!.uid).child("fcmToken").setValue(userData.fcmToken)
         }
     }
 
-    private fun signIn() {
-        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
+
 
     private fun signOut() {
-        mAuth!!.signOut()
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback { updateProfile() }
+        UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
+            override fun onCompleteLogout() {
+                FirebaseAuth.getInstance().signOut()
+
+                //val handler = Handler(Looper.getMainLooper())
+                //handler.post { updateUI() }
+            }
+        })
     }
 
     private fun sendPostToFCM(chatData: ChatData, message: String) {
         mFirebaseDatabase!!.getReference("users")
-                .child(chatData.userEmail!!.substring(0, chatData.userEmail!!.indexOf('@')))
+                .child(chatData.userEmail!!)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val userData = dataSnapshot.getValue(UserData::class.java)
@@ -290,15 +308,14 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                 if (!TextUtils.isEmpty(message)) {
                     mEdtMessage!!.setText("")
                     val chatData = ChatData()
-                    chatData.userName = userName
                     chatData.message = message
                     chatData.time = System.currentTimeMillis()
-                    chatData.userEmail = mAuth!!.currentUser!!.email // 사용자 이메일 주소
+                    chatData.userEmail = mAuth!!.currentUser!!.uid // 사용자 uid
                     chatData.userPhotoUrl = mAuth!!.currentUser!!.photoUrl!!.toString() // 사용자 프로필 이미지 주소
                     mDatabaseReference!!.push().setValue(chatData)
                 }
             }
-            R.id.btn_google_signin -> signIn()
+
             R.id.btn_google_signout -> signOut()
         }
     }

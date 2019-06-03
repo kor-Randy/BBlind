@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Debug
 import android.support.constraint.solver.widgets.Snapshot
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -16,6 +17,8 @@ import kotlinx.android.synthetic.main.activity_apply.*
 import android.widget.BaseAdapter
 import android.widget.ListAdapter
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_account.*
 import java.lang.ArithmeticException
@@ -32,7 +35,8 @@ class ApplyActivity : AppCompatActivity()
 {
 
     var Match = false
-
+    private var mAuth: FirebaseAuth? = null
+    private var user : FirebaseUser? = null
     @SuppressLint("ObsoleteSdkInt")
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -40,7 +44,14 @@ class ApplyActivity : AppCompatActivity()
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_apply)
+
+
+
+
         var i =0
+        mAuth = FirebaseAuth.getInstance()
+        user = mAuth!!.currentUser
+
 
         var sex : String? = null
         var id : String? = null
@@ -110,7 +121,7 @@ class ApplyActivity : AppCompatActivity()
                     }
                     else {
 
-                         id = Random.nextInt(0,10000000).toString()
+                         id = user!!.uid
 
                         if(Apply_Toggle_Sex.isChecked)
                         {
@@ -191,51 +202,63 @@ class ApplyActivity : AppCompatActivity()
                                                             || find!!.to.toString() < Apply_Spinner_Before_Time.selectedItem.toString()) {
                                                         //시간조건이 겹치지 않음.
                                                     } else {
+
+
                                                         //시간 조건이 겹침
                                                         Match=true
                                                         Log.d("chat","온다2")
 
-                                                        Chatref.child(id+find!!.name).child("Info").child("Id1").setValue(id)
-                                                        Chatref.child(id+find!!.name).child("Info").child("Id2").setValue(find!!.name)
+                                                        if(sex.equals("Man")) {
 
-                                                        Chatref.child(id+find!!.name).child("Letter").push().setValue("언행이 바른자가 미인을 얻는다.")
-                                                        Log.d("finddd","매치는 트루 츠루")
+                                                            MainActivity.ChatRoomNum = id+find!!.name
+                                                            ref.child("Account").child(id!!).child("ChatRoomNum").setValue(id + find!!.name)
+                                                            ref.child("Account").child(id!!).child("Match").setValue("Y")
 
-                                                        val delquery : Query =  Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
-                                                                .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(id)
+                                                            ref.child("Account").child(find!!.name!!).child("ChatRoomNum").setValue(id + find!!.name)
+                                                            ref.child("Account").child(find!!.name!!).child("Match").setValue("Y")
 
-                                                        delquery.addListenerForSingleValueEvent(object: ValueEventListener {
-                                                            override fun onCancelled(p0: DatabaseError) {
-                                                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                                                            }
+                                                            Chatref.child(id + find!!.name).child("Info").child("Id1").setValue(id)
+                                                            Chatref.child(id + find!!.name).child("Info").child("Id2").setValue(find!!.name)
 
-                                                            override fun onDataChange(p0: DataSnapshot) {
+                                                            Chatref.child(id + find!!.name).child("message").push().setValue("언행이 바른자가 미인을 얻는다.")
 
-                                                                for (appleSnapshot in p0.getChildren()) {
-                                                                    appleSnapshot.getRef().removeValue()
+                                                            Log.d("finddd", "매치는 트루 츠루")
+
+                                                            val delquery: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
+                                                                    .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(id)
+
+                                                            delquery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                override fun onCancelled(p0: DatabaseError) {
+                                                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                                                                 }
 
-                                                            }
-                                                        })
+                                                                override fun onDataChange(p0: DataSnapshot) {
 
-                                                        val delquery1 : Query =  Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
-                                                                .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(find!!.name)
+                                                                    for (appleSnapshot in p0.getChildren()) {
+                                                                        appleSnapshot.getRef().removeValue()
+                                                                    }
 
-                                                        delquery1.addListenerForSingleValueEvent(object: ValueEventListener {
-                                                            override fun onCancelled(p0: DatabaseError) {
-                                                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                                                            }
+                                                                }
+                                                            })
 
-                                                            override fun onDataChange(p0: DataSnapshot) {
+                                                            val delquery1: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
+                                                                    .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(find!!.name)
 
-                                                                for (appleSnapshot in p0.getChildren()) {
-                                                                    appleSnapshot.getRef().removeValue()
+                                                            delquery1.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                override fun onCancelled(p0: DatabaseError) {
+                                                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                                                                 }
 
-                                                            }
-                                                        })
+                                                                override fun onDataChange(p0: DataSnapshot) {
 
+                                                                    for (appleSnapshot in p0.getChildren()) {
+                                                                        appleSnapshot.getRef().removeValue()
+                                                                    }
 
+                                                                }
+                                                            })
+
+                                                        }
 
 
 
@@ -266,12 +289,7 @@ class ApplyActivity : AppCompatActivity()
 
 
                 }
-                catch(e : ArrayStoreException)
-                {
-                    Toast.makeText(this@ApplyActivity, "시간을 설정해주세요.",Toast.LENGTH_SHORT).show()
 
-
-                }
                 catch(e : ArithmeticException)
                 {
 
@@ -279,6 +297,12 @@ class ApplyActivity : AppCompatActivity()
                         Apply_Edittext_Introduction.setText("")
                         keyboard.showSoftInput(Apply_Edittext_Introduction,0)
 
+
+
+                }
+                catch(e : ArrayStoreException)
+                {
+                    Toast.makeText(this@ApplyActivity, "시간을 설정해주세요.",Toast.LENGTH_SHORT).show()
 
 
                 }
@@ -351,4 +375,7 @@ class ApplyActivity : AppCompatActivity()
         }
 
     }
+
+
+
 }

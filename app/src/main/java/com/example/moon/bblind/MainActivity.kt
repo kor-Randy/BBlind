@@ -33,6 +33,8 @@ import com.kakao.util.exception.KakaoException
 import android.os.Handler
 import android.widget.Toast
 import com.android.volley.*
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_apply.*
 
 import org.json.JSONObject
 
@@ -41,11 +43,16 @@ import java.util.HashMap
 class MainActivity : AppCompatActivity() {
     var binding: ActivityMainBinding? = null
     lateinit var loginButton : LoginButton
-
+    private var mAuth: FirebaseAuth?  = FirebaseAuth.getInstance()
+    private var user : FirebaseUser?= mAuth!!.currentUser
+    val database : FirebaseDatabase? = FirebaseDatabase.getInstance()
+    val myRef : DatabaseReference = database!!.getReference("Account")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+
+
 
 
 
@@ -137,9 +144,42 @@ class MainActivity : AppCompatActivity() {
     }
     private fun DirectLobby()
     {
-        var intent = Intent(this,LobbyActivity::class.java)
-        startActivity(intent)
+        var temp : Int?=null
+
+        myRef.child(user!!.uid).orderByChild("Match").addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                Log.d("matchhh",p0.getValue(true).toString())
+                if(p0.child("Match").getValue(true)!!.toString().equals("Y"))
+                {
+                    Log.d("matchhh","gogo")
+                    temp= 0
+                    MainActivity.ChatRoomNum=p0.child("ChatRoomNum").getValue(true).toString()
+                    val intent = Intent(this@MainActivity,Chat::class.java)
+                    startActivity(intent)
+                }
+                else
+                {
+                    Log.d("matchhh","nono")
+                    temp=1
+                    val intent = Intent(this@MainActivity,ApplyActivity::class.java)
+                    startActivity(intent)
+
+                }
+
+            }
+        })
+
+
+
     }
+
+
+
     private fun DirectSignUp()
     {
         var intent = Intent(this,Account::class.java)
@@ -182,6 +222,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
 
         private val TAG = MainActivity::class.java.name
+        public var ChatRoomNum : String? = null
     }
 
 
