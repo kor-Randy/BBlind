@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="drink">
+
+        <item>1병 이하</item>
+        <item>1~2병</item>
+        <item>2~3병</item>
+        <item>3병 이상</item>
+
+    </string-array>
+
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string-array name="subwayincheon2">
+
+    <item>검단오류</item>
+    <item> 왕길</item>
+    <item>검단사거리</item>
+    <item> 마전</item>
+    <item>완정</item>
+    <item>독정</item>
+    <item>검암</item>
+    <item> 검바위</item>
+    <item> 아시아드경기장</item>
+    <item> 서구청</item>
+    <item>가정</item>
+    <item>가정중앙시장</item>
+    <item> 석남</item>
+    <item> 서부여성회관</item>
+    <item>인천가좌</item>
+    <item>가재울</item>
+    <item>주안국가산단</item>
+    <item>주안</item>
+    <item>시민공원</item>
+    <item>석바위시장</item>
+    <item>인천시청</item>
+    <item>석천사거리</item>
+    <item>모래내시장</item>
+    <item>만수</item>
+    <item> 남동구청</item>
+    <item>인천대공원</item>
+    <item>운연</item>
+
+</string-array></resources>

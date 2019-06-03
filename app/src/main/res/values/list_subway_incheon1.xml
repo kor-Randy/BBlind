@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string-array name="subwayincheon1">
+
+    <item>계양</item>
+    <item> 귤현</item>
+    <item> 박촌</item>
+    <item> 임학</item>
+    <item> 계산</item>
+    <item> 경인교대입구</item>
+    <item> 작전</item>
+    <item> 갈산</item>
+    <item> 부평구청</item>
+    <item> 부평시장</item>
+    <item> 부평</item>
+    <item>  동수</item>
+    <item>  부평삼거리</item>
+    <item>  간석오거리</item>
+    <item>  인천시청</item>
+    <item>  예술회관</item>
+    <item> 인천터미널</item>
+    <item> 문학경기장</item>
+    <item> 선학</item>
+    <item> 신연수</item>
+    <item> 원인재</item>
+    <item> 동춘</item>
+    <item> 동막</item>
+    <item>캠퍼스타운</item>
+    <item> 테크노파크</item>
+    <item> 지식정보단지</item>
+    <item> 인천대입구</item>
+    <item> 센트럴파크</item>
+    <item>국제업무지구</item>
+
+</string-array>
+</resources>

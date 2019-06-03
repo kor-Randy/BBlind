@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="subway3">
+
+       <item> 지축</item>
+        <item>구파발</item>
+        <item>연신내</item>
+        <item> 불광</item>
+        <item>녹번</item>
+        <item>홍제</item>
+        <item>무악재</item>
+        <item>독립문</item>
+        <item>경복궁</item>
+        <item>안국</item>
+        <item>종로3가</item>
+        <item>을지로3가</item>
+        <item>충무로</item>
+        <item> 동대입구</item>
+        <item> 약수</item>
+        <item> 금호</item>
+        <item>옥수</item>
+        <item> 압구정</item>
+        <item> 신사</item>
+        <item> 잠원</item>
+        <item> 고속터미널</item>
+        <item>교대</item>
+        <item> 남부터미널</item>
+        <item> 양재</item>
+        <item> 매봉</item>
+        <item> 도곡</item>
+        <item>대치</item>
+        <item> 학여울</item>
+        <item>대청</item>
+        <item> 일원</item>
+        <item> 수서</item>
+        <item> 가락시장</item>
+        <item> 경찰병원</item>
+        <item>오금</item>
+        <item> 원흥</item>
+        <item>삼송</item>
+        <item>원당</item>
+        <item>화정</item>
+        <item>대곡</item>
+        <item>백석</item>
+        <item> 마두</item>
+        <item> 정발산</item>
+        <item>주엽</item>
+        <item>대화</item>
+
+    </string-array>
+
+</resources>

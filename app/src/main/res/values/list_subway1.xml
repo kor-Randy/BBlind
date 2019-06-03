@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="subway1">
+        <item>서울역</item>
+        <item>시청</item>
+        <item>종각</item>
+        <item> 종로3가</item>
+        <item>종로5가</item>
+        <item> 동대문</item>
+        <item>신설동</item>
+        <item>제기동</item>
+        <item>청량리</item>
+        <item>동묘앞</item>
+        <item>용산</item>
+        <item>노량진</item>
+        <item>대방</item>
+        <item>영등포</item>
+        <item>신도림</item>
+        <item>회기</item>
+        <item>외대앞</item>
+        <item>신이문</item>
+        <item>석계</item>
+        <item>광운대</item>
+        <item>월계</item>
+        <item>녹천</item>
+        <item>창동</item>
+        <item> 신길</item>
+        <item>구로</item>
+        <item>가산디지털단지</item>
+        <item>금천구청</item>
+        <item>석수</item>
+        <item>관악</item>
+        <item>안양</item>
+        <item>명학</item>
+        <item>금정</item>
+        <item>군포</item>
+        <item>의왕</item>
+        <item>성균관대</item>
+        <item>화서</item>
+        <item>수원</item>
+        <item>독산</item>
+        <item>세류</item>
+        <item>병점</item>
+        <item>세마</item>
+        <item>오산대</item>
+        <item>오산</item>
+        <item>송탄</item>
+        <item>서정리</item>
+        <item>지제</item>
+        <item>평택</item>
+        <item>성환</item>
+        <item>직산</item>
+        <item>두정</item>
+        <item>천안</item>
+        <item>당정</item>
+        <item>서동탄</item>
+        <item>광명</item>
+        <item>개봉</item>
+        <item>오류동</item>
+        <item>역곡</item>
+        <item>부천</item>
+        <item>송내</item>
+        <item>부평</item>
+        <item>백운</item>
+        <item>동암</item>
+        <item>주안</item>
+        <item>제물포</item>
+        <item>동인천</item>
+        <item>인천</item>
+        <item>구일</item>
+        <item>소사</item>
+        <item>부개</item>
+        <item>간석</item>
+        <item>도원</item>
+        <item>온수</item>
+        <item>중동</item>
+        <item>도화</item>
+        <item>방학</item>
+        <item>도봉</item>
+        <item>도봉산</item>
+        <item>망월사</item>
+        <item>회룡</item>
+        <item>의정부</item>
+        <item>가능</item>
+        <item>녹양</item>
+        <item>양주</item>
+        <item>덕계</item>
+        <item>덕정</item>
+        <item>지행</item>
+        <item>동두천중앙</item>
+        <item>보산</item>
+        <item>동두천</item>
+        <item>소요산</item>
+
+
+    </string-array>
+
+</resources>

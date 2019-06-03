@@ -1,9 +1,374 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <ToggleButton
+                    android:id="@+id/Apply_Toggle_Sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:textOff="Man"
+                    android:textOn="Woman"
+                    android:textSize="8sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="인원"
+                    android:textSize="40sp" />
+
+                <Spinner
+                    android:id="@+id/Apply_Spinner_PersonNum"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="평균나이"
+                    android:textSize="40sp" />
+
+                <Spinner
+                    android:id="@+id/Apply_Spinner_AverageAge"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="평균주량"
+                    android:textSize="40sp" />
+
+                <Spinner
+                    android:id="@+id/Apply_Spinner_Average_Drink"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="만나는 시간"
+                    android:textSize="40sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <Spinner
+                        android:id="@+id/Apply_Spinner_Before_Time"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="~"
+                        android:textSize="40sp" />
+
+                    <Spinner
+                        android:id="@+id/Apply_Spinner_After_Time"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:gravity="center"
+                        android:text="만나는 장소"
+                        android:textSize="40sp" />
+
+                    <TextView
+                        android:id="@+id/Apply_Textview_Subway"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:text=""
+                        android:gravity="center"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.GridLayout
+                    android:id="@+id/Apply_Grid_Subway"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    app:columnCount="1">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subway1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+                            android:text="1호선" />
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subway2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+
+                            android:text="2호선" />
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subway3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+
+                            android:text="3호선" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subway4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+
+                            android:text="4호선" />
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subway5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+
+                            android:text="5호선" />
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subway6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+
+                            android:text="6호선" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subway7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+
+                            android:text="7호선" />
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subway9"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+
+                            android:text="9호선" />
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subway8"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+
+                            android:text="8호선" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subwaygyungjung"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+                            android:text="경·중선" />
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subwayincheon1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+                            android:text="인천1호선" />
+
+                        <Button
+                            android:id="@+id/Apply_Button_Subwayincheon2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="OpenSubwayPopup"
+                            android:text="인천2호선" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.GridLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="우리를 5자로 소개하세요"
+                    android:textSize="35sp"
+                    android:layout_marginTop="30dp"/>
+
+                <EditText
+                    android:id="@+id/Apply_Edittext_Introduction"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:hint="또라이집합,사랑스러워"
+                    android:textSize="40sp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:nextFocusDown="@id/Apply_button_Notice"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/Apply_button_Notice"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:text="신청하기"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/Apply_button_Match"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+
+                    android:layout_weight="1"
+                    android:text="매칭하기"
+                    android:textSize="30sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

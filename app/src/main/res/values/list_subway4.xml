@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string-array name="subway4">
+
+        <item>당고개</item>
+        <item>상계</item>
+        <item>  노원</item>
+        <item> 창동</item>
+        <item>  쌍문</item>
+        <item>  수유</item>
+        <item>  미아</item>
+        <item>  미아사거리</item>
+        <item>  길음</item>
+        <item> 성신여대입구</item>
+        <item> 한성대입구</item>
+        <item>  혜화</item>
+        <item> 동대문</item>
+        <item>  동대문역사문화공원</item>
+        <item> 충무로</item>
+        <item>  명동</item>
+        <item> 회현</item>
+        <item> 서울역</item>
+        <item> 숙대입구</item>
+        <item> 삼각지</item>
+        <item>  신용산</item>
+        <item>  이촌</item>
+        <item> 동작</item>
+        <item> 총신대입구</item>
+        <item> 사당</item>
+        <item> 남태령</item>
+        <item> 선바위</item>
+        <item>경마공원</item>
+        <item>대공원</item>
+        <item>과천</item>
+        <item>정부과천청사</item>
+        <item> 인덕원</item>
+        <item>   평촌</item>
+        <item>   범계</item>
+        <item>    금정</item>
+        <item>   산본</item>
+        <item>   대야미</item>
+        <item>   반월</item>
+        <item>   상록수</item>
+        <item>   한대앞</item>
+        <item>   중앙</item>
+        <item>  고잔</item>
+        <item>   초지</item>
+        <item>  안산</item>
+        <item>   신길온천</item>
+        <item>  정왕</item>
+        <item>  오이도</item>
+        <item>  수리산</item>
+
+    </string-array>
+
+</resources>

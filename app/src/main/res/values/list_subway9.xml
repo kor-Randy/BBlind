@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string-array name="subway9">
+
+
+    <item>개화</item>
+    <item>김포공항</item>
+    <item>공항시장</item>
+    <item>신방화</item>
+    <item>마곡나루</item>
+    <item>양천향교</item>
+    <item>가양</item>
+    <item>증미</item>
+    <item>  등촌</item>
+    <item>염창</item>
+    <item> 신목동</item>
+    <item> 선유도</item>
+    <item> 국회의사당</item>
+    <item> 여의도</item>
+    <item> 샛강</item>
+    <item> 노량진</item>
+    <item> 노들</item>
+    <item>  흑석</item>
+    <item> 동작</item>
+    <item> 구반포</item>
+    <item> 신반포</item>
+    <item> 고속터미널</item>
+    <item> 사평</item>
+    <item> 신논현</item>
+    <item>  언주</item>
+    <item>  선정릉</item>
+    <item> 삼성중앙</item>
+    <item>봉은사</item>
+    <item>종합운동장</item>
+    <item> 삼전</item>
+    <item> 석촌고분</item>
+    <item>  석촌</item>
+    <item>  송파나루</item>
+    <item>  한성백제</item>
+    <item>올림픽공원</item>
+    <item>   둔촌오륜</item>
+    <item>   중앙보훈병원</item>
+
+</string-array></resources>

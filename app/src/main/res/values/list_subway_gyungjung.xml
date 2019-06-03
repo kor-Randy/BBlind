@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string-array name="subwaygyungjung">
+
+
+    <item>이촌</item>
+    <item>서빙고</item>
+    <item> 용산</item>
+    <item>한남</item>
+    <item>옥수</item>
+    <item>응봉</item>
+    <item>왕십리</item>
+    <item> 청량리</item>
+    <item>중랑</item>
+    <item>상봉</item>
+    <item> 망우</item>
+    <item> 양원</item>
+    <item> 구리</item>
+    <item> 도농</item>
+    <item> 양정</item>
+    <item> 덕소</item>
+    <item> 도심</item>
+    <item>팔당</item>
+    <item>운길산</item>
+    <item>양수</item>
+    <item>신원</item>
+    <item>국수</item>
+    <item> 아신</item>
+    <item> 오빈</item>
+    <item>  양평</item>
+    <item> 원덕</item>
+    <item> 용문</item>
+    <item>지평</item>
+    <item>서울역</item>
+    <item> 신촌</item>
+    <item>효창공원앞</item>
+    <item>공덕</item>
+    <item>서강대</item>
+    <item>홍대입구</item>
+    <item>디지털미디어시티</item>
+    <item> 수색</item>
+    <item>화전</item>
+    <item>강매</item>
+    <item> 행신</item>
+    <item> 능곡</item>
+    <item> 곡산</item>
+    <item>백마</item>
+    <item> 풍산</item>
+    <item> 일산</item>
+    <item> 탄현</item>
+    <item>야당</item>
+    <item> 운정</item>
+    <item>금릉</item>
+    <item> 금촌</item>
+    <item> 월롱</item>
+    <item> 파주</item>
+    <item> 문산</item>
+
+</string-array></resources>

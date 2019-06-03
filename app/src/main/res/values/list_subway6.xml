@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="subway6">
+
+
+        <item> 응암</item>
+        <item> 역촌</item>
+        <item> 불광</item>
+        <item> 독바위</item>
+        <item>연신내</item>
+        <item>구산</item>
+        <item>새절</item>
+        <item> 증산</item>
+        <item> 디지털미디어시티</item>
+        <item> 월드컵경기장</item>
+        <item>마포구청</item>
+        <item>망원</item>
+        <item>합정</item>
+        <item>상수</item>
+        <item> 광흥창</item>
+        <item>  대흥</item>
+        <item> 공덕</item>
+        <item>효창공원앞</item>
+        <item> 삼각지</item>
+        <item> 녹사평</item>
+        <item>이태원</item>
+        <item>한강진</item>
+        <item> 버티고개</item>
+        <item>  약수</item>
+        <item>  청구</item>
+        <item>   신당</item>
+        <item>   동묘앞</item>
+        <item>   창신</item>
+        <item>  보문</item>
+        <item>  안암</item>
+        <item>   고려대</item>
+        <item>   월곡</item>
+        <item>   상월곡</item>
+        <item>     돌곶이</item>
+        <item>  석계</item>
+        <item>  태릉입구</item>
+        <item>화랑대</item>
+        <item>봉화산</item>
+
+</string-array>
+</resources>

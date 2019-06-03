@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string-array name="subway8">
+
+    <item>암사</item>
+    <item>천호</item>
+    <item>강동구청</item>
+    <item>몽촌토성</item>
+    <item>잠실</item>
+    <item>석촌</item>
+    <item>송파</item>
+    <item>가락시장</item>
+    <item> 문정</item>
+    <item> 장지</item>
+    <item>복정</item>
+    <item>산성</item>
+    <item>남한산성입구</item>
+    <item>단대오거리</item>
+    <item>신흥</item>
+    <item>수진</item>
+    <item> 모란</item>
+
+
+</string-array></resources>

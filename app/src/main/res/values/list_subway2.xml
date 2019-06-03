@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="subway2">
+
+        <item>까치산</item>
+        <item>시청</item>
+        <item>을지로입구</item>
+        <item>을지로3가</item>
+        <item>을지로4가</item>
+        <item>동대문역사문화공원</item>
+        <item>신당</item>
+        <item>상왕십리</item>
+        <item>왕십리</item>
+        <item>한양대</item>
+        <item>뚝섬</item>
+        <item>성수</item>
+        <item>건대입구</item>
+        <item>구의</item>
+        <item>강변</item>
+        <item>잠실나루</item>
+        <item>잠실</item>
+        <item>잠실새내</item>
+        <item>종합운동장</item>
+        <item>삼성</item>
+        <item>선릉</item>
+        <item>역삼</item>
+        <item>강남</item>
+        <item>교대</item>
+        <item>서초</item>
+        <item>방배</item>
+        <item>사당</item>
+        <item>낙성대</item>
+        <item>서울대입구</item>
+        <item>봉천</item>
+        <item>신림</item>
+        <item>신대방</item>
+        <item>구로디지털단지</item>
+        <item>대림</item>
+        <item>신도림</item>
+        <item>문래</item>
+        <item>영등포구청</item>
+        <item>당산</item>
+        <item>합정</item>
+        <item>홍대입구</item>
+        <item>신촌</item>
+        <item>이대</item>
+        <item>아현</item>
+        <item>충정로</item>
+        <item>용답</item>
+        <item>신답</item>
+        <item>신설동</item>
+        <item>도림천</item>
+        <item>양천구청</item>
+        <item>신정네거리</item>
+        <item>용두</item>
+    </string-array>
+</resources>

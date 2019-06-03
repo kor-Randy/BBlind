@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="subway5">
+
+
+        <item>방화</item>
+        <item> 개화산</item>
+        <item> 김포공항</item>
+        <item> 송정</item>
+        <item> 마곡</item>
+        <item>  발산</item>
+        <item>  우장산</item>
+        <item>  화곡</item>
+        <item>  까치산</item>
+        <item>  신정</item>
+        <item> 목동</item>
+        <item>오목교</item>
+        <item> 양평</item>
+        <item> 영등포구청</item>
+        <item>  영등포시장</item>
+        <item>  신길</item>
+        <item>  여의도</item>
+        <item>  여의나루</item>
+        <item>  마포</item>
+        <item>  공덕</item>
+        <item>  애오개</item>
+        <item> 충정로</item>
+        <item>  서대문</item>
+        <item> 광화문</item>
+        <item> 종로3가</item>
+        <item> 을지로4가</item>
+        <item> 동대문역사문화공원</item>
+        <item>  청구</item>
+        <item> 신금호</item>
+        <item> 행당</item>
+        <item>  왕십리</item>
+        <item>  마장</item>
+        <item>  답십리</item>
+        <item>  장한평</item>
+        <item>  군자</item>
+        <item> 아차산</item>
+        <item>  광나루</item>
+        <item> 천호</item>
+        <item> 강동</item>
+        <item>  길동</item>
+        <item>굽은다리</item>
+        <item>  명일</item>
+        <item> 고덕</item>
+        <item> 상일동</item>
+        <item>둔촌동</item>
+        <item>  올림픽공원</item>
+        <item>  방이</item>
+        <item> 오금</item>
+        <item>개롱</item>
+        <item>거여</item>
+        <item> 마천</item>
+
+    </string-array>
+
+</resources>
