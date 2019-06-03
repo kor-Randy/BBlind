@@ -18,7 +18,7 @@ import android.widget.Toast
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_account.*
-
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.spinner_item.*
 import kotlinx.android.synthetic.main.spinner_dropdown_item.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,7 +47,7 @@ class Account : AppCompatActivity()
         val keyboard : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         var spinadapter = ArrayAdapter.createFromResource(this,R.array.year,R.layout.spinner_item)
 
-
+        val currentUser = FirebaseAuth.getInstance().currentUser
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -155,21 +155,26 @@ class Account : AppCompatActivity()
 
 
 
-                myRef.child(id[i]).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
-                myRef.child(id[i]).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
-                myRef.child(id[i]).child("Sex").setValue(sex)
-                myRef.child(id[i]).child("Phone").setValue(getPhoneNumber())
+                myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
+                myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
+                myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
+                myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
                 if (Account_Radio_Student.isChecked())
-                    myRef.child(id[i]).child("isStudent").setValue("Y")
+                    myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
                 else
-                    myRef.child(id[i]).child("isStudent").setValue("N")
+                    myRef.child(currentUser!!.uid).child("isStudent").setValue("N")
 
                 i++
+                DirectLobby()
             }
         })
 
     }
-
+    private fun DirectLobby()
+    {
+        var intent = Intent(this,LobbyActivity::class.java)
+        startActivity(intent)
+    }
     @SuppressLint("MissingPermission")
     fun getPhoneNumber(): String {
         val telephony = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager

@@ -21,21 +21,20 @@ class KakaoSignupActivity : Activity(){
 
     private fun redirectLoginActivity()
     {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
-
-
-
+    }
+    private fun redirectAccountActivity()
+    {
+        startActivity(Intent(this, Account::class.java))
+        finish()
     }
     private fun redirectmainActivity()
     {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
         startActivity(intent)
         finish()
-
-
-
     }
     protected fun KakaorequestMe() {
 
@@ -70,6 +69,7 @@ class KakaoSignupActivity : Activity(){
             override fun onNotSignedUp() {
                 Toast.makeText(this@KakaoSignupActivity,"동의창", Toast.LENGTH_SHORT).show()
                 // 자동가입이 아닐경우 동의창
+                //redirectAccountActivity()
             }
         })
     }

@@ -25,7 +25,10 @@ import java.security.MessageDigest
 import android.widget.TextView
 import com.kakao.auth.Session
 import com.squareup.picasso.Picasso
-
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 
 class LoginActivity :AppCompatActivity() {
 
@@ -38,6 +41,9 @@ class LoginActivity :AppCompatActivity() {
     private lateinit var userName: String
     private lateinit var userId: String
     private lateinit var profileUrl: String
+    private var mAuth: FirebaseAuth? = null
+    private val firebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference = firebaseDatabase.getReference()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +57,13 @@ class LoginActivity :AppCompatActivity() {
         mKakaocallback = SessionCallback()
         Session.getCurrentSession().addCallback(mKakaocallback)
     }
+    override fun onStart() {
+        super.onStart()
+        mAuth = FirebaseAuth.getInstance()
+        var currentUser : FirebaseUser? = mAuth?.getCurrentUser()
+        updateUI(currentUser)
+    }
+
     protected fun redirectSignupActivity() {       //세션 연결 성공 시 SignupActivity로 넘김
         var intent = Intent(this,KakaoSignupActivity::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
@@ -83,5 +96,12 @@ class LoginActivity :AppCompatActivity() {
         }
 
 
+    }
+    private fun updateUI(user: FirebaseUser?) {
+        if(user != null) {
+
+        } else {
+
+        }
     }
 }
