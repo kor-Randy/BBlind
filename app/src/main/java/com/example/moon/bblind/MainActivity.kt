@@ -53,16 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         loginButton = findViewById<View>(R.id.login_button) as LoginButton
 
-        /*logoutButton.setOnClickListener {
-            UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
-                override fun onCompleteLogout() {
-                    FirebaseAuth.getInstance().signOut()
 
-                    val handler = Handler(Looper.getMainLooper())
-                    handler.post { updateUI() }
-                }
-            })
-        }*/
 
         Session.getCurrentSession().addCallback(KakaoSessionCallback())
     }
@@ -166,7 +157,7 @@ class MainActivity : AppCompatActivity() {
             getFirebaseJwt(accessToken!!).continueWithTask { task ->
                 val firebaseToken = task.result
                 val auth = FirebaseAuth.getInstance()
-                auth.signInWithCustomToken(firebaseToken)
+                auth.signInWithCustomToken(firebaseToken!!)
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     DirectSignUp()
