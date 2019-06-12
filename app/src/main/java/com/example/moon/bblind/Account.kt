@@ -28,6 +28,7 @@ import android.Manifest.permission.CALL_PHONE
 import android.content.Intent
 import android.support.annotation.NonNull
 import android.support.v4.app.ActivityCompat
+import com.google.firebase.iid.FirebaseInstanceId
 
 
 class Account : AppCompatActivity()
@@ -154,11 +155,12 @@ class Account : AppCompatActivity()
                     sex = "Girl"
 
 
-
                 myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
                 myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
                 myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
                 myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
+                myRef.child(currentUser!!.uid).child("Match").setValue("N")
+                myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
                 if (Account_Radio_Student.isChecked())
                     myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
                 else

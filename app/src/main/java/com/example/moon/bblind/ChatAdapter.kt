@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
 
 import java.util.Locale
 
@@ -124,7 +123,7 @@ class ChatAdapter(context: Context, resource: Int) : ArrayAdapter<ChatData>(cont
 
     override fun getItemViewType(position: Int): Int {
 
-        val email = getItem(position)!!.userEmail
+        val email = getItem(position)!!.userName
 
         return if (!TextUtils.isEmpty(mMyEmail) && mMyEmail == email) {
 
@@ -167,7 +166,6 @@ class ChatAdapter(context: Context, resource: Int) : ArrayAdapter<ChatData>(cont
 
             val chatData = getItem(position)
 
-            Picasso.with(context).load(chatData!!.userPhotoUrl).into(mImgProfile)
 
             mTxtUserName!!.text = chatData.userName
 

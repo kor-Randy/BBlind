@@ -10,9 +10,10 @@ class Loading : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
         Handler().postDelayed({
+
             var intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
-        },5000)
+        },1000)
     }
 }

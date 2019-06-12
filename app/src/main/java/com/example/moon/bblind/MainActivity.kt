@@ -46,13 +46,12 @@ class MainActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth?  = FirebaseAuth.getInstance()
     private var user : FirebaseUser?= mAuth!!.currentUser
     val database : FirebaseDatabase? = FirebaseDatabase.getInstance()
-    val myRef : DatabaseReference = database!!.getReference("Account")
+    val myRef : DatabaseReference = database!!.reference
+    var auth : FirebaseAuth?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-
-
 
 
 
@@ -81,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             /**
              * SHOW LOGO FOR 2SEC
              */
-            DirectLobby()
+            DirectLobby(currentUser.uid)
             /*if (currentUser.photoUrl != null) {
                 Glide.with(this)
                         .load(currentUser.photoUrl)
@@ -138,35 +137,51 @@ class MainActivity : AppCompatActivity() {
                 return params
             }
         }
-       //request.setRetryPolicy(DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT))
+      // request.setRetryPolicy(DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT))
         queue.add(request)
         return source.task
     }
-    private fun DirectLobby()
+    private fun DirectLobby( str : String)
     {
         var temp : Int?=null
 
-        myRef.child(user!!.uid).orderByChild("Match").addValueEventListener(object: ValueEventListener {
+        myRef.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
 
             override fun onDataChange(p0: DataSnapshot) {
 
-                Log.d("matchhh",p0.getValue(true).toString())
-                if(p0.child("Match").getValue(true)!!.toString().equals("Y"))
-                {
-                    Log.d("matchhh","gogo")
-                    temp= 0
-                    MainActivity.ChatRoomNum=p0.child("ChatRoomNum").getValue(true).toString()
-                    val intent = Intent(this@MainActivity,Chat::class.java)
+               if(str==null)
+               {
+                   Log.d("zczc","uid없음")
+
+               }
+                else if(!p0.child("Account").child(str).exists())
+               {
+                   Log.d("zczc","계정이없음")
+                   DirectSignUp()
+               }
+                else if (p0.child("Account").child(str).exists()||p0.child("Account").child(str).child("Match").getValue(true)!!.toString().equals("Y"))
+                {   //채팅방이 존재할때 채팅방의 번호, 상대방의 Token을 초기화한다
+                    //-> 이것을 핸드폰 내부저장소에 저장해야 함
+                    Log.d("matchhh", "gogo")
+                    temp = 0
+                    MainActivity.ChatRoomNum = p0.child("Account").child(str).child("ChatRoomNum").getValue(true).toString()
+                    val strr = MainActivity.ChatRoomNum
+
+                    strr!!.replace(str, "")
+                    MainActivity.Token = p0.child("Account").child(strr!!).child("fcmToken").getValue(true).toString()
+                    Log.d("zczc",MainActivity.ChatRoomNum.toString())
+                    Log.d("zczc",MainActivity.Token.toString())
+
+                    val intent = Intent(this@MainActivity, LobbyActivity::class.java)
                     startActivity(intent)
                 }
-                else
-                {
-                    Log.d("matchhh","nono")
-                    temp=1
-                    val intent = Intent(this@MainActivity,ApplyActivity::class.java)
+               else {
+                    Log.d("matchhh", "nono")
+                    temp = 1
+                    val intent = Intent(this@MainActivity, ApplyActivity::class.java)
                     startActivity(intent)
 
                 }
@@ -196,11 +211,31 @@ class MainActivity : AppCompatActivity() {
             val accessToken = Session.getCurrentSession().accessToken
             getFirebaseJwt(accessToken!!).continueWithTask { task ->
                 val firebaseToken = task.result
-                val auth = FirebaseAuth.getInstance()
-                auth.signInWithCustomToken(firebaseToken!!)
+                auth = FirebaseAuth.getInstance()
+                auth!!.signInWithCustomToken(firebaseToken!!)
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    DirectSignUp()
+
+                       myRef.addListenerForSingleValueEvent(object: ValueEventListener {
+                           override fun onCancelled(p0: DatabaseError) {
+                              }
+
+                           override fun onDataChange(p0: DataSnapshot) {
+
+                               if(p0.child("Account").child(auth!!.currentUser!!.uid).exists())
+                               {
+                                   DirectLobby(auth!!.currentUser!!.uid)
+                               }
+                                else
+                               {
+                                   DirectSignUp()
+                               }
+                           }
+                       })
+
+
+
+
                     //updateUI()
                 } else {
                     Toast.makeText(applicationContext, "Failed to create a Firebase user.", Toast.LENGTH_LONG).show()
@@ -222,7 +257,9 @@ class MainActivity : AppCompatActivity() {
     companion object {
 
         private val TAG = MainActivity::class.java.name
-        public var ChatRoomNum : String? = null
+        var ChatRoomNum : String? = null
+        var Token : String? = null
+
     }
 
 

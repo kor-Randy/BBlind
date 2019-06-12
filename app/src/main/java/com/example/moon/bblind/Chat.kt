@@ -1,41 +1,41 @@
 package com.example.moon.bblind
 
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 
 import android.widget.TextView
 import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.*
 import com.google.firebase.database.*
-import com.google.firebase.iid.FirebaseInstanceId
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_chattingroom.*
 import org.json.JSONObject
-
+import android.support.v4.app.Fragment
+import kotlinx.android.synthetic.main.activity_chattingroom.view.*
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Random
 
-class Chat : AppCompatActivity(), View.OnClickListener {
+class Chat : Fragment(), View.OnClickListener {
 
     private val RC_SIGN_IN = 1001
     private val FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send"
     private val SERVER_KEY = "AAAAghhryJU:APA91bE5FeyIHILMSGcWRgWY4hp43aQv9a5haGPMw2A5ZM0G6-102amS9gh-6YKLRRs4qAAKBE-dCBE7A1fnUjoEi3A6mZgrjVIGz-Y34x_yuOYk4fHSM_wT969p36N5oYgYobr3tyCq"
 
     // Firebase - Realtime Database
-    private var mFirebaseDatabase: FirebaseDatabase? = null
+    private var mFirebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var mDatabaseReference: DatabaseReference? = null
     private var mChildEventListener: ChildEventListener? = null
 
@@ -45,97 +45,129 @@ class Chat : AppCompatActivity(), View.OnClickListener {
     private var mGoogleApiClient: GoogleApiClient? = null
 
     // Views
-    private var mListView: ListView? = null
-    private var mEdtMessage: EditText? = null
-    private var mBtnGoogleSignIn: SignInButton? = null // 로그인 버튼
-    private var mBtnGoogleSignOut: Button? = null // 로그아웃 버튼
-    private var mTxtProfileInfo: TextView? = null // 사용자 정보 표시
-    private var mImgProfile: ImageView? = null // 사용자 프로필 이미지 표시
-
+    private lateinit var mListView: ListView
+    private lateinit var mEdtMessage: EditText
+    private lateinit var mBtnGoogleSignIn: SignInButton // 로그인 버튼
+    private lateinit var mBtnGoogleSignOut: Button // 로그아웃 버튼
+    private lateinit var mTxtProfileInfo: TextView // 사용자 정보 표시
+    private lateinit var mImgProfile: ImageView // 사용자 프로필 이미지 표시
+    private lateinit var list: ListView
+    private lateinit var  btn_send : Button
     private var user : FirebaseUser? = null
     // Values
     private var mAdapter: ChatAdapter? = null
     private var userName: String? = null
     val database : FirebaseDatabase = FirebaseDatabase.getInstance()
     private var ChatRoomNum : String? = null
+    private var chatdata : ChatData? = null
 
-
+    private val fcmtoken : String? = null
 
     val ref : DatabaseReference = database.reference
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chattingroom)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val view = inflater!!.inflate(R.layout.activity_chattingroom, container, false) as View
+       // list = view.findViewById(R.id.list)
+        mBtnGoogleSignIn = view.findViewById(R.id.btn_google_signin)
+        mBtnGoogleSignOut = view.findViewById(R.id.btn_google_signout)
+        mTxtProfileInfo = view.findViewById(R.id.txt_profile_info)
+        mImgProfile = view.findViewById(R.id.img_profile)
+        mListView = view.findViewById(R.id.list_message)
+        mEdtMessage = view.findViewById(R.id.edit_message)
+        btn_send = view.findViewById(R.id.btn_send)
+        con = activity
+
 
         initViews()
         initFirebaseDatabase()
         initFirebaseAuth()
         initValues()
         user = mAuth!!.currentUser
+
+        return view
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+
+    }
+
+
+
     private fun initViews() {
-        mListView = list_message as ListView
-        mAdapter = ChatAdapter(this, 0)
+
+
+
+        mAdapter = ChatAdapter(con!!, 0)
+
+        Log.d("cccc",mAdapter.toString())
+        Log.d("cccc",con.toString())
+
+
         mListView!!.adapter = mAdapter
         mListView!!.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val chatData = mAdapter!!.getItem(position)
-            if (!TextUtils.isEmpty(chatData.userEmail)) {
-                val editText = EditText(this@Chat)
-                AlertDialog.Builder(this@Chat)
-                        .setMessage(chatData.userEmail + " 님 에게 메시지 보내기")
+            if (!TextUtils.isEmpty(chatData.userName)) {
+                val editText = EditText(activity)
+                AlertDialog.Builder(activity!!)
+                        .setMessage(chatData.userName + " 님 에게 메시지 보내기")
                         .setView(editText!!)
-                        .setPositiveButton("보내기") { dialog, which -> sendPostToFCM(chatData, editText.text.toString()) }
+                        .setPositiveButton("보내기") { dialog, which -> sendPostToFCM(editText.text.toString()) }
                         .setNegativeButton("취소") { dialog, which ->
                             // not thing..
                         }.show()
             }
         }
 
-        mEdtMessage = edit_message as EditText
+       // mEdtMessage = edit_message as EditText
         btn_send.setOnClickListener(this)
 
-        mBtnGoogleSignIn = btn_google_signin as SignInButton
-        mBtnGoogleSignOut = btn_google_signout as Button
+      //  mBtnGoogleSignIn = btn_google_signin as SignInButton
+      //  mBtnGoogleSignOut = btn_google_signout as Button
         mBtnGoogleSignIn!!.setOnClickListener(this)
         mBtnGoogleSignOut!!.setOnClickListener(this)
 
-        mTxtProfileInfo = txt_profile_info as TextView
-        mImgProfile = img_profile as ImageView
+     //   mTxtProfileInfo = txt_profile_info as TextView
+     //   mImgProfile = img_profile as ImageView
     }
 
     private fun initFirebaseDatabase() {
-        mFirebaseDatabase = FirebaseDatabase.getInstance()
-
-
-
-        mDatabaseReference =  ref.child("Chat").child(MainActivity.ChatRoomNum!!).child("message")
-        mChildEventListener = object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                val chatData = dataSnapshot.getValue(ChatData::class.java)
-                chatData!!.firebaseKey = dataSnapshot.key
-                mAdapter!!.add(chatData)
-                mListView!!.smoothScrollToPosition(mAdapter!!.count)
-            }
-
-            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {}
-
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                val firebaseKey = dataSnapshot.key
-                val count = mAdapter!!.count
-                for (i in 0 until count) {
-                    if (mAdapter!!.getItem(i).firebaseKey.equals(firebaseKey)) {
-                        mAdapter!!.remove(mAdapter!!.getItem(i))
-                        break
+        Log.d("checkk",MainActivity.ChatRoomNum!!.toString())
+        ref.child("Chat").child(MainActivity.ChatRoomNum!!).child("message")
+                .addChildEventListener(object: ChildEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
                     }
-                }
-            }
 
-            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
+                    override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                     }
 
-            override fun onCancelled(databaseError: DatabaseError) {}
-        }
-        mDatabaseReference!!.addChildEventListener(mChildEventListener!!)
+                    override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                      }
+
+                    override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+
+                       chatdata = p0.getValue(ChatData::class.java)
+                        Log.d("checkk",p0.getValue(ChatData::class.java).toString())
+                        chatdata!!.firebaseKey = p0.key
+                        mAdapter!!.add(chatdata)
+                        mListView!!.smoothScrollToPosition(mAdapter!!.count) }
+
+                    override fun onChildRemoved(p0: DataSnapshot) {
+                        val firebaseKey = p0.key
+                        val count = mAdapter!!.count
+                        for (i in 0 until count) {
+                            if (mAdapter!!.getItem(i).firebaseKey.equals(firebaseKey)) {
+                                mAdapter!!.remove(mAdapter!!.getItem(i))
+                                break
+                            }
+                        } }
+                })
+
+
     }
 
     private fun initFirebaseAuth() {
@@ -188,13 +220,19 @@ class Chat : AppCompatActivity(), View.OnClickListener {
             mAdapter!!.setEmail(user!!.uid)
             mAdapter!!.notifyDataSetChanged()
 
-            Picasso.with(this).load(user!!.photoUrl).into(mImgProfile)
 
             val userData = UserData()
             userData.userEmailID = user!!.uid
-            userData.fcmToken = FirebaseInstanceId.getInstance().token
+            ref.child(user!!.uid).child("fcmToken").addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                 }
 
-            mFirebaseDatabase!!.getReference("Account").child(user!!.uid).child("fcmToken").setValue(userData.fcmToken)
+                override fun onDataChange(p0: DataSnapshot) {
+                    userData.fcmToken = p0.getValue(true).toString()
+                }
+            })
+
+
         }
     }
 
@@ -211,17 +249,15 @@ class Chat : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-    private fun sendPostToFCM(chatData: ChatData, message: String) {
-        mFirebaseDatabase!!.getReference("users")
-                .child(chatData.userEmail!!)
+    private fun sendPostToFCM(message: String) {
+        mFirebaseDatabase!!.getReference("Account")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        val userData = dataSnapshot.getValue(UserData::class.java)
 
                         Log.d("checkkk", dataSnapshot.toString())
 
                         Thread(object : Runnable {
-                            internal var token: String? = null
+
                             override fun run() {
                                 try {
 
@@ -231,7 +267,7 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                                     notification.put("body", message)
                                     notification.put("title", getString(R.string.app_name))
                                     root.put("notification", notification)
-                                    root.put("to", userData!!.fcmToken)   // FMC 메시지 생성 end
+                                    root.put("to", MainActivity.Token)   // FMC 메시지 생성 end
 
                                     val Url = URL(FCM_MESSAGE_URL)
                                     val conn = Url.openConnection() as HttpURLConnection
@@ -285,40 +321,49 @@ class Chat : AppCompatActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
             val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            if (result.isSuccess) {
+            /*if (result.isSuccess) {
                 val account = result.signInAccount
                 val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
                 mAuth!!.signInWithCredential(credential)
                         .addOnCompleteListener(this) { task ->
                             if (!task.isSuccessful) {
-                                Toast.makeText(this@Chat, "Authentication failed.",
+                                Toast.makeText(con, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show()
                             }
                         }
-            } else {
+            }else {
                 updateProfile()
-            }
+            }*/
         }
     }
 
     override fun onClick(v: View) {
-        when (v.id) {
-            R.id.btn_send -> {
-                val message = mEdtMessage!!.text.toString()
+        when (v) {
+           btn_send -> {
+                val message = edit_message.text.toString()
                 if (!TextUtils.isEmpty(message)) {
-                    mEdtMessage!!.setText("")
+                    edit_message!!.setText("")
                     val chatData = ChatData()
+                    chatData.firebaseKey = null
                     chatData.message = message
                     chatData.time = System.currentTimeMillis()
-                    chatData.userEmail = mAuth!!.currentUser!!.uid // 사용자 uid
-                    chatData.userPhotoUrl = mAuth!!.currentUser!!.photoUrl!!.toString() // 사용자 프로필 이미지 주소
-                    mDatabaseReference!!.push().setValue(chatData)
+                    chatData.userName = mAuth!!.currentUser!!.uid // 사용자 uid
+                   ref.child("Chat").child(MainActivity.ChatRoomNum!!).child("message").push().setValue(chatData)
+
+
+
+                    sendPostToFCM(message)
+
                 }
             }
 
-            R.id.btn_google_signout -> signOut()
+
         }
     }
+    companion object {
 
+        var con : Context? = null
+
+    }
 
 }

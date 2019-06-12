@@ -119,6 +119,10 @@ class ApplyActivity : AppCompatActivity()
                             throw ArrayStoreException("Can't use Time")
 
                     }
+                    else if(Apply_Textview_Subway.text.toString().equals(""))
+                    {
+                        throw CloneNotSupportedException("Please set Venue")
+                    }
                     else {
 
                          id = user!!.uid
@@ -186,11 +190,11 @@ class ApplyActivity : AppCompatActivity()
 
 
 
-                                               if(find!!.name!!.toInt().toString().equals(id))
+                                              /* if(find!!.name!!.toInt().toString().equals(id))
                                                {
 
 
-                                               }
+                                               }*/
 
                                                 Log.d("finddd", find!!.name!!.toInt().toString() + " " + find!!.sex + " " + find!!.from + " " + find!!.to)
 
@@ -210,24 +214,51 @@ class ApplyActivity : AppCompatActivity()
 
                                                         if(sex.equals("Man")) {
 
-                                                            MainActivity.ChatRoomNum = id+find!!.name
-                                                            ref.child("Account").child(id!!).child("ChatRoomNum").setValue(id + find!!.name)
+                                                            MainActivity.ChatRoomNum = id + find!!.name
+
+                                                            Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ManId").setValue(id)
+                                                            Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("WomanId").setValue(find!!.name)
+
+                                                        }
+                                                        else {
+                                                            MainActivity.ChatRoomNum = find!!.name + id
+
+                                                            Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ManId").setValue(find!!.name)
+                                                            Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("WomanId").setValue(id)
+
+                                                        }
+                                                            ref.child("Account").child(id!!).child("ChatRoomNum").setValue(MainActivity.ChatRoomNum)
                                                             ref.child("Account").child(id!!).child("Match").setValue("Y")
 
-                                                            ref.child("Account").child(find!!.name!!).child("ChatRoomNum").setValue(id + find!!.name)
+                                                            ref.child("Account").child(find!!.name!!).child("ChatRoomNum").setValue(MainActivity.ChatRoomNum)
                                                             ref.child("Account").child(find!!.name!!).child("Match").setValue("Y")
 
-                                                            Chatref.child(id + find!!.name).child("Info").child("Id1").setValue(id)
-                                                            Chatref.child(id + find!!.name).child("Info").child("Id2").setValue(find!!.name)
 
-                                                            Chatref.child(id + find!!.name).child("message").push().setValue("언행이 바른자가 미인을 얻는다.")
+                                                            ref.child("Account").child(find!!.name!!).addListenerForSingleValueEvent(object: ValueEventListener {
+                                                                override fun onCancelled(p0: DatabaseError) {
+
+                                                                }
+
+                                                                override fun onDataChange(p0: DataSnapshot) {
+                                                                   MainActivity.Token =  p0.child("fcmToken").getValue(true).toString()
+                                                                   }
+                                                            })
+
+
+                                                            var cd : ChatData? = ChatData()
+
+                                                            cd!!.message = "언행이 바른자가 미인을 얻는다."
+                                                            cd!!.userName = "Notice"
+                                                            cd!!.time = System.currentTimeMillis()
+
+                                                            Chatref.child(MainActivity.ChatRoomNum.toString()).child("message").push().setValue(cd)
 
                                                             Log.d("finddd", "매치는 트루 츠루")
 
                                                             val delquery: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
                                                                     .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(id)
 
-                                                            delquery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                            delquery.addValueEventListener(object : ValueEventListener {
                                                                 override fun onCancelled(p0: DatabaseError) {
                                                                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                                                                 }
@@ -244,7 +275,7 @@ class ApplyActivity : AppCompatActivity()
                                                             val delquery1: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
                                                                     .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(find!!.name)
 
-                                                            delquery1.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                            delquery1.addValueEventListener(object : ValueEventListener {
                                                                 override fun onCancelled(p0: DatabaseError) {
                                                                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                                                                 }
@@ -258,9 +289,10 @@ class ApplyActivity : AppCompatActivity()
                                                                 }
                                                             })
 
-                                                        }
 
 
+                                                        setResult(RESULT_OK)
+                                                        finish()
 
 
                                                     }
@@ -277,7 +309,7 @@ class ApplyActivity : AppCompatActivity()
                                             }
 
                                         override fun onChildRemoved(p0: DataSnapshot) {
-                                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
                                         }
 
 
@@ -305,6 +337,10 @@ class ApplyActivity : AppCompatActivity()
                     Toast.makeText(this@ApplyActivity, "시간을 설정해주세요.",Toast.LENGTH_SHORT).show()
 
 
+                } catch(e : CloneNotSupportedException)
+                {
+                    Toast.makeText(this@ApplyActivity, "지하철역을 설정해주세요.",Toast.LENGTH_SHORT).show()
+
                 }
                 catch(e:Exception)
                 {
@@ -313,7 +349,11 @@ class ApplyActivity : AppCompatActivity()
 
                 }
 
+
+
             }
+
+
 
         })
 
