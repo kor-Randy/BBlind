@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import com.example.moon.bblind.databinding.ActivityMainBinding
+import com.test.moon.bblind.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference

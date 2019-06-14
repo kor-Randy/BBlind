@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.annotation.SuppressLint
 import android.os.Bundle

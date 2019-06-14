@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.app.Activity
 import android.content.Intent
@@ -11,7 +11,7 @@ class Loading : Activity() {
         setContentView(R.layout.activity_loading)
         Handler().postDelayed({
 
-            var intent = Intent(this,MainActivity::class.java)
+            var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         },1000)

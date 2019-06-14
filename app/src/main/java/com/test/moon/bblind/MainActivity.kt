@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -22,7 +22,7 @@ import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.example.moon.bblind.databinding.ActivityMainBinding
+import com.test.moon.bblind.databinding.ActivityMainBinding
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.usermgmt.LoginButton
@@ -197,7 +197,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun DirectSignUp()
     {
-        var intent = Intent(this,Account::class.java)
+        var intent = Intent(this, Account::class.java)
         startActivity(intent)
 
     }

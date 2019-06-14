@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.content.Intent
 import android.os.Bundle
@@ -42,7 +42,7 @@ class Home : Fragment(), View.OnClickListener
             bu ->
             {
                 Log.d("zczc","고고")
-                val it : Intent = Intent(activity,ApplyActivity::class.java)
+                val it : Intent = Intent(activity, ApplyActivity::class.java)
                 startActivityForResult(it,0)
 
             }

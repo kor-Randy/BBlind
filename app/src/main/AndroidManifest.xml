@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.moon.bblind">
+    package="com.test.moon.bblind">
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <application
         android:usesCleartextTraffic="true"
-        android:name = ".GlobalApplication"
+        android:name = ".KakaoLoginApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,31 +22,31 @@
             android:name="com.kakao.sdk.AppKey"
 
             android:value="@string/kakao_app_key" />
-        <activity android:name=".LobbyActivity"></activity>>
-        <activity android:name=".Loading"> <intent-filter>
+        <activity android:name="com.test.moon.bblind.Loading"></activity>>
+        <activity android:name="com.test.moon.bblind.LobbyActivity"> <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter></activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.test.moon.bblind.LoginActivity">
 
         </activity>
-        <activity android:name=".KakaoSignupActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name="com.test.moon.bblind.KakaoSignupActivity"></activity>
+        <activity android:name="com.test.moon.bblind.MainActivity"></activity>
 
-        <activity android:name=".Account"></activity>
-        <activity android:name=".msg"></activity>
-        <activity android:name=".SubwayPopup" android:theme="@android:style/Theme.Dialog"></activity>
-
-
+        <activity android:name="com.test.moon.bblind.Account"></activity>
+        <activity android:name="com.test.moon.bblind.msg"></activity>
+        <activity android:name="com.test.moon.bblind.SubwayPopup" android:theme="@android:style/Theme.Dialog"></activity>
 
 
-        <activity android:name=".ApplyActivity"></activity>
-        <activity android:name=".GameActivity"></activity>
+
+
+        <activity android:name="com.test.moon.bblind.ApplyActivity"></activity>
+        <activity android:name="com.test.moon.bblind.GameActivity"></activity>
 
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name="com.test.moon.bblind.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
@@ -53,7 +54,7 @@
         </service>
 
         <service
-            android:name=".MyFirebaseInstanceIDService">
+            android:name="com.test.moon.bblind.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>

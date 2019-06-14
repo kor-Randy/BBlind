@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.content.Intent
 import android.os.Bundle
@@ -65,7 +65,7 @@ class LoginActivity :AppCompatActivity() {
     }
 
     protected fun redirectSignupActivity() {       //세션 연결 성공 시 SignupActivity로 넘김
-        var intent = Intent(this,KakaoSignupActivity::class.java)
+        var intent = Intent(this, KakaoSignupActivity::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
         finish()

@@ -1,9 +1,9 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
-import com.example.moon.bblind.R
+import com.test.moon.bblind.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

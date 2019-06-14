@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -137,7 +137,7 @@ class ApplyActivity : AppCompatActivity()
                         }
 
 
-                        iddata = IdData(id!!,sex!!,
+                        iddata = IdData(id!!, sex!!,
                                 Apply_Spinner_Before_Time.selectedItem.toString(),
                                 Apply_Spinner_After_Time.selectedItem.toString())
                         Log.d("chattt","온다1")

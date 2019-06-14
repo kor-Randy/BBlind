@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 
 import android.content.Context
@@ -136,36 +136,48 @@ class Chat : Fragment(), View.OnClickListener {
     }
 
     private fun initFirebaseDatabase() {
-        Log.d("checkk",MainActivity.ChatRoomNum!!.toString())
-        ref.child("Chat").child(MainActivity.ChatRoomNum!!).child("message")
-                .addChildEventListener(object: ChildEventListener {
-                    override fun onCancelled(p0: DatabaseError) {
-                    }
 
-                    override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                     }
+        if(MainActivity.ChatRoomNum!=null) {
+            Log.d("checkk", MainActivity.ChatRoomNum!!.toString())
+            ref.child("Chat").child(MainActivity.ChatRoomNum!!).child("message")
+                    .addChildEventListener(object : ChildEventListener {
+                        override fun onCancelled(p0: DatabaseError) {
+                        }
 
-                    override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                      }
+                        override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                        }
 
-                    override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                        override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                        }
 
-                       chatdata = p0.getValue(ChatData::class.java)
-                        Log.d("checkk",p0.getValue(ChatData::class.java).toString())
-                        chatdata!!.firebaseKey = p0.key
-                        mAdapter!!.add(chatdata)
-                        mListView!!.smoothScrollToPosition(mAdapter!!.count) }
+                        override fun onChildAdded(p0: DataSnapshot, p1: String?) {
 
-                    override fun onChildRemoved(p0: DataSnapshot) {
-                        val firebaseKey = p0.key
-                        val count = mAdapter!!.count
-                        for (i in 0 until count) {
-                            if (mAdapter!!.getItem(i).firebaseKey.equals(firebaseKey)) {
-                                mAdapter!!.remove(mAdapter!!.getItem(i))
-                                break
+                            chatdata = p0.getValue(ChatData::class.java)
+                            Log.d("checkk", p0.getValue(ChatData::class.java).toString())
+                            chatdata!!.firebaseKey = p0.key
+                            mAdapter!!.add(chatdata)
+                            mListView!!.smoothScrollToPosition(mAdapter!!.count)
+                        }
+
+                        override fun onChildRemoved(p0: DataSnapshot) {
+                            val firebaseKey = p0.key
+                            val count = mAdapter!!.count
+                            for (i in 0 until count) {
+                                if (mAdapter!!.getItem(i).firebaseKey.equals(firebaseKey)) {
+                                    mAdapter!!.remove(mAdapter!!.getItem(i))
+                                    break
+                                }
                             }
-                        } }
-                })
+                        }
+                    })
+        }
+        else
+        {
+            //채팅방이 존재하지 않습니다.
+
+
+        }
+
 
 
     }

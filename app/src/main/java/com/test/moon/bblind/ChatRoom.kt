@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

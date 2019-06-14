@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 class ChatData {
     var firebaseKey: String? = null // Firebase Realtime Database 에 등록된 Key 값

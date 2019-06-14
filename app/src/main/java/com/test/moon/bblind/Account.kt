@@ -1,4 +1,4 @@
-package com.example.moon.bblind
+package com.test.moon.bblind
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -174,7 +174,7 @@ class Account : AppCompatActivity()
     }
     private fun DirectLobby()
     {
-        var intent = Intent(this,LobbyActivity::class.java)
+        var intent = Intent(this, LobbyActivity::class.java)
         startActivity(intent)
     }
     @SuppressLint("MissingPermission")
