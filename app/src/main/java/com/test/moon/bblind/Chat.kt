@@ -70,10 +70,7 @@ class Chat : Fragment(), View.OnClickListener {
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.activity_chattingroom, container, false) as View
        // list = view.findViewById(R.id.list)
-        mBtnGoogleSignIn = view.findViewById(R.id.btn_google_signin)
-        mBtnGoogleSignOut = view.findViewById(R.id.btn_google_signout)
-        mTxtProfileInfo = view.findViewById(R.id.txt_profile_info)
-        mImgProfile = view.findViewById(R.id.img_profile)
+
         mListView = view.findViewById(R.id.list_message)
         mEdtMessage = view.findViewById(R.id.edit_message)
         btn_send = view.findViewById(R.id.btn_send)
@@ -128,8 +125,8 @@ class Chat : Fragment(), View.OnClickListener {
 
       //  mBtnGoogleSignIn = btn_google_signin as SignInButton
       //  mBtnGoogleSignOut = btn_google_signout as Button
-        mBtnGoogleSignIn!!.setOnClickListener(this)
-        mBtnGoogleSignOut!!.setOnClickListener(this)
+//        mBtnGoogleSignIn!!.setOnClickListener(this)
+     //   mBtnGoogleSignOut!!.setOnClickListener(this)
 
      //   mTxtProfileInfo = txt_profile_info as TextView
      //   mImgProfile = img_profile as ImageView
@@ -209,26 +206,26 @@ class Chat : Fragment(), View.OnClickListener {
 
         if (user == null) {
             // 비 로그인 상태 (메시지를 전송할 수 없다.)
-            mBtnGoogleSignIn!!.visibility = View.VISIBLE
-            mBtnGoogleSignOut!!.visibility = View.GONE
-            mTxtProfileInfo!!.visibility = View.GONE
-            mImgProfile!!.visibility = View.GONE
+           // mBtnGoogleSignIn!!.visibility = View.VISIBLE
+          //  mBtnGoogleSignOut!!.visibility = View.GONE
+           // mTxtProfileInfo!!.visibility = View.GONE
+           // mImgProfile!!.visibility = View.GONE
             btn_send.setVisibility(View.GONE)
             mAdapter!!.setEmail(null)
             mAdapter!!.notifyDataSetChanged()
         } else {
             // 로그인 상태
-            mBtnGoogleSignIn!!.visibility = View.GONE
-            mBtnGoogleSignOut!!.visibility = View.VISIBLE
-            mTxtProfileInfo!!.visibility = View.VISIBLE
-            mImgProfile!!.visibility = View.VISIBLE
+           // mBtnGoogleSignIn!!.visibility = View.GONE
+           // mBtnGoogleSignOut!!.visibility = View.VISIBLE
+            //mTxtProfileInfo!!.visibility = View.VISIBLE
+           // mImgProfile!!.visibility = View.VISIBLE
             btn_send.setVisibility(View.VISIBLE)
 
             userName = user!!.displayName // 채팅에 사용 될 닉네임 설정
             val email = user!!.uid
             val profile = StringBuilder()
             profile.append(userName).append("\n").append(user!!.uid)
-            mTxtProfileInfo!!.text = profile
+          //  mTxtProfileInfo!!.text = profile
             mAdapter!!.setEmail(user!!.uid)
             mAdapter!!.notifyDataSetChanged()
 
@@ -326,7 +323,9 @@ class Chat : Fragment(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        mDatabaseReference!!.removeEventListener(mChildEventListener!!)
+
+        //한번더 누를시에 어플 종료
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

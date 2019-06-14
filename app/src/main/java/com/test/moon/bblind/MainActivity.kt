@@ -2,6 +2,8 @@ package com.test.moon.bblind
 
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.support.v7.app.AppCompatActivity
@@ -37,8 +39,7 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_apply.*
 
 import org.json.JSONObject
-
-import java.util.HashMap
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     var binding: ActivityMainBinding? = null
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+
 
 
 
@@ -143,7 +145,6 @@ class MainActivity : AppCompatActivity() {
     }
     private fun DirectLobby( str : String)
     {
-        var temp : Int?=null
 
         myRef.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -151,6 +152,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+
+
+
+
 
                if(str==null)
                {
@@ -162,27 +167,86 @@ class MainActivity : AppCompatActivity() {
                    Log.d("zczc","계정이없음")
                    DirectSignUp()
                }
-                else if (p0.child("Account").child(str).exists()||p0.child("Account").child(str).child("Match").getValue(true)!!.toString().equals("Y"))
-                {   //채팅방이 존재할때 채팅방의 번호, 상대방의 Token을 초기화한다
-                    //-> 이것을 핸드폰 내부저장소에 저장해야 함
+                else if (p0.child("Account").child(str).exists()&&p0.child("Account").child(str).child("Match").getValue(true)!!.toString().equals("Y"))
+                {
+
+                    //매칭상대가 존재할 경우
+
+
+
                     Log.d("matchhh", "gogo")
-                    temp = 0
                     MainActivity.ChatRoomNum = p0.child("Account").child(str).child("ChatRoomNum").getValue(true).toString()
-                    val strr = MainActivity.ChatRoomNum
+                    var strr = MainActivity.ChatRoomNum
 
-                    strr!!.replace(str, "")
-                    MainActivity.Token = p0.child("Account").child(strr!!).child("fcmToken").getValue(true).toString()
-                    Log.d("zczc",MainActivity.ChatRoomNum.toString())
-                    Log.d("zczc",MainActivity.Token.toString())
+                    val today = Date()
+                    var strdate : String? = null
 
+                    var format1 : SimpleDateFormat? = null
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        format1 = SimpleDateFormat("yyyy-MM-dd")
+
+                        strdate = format1.format(today)
+                        Log.d("zczc",format1!!.format(today))
+                        Log.d("cancelll","지워짐"+p0.child("Chat").child(strr!!).child("Info").child("MeetDate").getValue(true).toString()+"지금"+strdate)
+
+                    }
+
+                    if(p0.child("Chat").child(ChatRoomNum!!).child("Info").child("MeetDate").getValue(true).toString().compareTo(strdate!!)<0)
+                    {
+
+                        if(p0.child("Chat").child(ChatRoomNum!!).exists())
+                        {
+                            myRef.child("Chat").child(ChatRoomNum!!).removeValue()
+                        }
+
+
+                        strr = strr!!.replace(str, "")
+                        Myuid = str
+                        Log.d("cancellll","zz지워짐"+strr+"/"+Myuid)
+
+                        if(p0.child("ApplyInformation").child(Myuid!!).exists())
+                        {
+                            myRef.child("ApplyInformation").child(Myuid!!).removeValue()
+
+                            myRef.child("Account").child(Myuid!!).child("ChatRoomNum").setValue("")
+                            myRef.child("Account").child(Myuid!!).child("Match").setValue("N")
+
+                        }
+
+                        if(p0.child("ApplyInformation").child(strr).exists())
+                        {
+                            myRef.child("ApplyInformation").child(strr).removeValue()
+
+                            myRef.child("Account").child(strr).child("ChatRoomNum").setValue("")
+                            myRef.child("Account").child(strr).child("Match").setValue("N")
+                        }
+
+
+                        Token=null
+                        ChatRoomNum=null
+
+                    }
+                    else
+                    {
+                        strr = strr!!.replace(str, "")
+                        Myuid = str
+                        MainActivity.Token = p0.child("Account").child(strr!!).child("fcmToken").getValue(true).toString()
+
+
+                    }
                     val intent = Intent(this@MainActivity, LobbyActivity::class.java)
                     startActivity(intent)
                 }
+
                else {
+                   //매칭 상대가 없을 경우
+
+                   Token=null
+                   ChatRoomNum=null
+                   Myuid = user!!.uid
                     Log.d("matchhh", "nono")
-                    temp = 1
-                    val intent = Intent(this@MainActivity, ApplyActivity::class.java)
-                    startActivity(intent)
+                   val intent = Intent(this@MainActivity, LobbyActivity::class.java)
+                   startActivity(intent)
 
                 }
 
@@ -259,6 +323,7 @@ class MainActivity : AppCompatActivity() {
         private val TAG = MainActivity::class.java.name
         var ChatRoomNum : String? = null
         var Token : String? = null
+        var Myuid : String? = null
 
     }
 

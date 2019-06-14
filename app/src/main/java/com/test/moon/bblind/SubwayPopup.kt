@@ -1,5 +1,4 @@
 package com.test.moon.bblind
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle

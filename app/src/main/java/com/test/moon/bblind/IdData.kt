@@ -7,14 +7,16 @@ class IdData
     public var sex : String? = null
     public var to : String? = null
     public var from : String? = null
+    public var date : String? = null
 
 
-    constructor(name : String, sex : String,from : String, to : String)
+    constructor(name : String, sex : String,from : String, to : String,date : String)
     {
         this.name = name
         this.sex = sex
         this.from = from
         this.to = to
+        this.date = date
     }
     constructor()
     {}

@@ -1,5 +1,4 @@
 package com.test.moon.bblind
-
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.util.Log

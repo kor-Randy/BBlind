@@ -20,8 +20,7 @@ import android.widget.Toast
 class Store : Fragment(),BillingProcessor.IBillingHandler{
     override fun onPurchaseHistoryRestored() {
         Toast.makeText(context,"Restored",Toast.LENGTH_LONG).show()
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+      }
 
     lateinit var bp : BillingProcessor
     private lateinit var text: ListView
@@ -34,7 +33,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
 
 
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
-
+        bp.consumePurchase(productId)
         val builder = AlertDialog.Builder(context!!)
         builder.setMessage("구매 성공 하였습니다.")
                 .setCancelable(false)

@@ -1,6 +1,4 @@
 package com.test.moon.bblind
-
-
 import android.app.Activity
 import android.os.Debug
 import android.util.Log

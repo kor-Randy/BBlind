@@ -1,6 +1,4 @@
 package com.test.moon.bblind
-
-
 import android.content.Context
 import android.os.Build
 import android.text.TextUtils
