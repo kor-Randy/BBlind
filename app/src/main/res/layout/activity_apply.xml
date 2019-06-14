@@ -97,6 +97,64 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="만나는 날짜"
+                    android:textSize="30sp" />
+                <Button
+                    android:id="@+id/Apply_Date"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="날짜 설정"
+                    android:onClick="NoticeDate"
+                    android:gravity="center"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/SampleBidYearText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="년"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/SampleBidMonthText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="월"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/SampleBidDayText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="일"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -357,14 +415,14 @@
                     android:textSize="30sp" />
 
                 <Button
-                    android:id="@+id/Apply_button_Match"
+                    android:id="@+id/Apply_button_Cancel"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="20dp"
 
                     android:layout_weight="1"
-                    android:text="매칭하기"
-                    android:textSize="30sp"/>
+                    android:text="취소하기"
+                    android:textSize="30sp" />
             </LinearLayout>
 
         </LinearLayout>
