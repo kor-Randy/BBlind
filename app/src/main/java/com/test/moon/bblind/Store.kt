@@ -13,6 +13,8 @@ import android.widget.TextView
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
 import android.content.DialogInterface
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.widget.Toast
 
@@ -33,6 +35,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
 
 
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
+        Toast.makeText(context,"Success",Toast.LENGTH_LONG).show()
         bp.consumePurchase(productId)
         val builder = AlertDialog.Builder(context!!)
         builder.setMessage("구매 성공 하였습니다.")
@@ -52,7 +55,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        var fragmentManager = fragmentManager!!.fragments
         bp = BillingProcessor(activity, resources.getString(R.string.license), this)
         bp.initialize()
     }
@@ -68,12 +71,16 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+         Toast.makeText(context,"In fragment result",Toast.LENGTH_LONG).show()
         if(!bp.handleActivityResult(requestCode,resultCode,data))
         {
+            Toast.makeText(context,"Result in store ?",Toast.LENGTH_LONG).show()
             super.onActivityResult(requestCode, resultCode, data)
-        }
-
+        }else{Toast.makeText(context,"store?",Toast.LENGTH_LONG).show()}
     }
+
+
+
 
     override fun onDestroy() {
         if(bp != null)
