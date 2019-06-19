@@ -154,12 +154,14 @@ class Account : AppCompatActivity()
                 else
                     sex = "Girl"
 
+                val crd  = ChatRoomData()
+
 
                 myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
                 myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
                 myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
                 myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
-                myRef.child(currentUser!!.uid).child("Match").setValue("N")
+                myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
                 myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
                 if (Account_Radio_Student.isChecked())
                     myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
@@ -175,6 +177,7 @@ class Account : AppCompatActivity()
     private fun DirectLobby()
     {
         var intent = Intent(this, LobbyActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
     @SuppressLint("MissingPermission")

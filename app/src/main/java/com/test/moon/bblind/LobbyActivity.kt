@@ -69,7 +69,7 @@ class LobbyActivity: AppCompatActivity() {
     private fun setupViewPager(viewPager: ViewPager?) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFrag(Home(), "HOME")
-        adapter.addFrag(Chat(), "CHAT")
+        adapter.addFrag(ChatRoom(), "CHAT")
         adapter.addFrag(Store(), "STORE")
         //adapter.addFrag(heart(), "HEART")
         viewPager!!.adapter = adapter

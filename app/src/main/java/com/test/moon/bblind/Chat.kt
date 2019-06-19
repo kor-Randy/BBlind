@@ -23,12 +23,13 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback
 import kotlinx.android.synthetic.main.activity_chattingroom.*
 import org.json.JSONObject
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_chattingroom.view.*
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Random
 
-class Chat : Fragment(), View.OnClickListener {
+class Chat : AppCompatActivity(), View.OnClickListener {
 
     private val RC_SIGN_IN = 1001
     private val FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send"
@@ -47,10 +48,6 @@ class Chat : Fragment(), View.OnClickListener {
     // Views
     private lateinit var mListView: ListView
     private lateinit var mEdtMessage: EditText
-    private lateinit var mBtnGoogleSignIn: SignInButton // 로그인 버튼
-    private lateinit var mBtnGoogleSignOut: Button // 로그아웃 버튼
-    private lateinit var mTxtProfileInfo: TextView // 사용자 정보 표시
-    private lateinit var mImgProfile: ImageView // 사용자 프로필 이미지 표시
     private lateinit var list: ListView
     private lateinit var  btn_send : Button
     private var user : FirebaseUser? = null
@@ -66,30 +63,20 @@ class Chat : Fragment(), View.OnClickListener {
     val ref : DatabaseReference = database.reference
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.activity_chattingroom, container, false) as View
-       // list = view.findViewById(R.id.list)
-
-        mListView = view.findViewById(R.id.list_message)
-        mEdtMessage = view.findViewById(R.id.edit_message)
-        btn_send = view.findViewById(R.id.btn_send)
-        con = activity
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_chattingroom)
+
+        mListView = findViewById(R.id.list_message)
+        mEdtMessage = findViewById(R.id.edit_message)
+        btn_send = findViewById(R.id.btn_send)
         initViews()
         initFirebaseDatabase()
         initFirebaseAuth()
         initValues()
         user = mAuth!!.currentUser
-
-        return view
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
 
     }
 
@@ -99,7 +86,7 @@ class Chat : Fragment(), View.OnClickListener {
 
 
 
-        mAdapter = ChatAdapter(con!!, 0)
+        mAdapter = ChatAdapter(this, 0)
 
         Log.d("cccc",mAdapter.toString())
         Log.d("cccc",con.toString())
@@ -109,8 +96,8 @@ class Chat : Fragment(), View.OnClickListener {
         mListView!!.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val chatData = mAdapter!!.getItem(position)
             if (!TextUtils.isEmpty(chatData.userName)) {
-                val editText = EditText(activity)
-                AlertDialog.Builder(activity!!)
+                val editText = EditText(this)
+                AlertDialog.Builder(this)
                         .setMessage(chatData.userName + " 님 에게 메시지 보내기")
                         .setView(editText!!)
                         .setPositiveButton("보내기") { dialog, which -> sendPostToFCM(editText.text.toString()) }
@@ -134,9 +121,9 @@ class Chat : Fragment(), View.OnClickListener {
 
     private fun initFirebaseDatabase() {
 
-        if(MainActivity.ChatRoomNum!=null) {
-            Log.d("checkk", MainActivity.ChatRoomNum!!.toString())
-            ref.child("Chat").child(MainActivity.ChatRoomNum!!).child("message")
+        if(MainActivity.nowChatRoomNum!=null) {
+            Log.d("checkk", MainActivity.nowChatRoomNum!!.toString())
+            ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("message")
                     .addChildEventListener(object : ChildEventListener {
                         override fun onCancelled(p0: DatabaseError) {
                         }
@@ -276,7 +263,7 @@ class Chat : Fragment(), View.OnClickListener {
                                     notification.put("body", message)
                                     notification.put("title", getString(R.string.app_name))
                                     root.put("notification", notification)
-                                    root.put("to", MainActivity.Token)   // FMC 메시지 생성 end
+                                    root.put("to", MainActivity.nowToken)   // FMC 메시지 생성 end
 
                                     val Url = URL(FCM_MESSAGE_URL)
                                     val conn = Url.openConnection() as HttpURLConnection
