@@ -16,6 +16,7 @@ import android.content.DialogInterface
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.widget.Toast
 
 
@@ -48,7 +49,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
-        Toast.makeText(context,"Error",Toast.LENGTH_LONG).show()
+        Toast.makeText(context,errorCode.toString() +"   "+error.toString(),Toast.LENGTH_LONG).show()
 
     }
 
@@ -58,6 +59,9 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
         var fragmentManager = fragmentManager!!.fragments
         bp = BillingProcessor(activity, resources.getString(R.string.license), this)
         bp.initialize()
+
+        Log.d("id",this.id.toString())
+        Log.d("id",this.tag.toString())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -71,12 +75,11 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-         Toast.makeText(context,"In fragment result",Toast.LENGTH_LONG).show()
+        Log.d("Activity","InFragment")
         if(!bp.handleActivityResult(requestCode,resultCode,data))
         {
-            Toast.makeText(context,"Result in store ?",Toast.LENGTH_LONG).show()
             super.onActivityResult(requestCode, resultCode, data)
-        }else{Toast.makeText(context,"store?",Toast.LENGTH_LONG).show()}
+        }
     }
 
 
