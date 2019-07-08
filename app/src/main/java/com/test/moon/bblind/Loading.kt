@@ -11,6 +11,7 @@ class Loading : Activity() {
         Handler().postDelayed({
 
             var intent = Intent(this,MainActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
             finish()
         },1000)

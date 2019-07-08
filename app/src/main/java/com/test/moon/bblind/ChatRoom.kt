@@ -72,7 +72,8 @@ class ChatRoom : Fragment() {
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
             }
 
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+            override fun onChildAdded(p0: DataSnapshot, p1: String?)
+            {
 
 
                 for(a : DataSnapshot in p0.children) {
@@ -138,12 +139,14 @@ class ChatRoom : Fragment() {
 
                         if(p0.child(al[position].ChatRoomNum!!).exists()) {
 
+
                             MainActivity.nowChatRoomNum = al[position].ChatRoomNum
                             val num = MainActivity.crd!!.ChatRoom.indexOf(MainActivity.nowChatRoomNum)
                             MainActivity.nowToken = MainActivity.crd!!.Token[num]
-                            Log.d("asdasd", num.toString())
+                            Log.d("dedede","position = "+position)
+                            Log.d("dedede","ChatRoomNum = "+MainActivity.nowChatRoomNum)
+                            Log.d("dedede","Token = "+MainActivity.nowToken)
 
-                            Log.d("asdasd", MainActivity.nowToken);
                             val i = Intent(activity, Chat::class.java)
                             //i.putExtra("token",)
                             startActivity(i)

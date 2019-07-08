@@ -33,7 +33,6 @@ import java.util.Date;
 
 class ApplyActivity : AppCompatActivity()
 {
-
     var Match = false
     private var mAuth: FirebaseAuth? = null
     private var user : FirebaseUser? = null
@@ -186,9 +185,7 @@ class ApplyActivity : AppCompatActivity()
                                 Apply_Spinner_Average_Drink.selectedItem.toString(),
                                 Apply_Edittext_Introduction.text.toString())
                         Log.d("chattt","온다1")
-                        Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
-                                .child(Apply_Spinner_PersonNum.selectedItem.toString())
-                                .push().setValue(iddata)
+
 
 
 
@@ -197,15 +194,18 @@ class ApplyActivity : AppCompatActivity()
 
                         //*********************************************여기서 나와 같은 조건의 상대성별 확인
 
+                        MainActivity.checkapplylist!!.checklist!!.add(Apply_Textview_Subway.text.toString()+"/"+Apply_Spinner_PersonNum.selectedItem.toString())
 
-                      /*  if(Applyref.child("SubwayStation/"+Apply_Textview_Subway.text.toString()+"/"+Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(id)!=null)
-                        {
+                        ref.child("Account").child(id!!).child("Myapply").setValue(MainActivity.checkapplylist)
 
-                            Toast.makeText(this@ApplyActivity, "이미 같은 정보로 신청이 존재합니다.",Toast.LENGTH_LONG).show()
 
-                        }
-                        else {
-*/
+
+                          Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
+                                  .child(Apply_Spinner_PersonNum.selectedItem.toString())
+                                  .push().setValue(iddata)
+
+
+
 
                             Applyref.child("SubwayStation/" + Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()).addChildEventListener(object : ChildEventListener {
                                 override fun onCancelled(p0: DatabaseError) {
@@ -298,6 +298,28 @@ class ApplyActivity : AppCompatActivity()
 
                                                             ref.child("Account").child(find!!.name!!).child("ChatNum").setValue(MainActivity.crdd)
 
+
+
+
+
+                                                            MainActivity.checkapplylistt = p0.child(find!!.name!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
+
+
+                                                            MainActivity.checkapplylistt!!.checklist!!.remove(Apply_Textview_Subway.text.toString()+"/"+Apply_Spinner_PersonNum.selectedItem.toString())
+
+                                                            ref.child("Account").child(find!!.name!!).child("Myapply").setValue(MainActivity.checkapplylistt)
+
+
+
+
+
+                                                            MainActivity.checkapplylist = p0.child(id!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
+
+                                                            MainActivity.checkapplylist!!.checklist!!.remove(Apply_Textview_Subway.text.toString()+"/"+Apply_Spinner_PersonNum.selectedItem.toString())
+
+                                                            ref.child("Account").child(id!!).child("Myapply").setValue(MainActivity.checkapplylist)
+
+
                                                         }
                                                     })
 
@@ -326,6 +348,11 @@ class ApplyActivity : AppCompatActivity()
 
 
                                                     Chatref.child(MainActivity.ChatRoomNum.toString()).child("message").push().setValue(cd)
+
+
+
+
+
 
                                                     Log.d("finddd", "매치는 트루 츠루")
 
@@ -362,6 +389,11 @@ class ApplyActivity : AppCompatActivity()
                                                     })
 
 
+
+
+
+
+
                                                     val it: Intent = Intent(this@ApplyActivity, LobbyActivity::class.java)
                                                     it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                                     startActivity(it);
@@ -385,11 +417,14 @@ class ApplyActivity : AppCompatActivity()
 
 
                             })
+
                         }
-                       // }
+
+
 
                     val it : Intent = Intent(this@ApplyActivity,LobbyActivity::class.java)
-                    it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+                    it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(it);
 
 

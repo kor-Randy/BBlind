@@ -1,5 +1,6 @@
 package com.test.moon.bblind
 
+import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.icu.text.SimpleDateFormat
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
+        activity = this
 
 
 
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        Toast.makeText(this,"MainActicity",Toast.LENGTH_LONG).show()
         updateUI()
     }
 
@@ -154,6 +157,15 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
 
+                if(p0.child("Account").child(user!!.uid).child("Myapply").exists()) {
+                    MainActivity.checkapplylist = p0.child("Account").child(user!!.uid).child("Myapply").getValue(CheckApplyListData::class.java)!!
+                    Log.d("checkcheck", checkapplylist!!.checklist!!.size.toString())
+                }
+                else
+                {
+                    for(i in 0..MainActivity.checkapplylist!!.checklist!!.size-1)
+                    MainActivity.checkapplylist!!.checklist!!.removeAt(0)
+                }
 
 
 
@@ -263,7 +275,10 @@ class MainActivity : AppCompatActivity() {
                     }
 
 
+
                     val intent = Intent(this@MainActivity, LobbyActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
                     startActivity(intent)
                 }
 
@@ -272,6 +287,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+                 //  crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
 
 
                    Myuid =FirebaseAuth.getInstance().uid
@@ -282,6 +298,8 @@ class MainActivity : AppCompatActivity() {
 
                    Log.d("matchhh", "nono")
                    val intent = Intent(this@MainActivity, LobbyActivity::class.java)
+                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
                    startActivity(intent)
 
                 }
@@ -298,6 +316,8 @@ class MainActivity : AppCompatActivity() {
     private fun DirectSignUp()
     {
         var intent = Intent(this, Account::class.java)
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
 
     }
@@ -356,11 +376,14 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
 
+        var activity: Activity? = null
         private val TAG = MainActivity::class.java.name
         var ChatRoomNum : String? = null
         var Token : String? = null
         var Myuid : String? = null
         var crd  :ChatRoomData? = ChatRoomData()
+        var checkapplylist : CheckApplyListData? = CheckApplyListData()
+        var checkapplylistt : CheckApplyListData? = CheckApplyListData()
 
         var crdd  :ChatRoomData? = ChatRoomData()
         var nowChatRoomNum : String? = null

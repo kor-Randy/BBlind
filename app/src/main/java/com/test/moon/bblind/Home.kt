@@ -22,6 +22,7 @@ class Home : Fragment(), View.OnClickListener
 
     private lateinit var text: TextView
     private lateinit var bu: Button
+    private lateinit var checkbu : Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +35,8 @@ class Home : Fragment(), View.OnClickListener
         text = view.findViewById(R.id.text)
         bu = view.findViewById(R.id.Home_Apply)
         bu.setOnClickListener(this)
+        checkbu = view.findViewById(R.id.Home_Check_Apply)
+        checkbu.setOnClickListener(this)
         return view
     }
 
@@ -45,16 +48,17 @@ class Home : Fragment(), View.OnClickListener
             bu ->
             {
 
-
-
                             Log.d("zczc","고고")
                             val it : Intent = Intent(activity,ApplyActivity::class.java)
                             startActivity(it)
 
+            }
 
+            checkbu ->
+            {
 
-
-
+                val it : Intent = Intent(activity,CheckApplyActivity::class.java)
+                startActivity(it)
 
             }
 

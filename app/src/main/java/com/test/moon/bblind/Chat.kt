@@ -179,7 +179,8 @@ class Chat : AppCompatActivity(), View.OnClickListener {
         mAuthListener = FirebaseAuth.AuthStateListener { updateProfile() }
     }
 
-    private fun initValues() {
+    private fun initValues()
+    {
 
 
         if (user == null) {
@@ -346,7 +347,8 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                     chatData.message = message
                     chatData.time = System.currentTimeMillis()
                     chatData.userName = mAuth!!.currentUser!!.uid // 사용자 uid
-                   ref.child("Chat").child(MainActivity.ChatRoomNum!!).child("message").push().setValue(chatData)
+                    Log.d("dedede","ChatRoomNum = "+MainActivity.nowChatRoomNum)
+                   ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("message").push().setValue(chatData)
 
 
 

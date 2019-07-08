@@ -177,7 +177,8 @@ class Account : AppCompatActivity()
     private fun DirectLobby()
     {
         var intent = Intent(this, LobbyActivity::class.java)
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
         startActivity(intent)
     }
     @SuppressLint("MissingPermission")

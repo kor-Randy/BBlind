@@ -4,12 +4,19 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.PersistableBundle
+import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -17,10 +24,20 @@ import android.widget.Toast
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.FirebaseAuth
+import com.kakao.kakaolink.v2.KakaoLinkResponse
+import com.kakao.kakaolink.v2.KakaoLinkService
+import com.kakao.message.template.*
+import com.kakao.message.template.FeedTemplate.newBuilder
+import com.kakao.network.ErrorResult
+import com.kakao.network.callback.ResponseCallback
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
+import com.kakao.util.helper.log.Logger
 
-class LobbyActivity: AppCompatActivity() {
+class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+
+    private val backpress : BackPress = BackPress(this)
+    private lateinit var adapter : ViewPagerAdapter
     internal val tabIcons = intArrayOf(R.drawable.homed,R.drawable.chatd, R.drawable.heartd)
     private var viewPager: ViewPager? = null
     private var tabLayout: TabLayout? = null
@@ -28,6 +45,11 @@ class LobbyActivity: AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
+
+        val navigationView = findViewById(R.id.nav_view) as NavigationView
+        navigationView.setNavigationItemSelectedListener(this)
+
+
         viewPager = findViewById(R.id.viewpager)
         setupViewPager(viewPager)
         tabLayout = findViewById(R.id.tabs)
@@ -45,16 +67,81 @@ class LobbyActivity: AppCompatActivity() {
         }else{Toast.makeText(this,"null",Toast.LENGTH_LONG).show()}
 
         mBtnSignOut.setOnClickListener {
-            UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
-                override fun onCompleteLogout() {
-                    FirebaseAuth.getInstance().signOut()
 
-                    //val handler = Handler(Looper.getMainLooper())
-                    //handler.post { updateUI() }
+            var params = TextTemplate.newBuilder("안뇽",
+            LinkObject.newBuilder().setWebUrl("https://developers.kakao.com").setMobileWebUrl("https://developers.kakao.com").build()).setButtonTitle("수상한 친구 만들러가기").build()
+
+           var serverCallbackArgs  = HashMap<String, String>();
+           var aa : Map<Any,Any> = HashMap<Any,Any>()
+
+            serverCallbackArgs.put("user_id", MainActivity.Myuid!!);
+
+            var aaa  = object : ResponseCallback<KakaoLinkResponse>(){
+                override fun onSuccess(result: KakaoLinkResponse?) {
+
+                    Log.d("ststst","성공")
+
                 }
-            })
+
+                override fun onFailure(errorResult: ErrorResult?) {
+
+                }
+
+            }
+
+            KakaoLinkService.getInstance().sendDefault(this, params, serverCallbackArgs,aaa)
+
+
+
+
+            /* UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
+                 override fun onCompleteLogout() {
+                     FirebaseAuth.getInstance().signOut()
+
+                     //val handler = Handler(Looper.getMainLooper())
+                     //handler.post { updateUI() }
+                 }
+             })*/
         }
 
+    }
+
+    override fun onBackPressed() {
+        val activity = MainActivity.activity as MainActivity
+        activity.finish()
+
+
+        backpress.onBackPressed()
+    }
+
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+
+        val eid = p0.itemId
+
+
+        if (eid == R.id.nav_AppInformation) {
+            Toast.makeText(this,"앱정보",Toast.LENGTH_LONG).show()
+            // Handle the camera action
+        } else if (eid == R.id.nav_Chat) {
+            Toast.makeText(this,"채팅문의",Toast.LENGTH_LONG).show()
+
+        } else if (eid == R.id.nav_Information) {
+            Toast.makeText(this,"이용안내",Toast.LENGTH_LONG).show()
+
+        } else if (eid == R.id.Nav_My_Matching) {
+            Toast.makeText(this,"내 매칭정보",Toast.LENGTH_LONG).show()
+
+        } else if (eid == R.id.nav_QnA) {
+            Toast.makeText(this,"자주묻는질문",Toast.LENGTH_LONG).show()
+
+        } else if (eid == R.id.Nav_Recommend) {
+            Toast.makeText(this,"추천인코드적기",Toast.LENGTH_LONG).show()
+        }
+
+
+        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        drawer.closeDrawer(GravityCompat.START)
+        return true
     }
 
     private fun setupTabIcons() {
@@ -67,7 +154,7 @@ class LobbyActivity: AppCompatActivity() {
     }
 
     private fun setupViewPager(viewPager: ViewPager?) {
-        val adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFrag(Home(), "HOME")
         adapter.addFrag(ChatRoom(), "CHAT")
         adapter.addFrag(Store(), "STORE")
@@ -75,6 +162,18 @@ class LobbyActivity: AppCompatActivity() {
         viewPager!!.adapter = adapter
         viewPager.offscreenPageLimit= 7         // 한번에 5개의 ViewPager를 띄우겠다 -> 성능향상
     }    //ADAPT FRAGMENT
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Log.d("Activity","InActivity")
+        super.onActivityResult(requestCode, resultCode, data)
+        val fragmentManager = supportFragmentManager
+        val fragment = adapter.getItem(2)
+        if (fragment != null) {
+            Log.d("Activity","toFragment")
+            (fragment as Store).onActivityResult(requestCode, resultCode, data)
+        }else{Log.d("Activity","NULL")}
+
+    }
 
     ///////////////////////////////////// Adapter ///////////////////////////////////////////////////////////////
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
@@ -99,5 +198,6 @@ class LobbyActivity: AppCompatActivity() {
             return null
         }
     }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
