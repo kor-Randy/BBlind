@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/List_MeetDate"
+            android:layout_marginLeft="10dp"
+            android:text = "19.07.08"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="#000000"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/List_Subway"
+            android:text = "종로 3가"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="#000000"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/List_PersonNum"
+            android:text = "2명"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="#000000"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Last_Msg"
+            android:layout_marginLeft="10dp"
+            android:text = "안녕하세요 :)"
+            android:textColor="#000000000"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/Count_Msg"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:text="20"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_height="match_parent"
+            android:background="@drawable/talk" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+</LinearLayout>

@@ -5,5 +5,6 @@ class ChatRoomListData {
     var PersonNum: String? = null
     var MeetDate: String? = null
     var ChatRoomNum: String? = null
-
+    var LastMsg : String? = null
+    var CountMsg : Int? = 0
 }

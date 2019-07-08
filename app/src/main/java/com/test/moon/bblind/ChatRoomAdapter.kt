@@ -52,7 +52,7 @@ class ChatRoomAdapter(Data: ArrayList<ChatRoomListData>) : BaseAdapter() {
             if (inflater == null) {
                 inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             }
-            convertView = inflater!!.inflate(R.layout.chatroomlist, parent, false)
+            convertView = inflater!!.inflate(R.layout.chatroomlist2, parent, false)//change
         }
 
         //구매글들에 대한 정보들
@@ -60,10 +60,13 @@ class ChatRoomAdapter(Data: ArrayList<ChatRoomListData>) : BaseAdapter() {
         val NoticeDataCount = convertView!!.findViewById<TextView>(R.id.List_MeetDate)
         val NoticeDataPersonNum = convertView.findViewById<TextView>(R.id.List_PersonNum)
         val NoticeDataTitle = convertView.findViewById<TextView>(R.id.List_Subway)
-
+        val NoticeLastMsg = convertView.findViewById<TextView>(R.id.Last_Msg)//change
+        val NoticeCountMsg = convertView.findViewById<TextView>(R.id.Count_Msg)//change
         NoticeDataCount.setText(chatRoomListData[position].MeetDate)
         NoticeDataPersonNum.setText(chatRoomListData[position].PersonNum)
         NoticeDataTitle.setText(chatRoomListData[position].Subway)
+        NoticeLastMsg.setText(chatRoomListData[position].LastMsg)//change
+        NoticeCountMsg.setText(chatRoomListData[position].CountMsg.toString())//change
         Log.d("aaaaz",""+NoticeDataCount.text +"  "+ NoticeDataPersonNum.text+NoticeDataTitle.text)
         return convertView!!
     }
