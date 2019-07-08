@@ -109,7 +109,7 @@ class CheckApplyActivity :AppCompatActivity()
                     Log.d("checkcheck",lv!!.count.toString())
                 }
             })
-
+            setListViewHeightBasedOnChildren(lv!!)
 
         }
 

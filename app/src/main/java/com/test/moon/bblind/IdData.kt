@@ -3,7 +3,7 @@ package com.test.moon.bblind
 class IdData
 {
 
-    public var name : String? = "a"
+    public var name : String? = null
     public var sex : String? = null
     public var to : String? = null
     public var from : String? = null
