@@ -156,6 +156,7 @@ class Account : AppCompatActivity()
 
                 val crd  = ChatRoomData()
 
+                MainActivity.checkapplylist!!.checklist!!.add("초기화")
 
                 myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
                 myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
@@ -163,6 +164,8 @@ class Account : AppCompatActivity()
                 myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
                 myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
                 myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
+                myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
+                myRef.child(currentUser!!.uid).child("heart").setValue(0)
                 if (Account_Radio_Student.isChecked())
                     myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
                 else

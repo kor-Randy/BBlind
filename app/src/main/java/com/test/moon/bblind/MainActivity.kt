@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else
                 {
-                    for(i in 0..MainActivity.checkapplylist!!.checklist!!.size-1)
+                    for(i in 1..MainActivity.checkapplylist!!.checklist!!.size)
                     MainActivity.checkapplylist!!.checklist!!.removeAt(0)
                 }
 
@@ -221,13 +221,21 @@ class MainActivity : AppCompatActivity() {
                                 Log.d("cancellll","zz지워짐"+strr+"/"+Myuid)
 
 
+
                                 crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
+                                for(i in 0.. crdd!!.Token.size-1) {
+                                    crdd!!.Token.remove(p0.child("Account").child(Myuid!!).child("fcmToken").getValue(true))
+                                }
+                                for(i in 0..crdd!!.ChatRoom.size-1) {
+                                    crdd!!.ChatRoom.remove(ChatRoomNum!!)
+                                }
 
-                                crdd!!.Token.remove(p0.child("Account").child(Myuid!!).child("fcmToken").getValue(true))
-                                crdd!!.ChatRoom.remove(ChatRoomNum!!)
-
+                                for(i in 0.. crd!!.Token.size-1) {
                                 crd!!.Token.remove(p0.child("Account").child(strr!!).child("fcmToken").getValue(true))
-                                crd!!.ChatRoom.remove(ChatRoomNum!!)
+                                }
+                                for(i in 0.. crd!!.ChatRoom.size-1) {
+                                    crd!!.ChatRoom.remove(ChatRoomNum!!)
+                                }
 
 
                                 myRef.child("Account").child(Myuid!!).child("ChatNum").setValue(crd)
@@ -378,10 +386,12 @@ class MainActivity : AppCompatActivity() {
 
         var activity: Activity? = null
         private val TAG = MainActivity::class.java.name
+        var applyactivity : Activity? = null
         var ChatRoomNum : String? = null
         var Token : String? = null
         var Myuid : String? = null
         var crd  :ChatRoomData? = ChatRoomData()
+        var crdtemp  :ChatRoomData? = ChatRoomData()
         var checkapplylist : CheckApplyListData? = CheckApplyListData()
         var checkapplylistt : CheckApplyListData? = CheckApplyListData()
 

@@ -10,10 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_apply.*
 import kotlinx.android.synthetic.main.home.*
 
@@ -24,6 +21,11 @@ class Home : Fragment(), View.OnClickListener
     private lateinit var bu: Button
     private lateinit var checkbu : Button
 
+    val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+
+
+
+    val ref : DatabaseReference = database.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +34,25 @@ class Home : Fragment(), View.OnClickListener
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.home, container, false) as View
-        text = view.findViewById(R.id.text)
         bu = view.findViewById(R.id.Home_Apply)
         bu.setOnClickListener(this)
         checkbu = view.findViewById(R.id.Home_Check_Apply)
         checkbu.setOnClickListener(this)
+
+
+        ref.child("Account").addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                Log.d("chcheck","checklist가 바뀜")
+                if(p0.child(MainActivity.Myuid!!).child("Myapply").exists())
+                MainActivity.checkapplylist = p0.child(MainActivity.Myuid!!).child("Myapply").getValue(CheckApplyListData::class.java)
+            }
+        })
+
         return view
     }
 
@@ -50,7 +66,7 @@ class Home : Fragment(), View.OnClickListener
 
                             Log.d("zczc","고고")
                             val it : Intent = Intent(activity,ApplyActivity::class.java)
-                            startActivity(it)
+                            startActivityForResult(it,0)
 
             }
 
@@ -58,7 +74,7 @@ class Home : Fragment(), View.OnClickListener
             {
 
                 val it : Intent = Intent(activity,CheckApplyActivity::class.java)
-                startActivity(it)
+                 startActivity(it)
 
             }
 

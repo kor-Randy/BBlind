@@ -21,9 +21,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.kakao.kakaolink.v2.KakaoLinkResponse
 import com.kakao.kakaolink.v2.KakaoLinkService
 import com.kakao.message.template.*
@@ -41,6 +40,19 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
     internal val tabIcons = intArrayOf(R.drawable.homed,R.drawable.chatd, R.drawable.heartd)
     private var viewPager: ViewPager? = null
     private var tabLayout: TabLayout? = null
+
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("chcheck","꺼졌엉")
+
+        if(MainActivity.applyactivity!=null)
+        MainActivity.applyactivity!!.finish()
+
+
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -48,6 +60,9 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
+
+
+
 
 
         viewPager = findViewById(R.id.viewpager)
@@ -172,6 +187,10 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
             Log.d("Activity","toFragment")
             (fragment as Store).onActivityResult(requestCode, resultCode, data)
         }else{Log.d("Activity","NULL")}
+
+
+
+
 
     }
 
