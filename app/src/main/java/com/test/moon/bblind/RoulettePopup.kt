@@ -7,16 +7,22 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.Window
 import android.view.Window.FEATURE_NO_TITLE
-
+import android.content.Intent
+import android.widget.TextView
 
 
 class RoulettePopup : Activity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
 
 
         setContentView(R.layout.roulette_popup)
+        val text : TextView = findViewById(R.id.txtText)
+        val intent = intent
+        val gameName : String = intent.getStringExtra("gameName")
+        text.text = gameName
 
     }
     public fun mOnClose(v : View){

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.PersistableBundle
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -62,8 +63,8 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         navigationView.setNavigationItemSelectedListener(this)
 
 
-
-
+        val fab : FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener { val intent = Intent(this@LobbyActivity, roulette::class.java) ; startActivity(intent) }
 
         viewPager = findViewById(R.id.viewpager)
         setupViewPager(viewPager)
