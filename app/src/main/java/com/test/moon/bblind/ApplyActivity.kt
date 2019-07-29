@@ -108,6 +108,9 @@ class ApplyActivity : AppCompatActivity()
         Apply_button_Notice.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
 
+                Log.d("aaaaz","Click Notice")
+
+
                 val today = Date()
                 var strdate : String? = null
 
@@ -129,7 +132,7 @@ class ApplyActivity : AppCompatActivity()
                     format2 = SimpleDateFormat("yyyy-MM-dd")
                     if(datee==null)
                     {
-                        Toast.makeText(this@ApplyActivity, "날짜는 다시 입력해주세요.",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ApplyActivity, "날짜를 다시 입력해주세요.",Toast.LENGTH_SHORT).show()
 
                     }
                     else {
@@ -140,11 +143,44 @@ class ApplyActivity : AppCompatActivity()
 
                 }
 
+                Log.d("aaaaz","Try 전")
                 try {
 
+                    var s4 : Boolean? = null
+
+                    if(MainActivity.checkapplylist!!.checklist!!.size>1)
+                    {
+
+                        Log.d("aaaaz","1111")
+                        for ( i in 1..MainActivity.checkapplylist!!.checklist!!.size-1)
+                        //1부터인 이유 = 0번째는 "초기화"
+                        {
+                            //이미지난 매칭정보가 존재할 경우
 
 
-                    if(Apply_Edittext_Introduction.text.toString().length!=5)
+                            Log.d("aaaaz","2222")
+                            var s1 = MainActivity.checkapplylist!!.checklist!![i].split("/")[0]
+                            var s2 = MainActivity.checkapplylist!!.checklist!![i].split("/")[1]
+                            var s3 = MainActivity.checkapplylist!!.checklist!![i].split("/")[2]
+
+                            if(s3.equals(selectdatstr))
+                            {
+
+                                Log.d("aaaaz","3333")
+                                s4 = true
+                            }
+
+                            Log.d("aaaaz","4444")
+
+                        }
+                    }
+
+
+                    if(s4 == true)
+                    {
+                        throw NoSuchMethodException("Already Exist")
+                    }
+                    else if(Apply_Edittext_Introduction.text.toString().length!=5)
                     {
                         throw ArithmeticException("Five Introduction")
                     }
@@ -164,13 +200,11 @@ class ApplyActivity : AppCompatActivity()
                     }
                     else {
 
+                        Log.d("aaaaz","5555")
+
                         id = user!!.uid
 
-                        if (Apply_Toggle_Sex.isChecked) {
-                            sex = "Woman"
-                        } else {
-                            sex = "Man"
-                        }
+                    sex = MainActivity.Mysex
 
 
 
@@ -186,16 +220,11 @@ class ApplyActivity : AppCompatActivity()
 
 
 
-                        if (MainActivity.checkapplylist!!.checklist!!.contains(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+ selectdatstr)) {
 
-                            Toast.makeText(this@ApplyActivity, "이미 같은 장소와 인원의 매칭 정보가 있습니다..", Toast.LENGTH_SHORT).show()
-
-
-                        } else {
 
                             //*********************************************여기서 나와 같은 조건의 상대성별 확인
                             Log.d("aaaaz","one")
-                            MainActivity.checkapplylist!!.checklist!!.add(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+ selectdatstr)
+                            MainActivity.checkapplylist!!.checklist!!.add(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+"/" + selectdatstr)
 
                             Log.d("aaaaz","two")
                             ref.child("Account").child(id!!).child("Myapply").setValue(MainActivity.checkapplylist)
@@ -321,7 +350,7 @@ class ApplyActivity : AppCompatActivity()
                                                             MainActivity.checkapplylistt = p0.child(find!!.name!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
 
 
-                                                            MainActivity.checkapplylistt!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+ selectdatstr)
+                                                            MainActivity.checkapplylistt!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+"/" + selectdatstr)
 
                                                             ref.child("Account").child(find!!.name!!).child("Myapply").setValue(MainActivity.checkapplylistt)
 
@@ -331,7 +360,7 @@ class ApplyActivity : AppCompatActivity()
 
                                                             MainActivity.checkapplylist = p0.child(iddata!!.name!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
 
-                                                            MainActivity.checkapplylist!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+ selectdatstr)
+                                                            MainActivity.checkapplylist!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+"/" + selectdatstr)
 
                                                             ref.child("Account").child(iddata!!.name!!).child("Myapply").setValue(MainActivity.checkapplylist)
 
@@ -347,12 +376,9 @@ class ApplyActivity : AppCompatActivity()
 
                                                             if (selectdatstr.length > 7) {
 
-                                                                val cr = ChatRoomListData()
+                                                                val cr = ChatRoomListData(Apply_Textview_Subway.text.toString(),Apply_Spinner_PersonNum.selectedItem.toString(),selectdatstr,MainActivity.ChatRoomNum.toString(),"언행이 바른자가 미인을 얻는다.")
 
-                                                                cr.PersonNum = Apply_Spinner_PersonNum.selectedItem.toString()
-                                                                cr.Subway = Apply_Textview_Subway.text.toString()
-                                                                cr.MeetDate = selectdatstr
-                                                                cr.ChatRoomNum = MainActivity.ChatRoomNum
+
 
                                                                 Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ChatRoomList").setValue(cr)
                                                             }
@@ -377,8 +403,14 @@ class ApplyActivity : AppCompatActivity()
                                                                 override fun onDataChange(p0: DataSnapshot) {
 
                                                                     for (appleSnapshot in p0.getChildren()) {
-                                                                        appleSnapshot.getRef().removeValue()
-                                                                        Log.d("aaaaz", "삭제")
+
+                                                                        if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
+
+                                                                            appleSnapshot.getRef().removeValue()
+                                                                            Log.d("aaaaz", "삭제")
+
+
+                                                                        }
                                                                     }
 
                                                                 }
@@ -393,9 +425,15 @@ class ApplyActivity : AppCompatActivity()
 
                                                                 override fun onDataChange(p0: DataSnapshot) {
 
+
                                                                     for (appleSnapshot in p0.getChildren()) {
-                                                                        appleSnapshot.getRef().removeValue()
-                                                                        Log.d("aaaaz", "삭제1")
+
+                                                                        if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
+
+                                                                            appleSnapshot.getRef().removeValue()
+                                                                            Log.d("aaaaz", "삭제")
+
+                                                                        }
                                                                     }
 
                                                                 }
@@ -439,7 +477,7 @@ class ApplyActivity : AppCompatActivity()
 
                             })
 
-                        }
+
 
 
                         val it: Intent = Intent(this@ApplyActivity, LobbyActivity::class.java)
@@ -476,6 +514,10 @@ class ApplyActivity : AppCompatActivity()
                 {
                     Toast.makeText(this@ApplyActivity, "이미 지난 날짜입니다.",Toast.LENGTH_SHORT).show()
 
+                }
+                catch(e : NoSuchMethodException)
+                {
+                    Toast.makeText(this@ApplyActivity,"이미 선택된 날짜로 매칭정보가 이미 존재합니다.",Toast.LENGTH_LONG).show()
                 }
                 catch(e:Exception)
                 {

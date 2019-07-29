@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-
+                Mysex = p0.child("Account").child(user!!.uid).child("Sex").getValue(true).toString()
                 if(p0.child("Account").child(user!!.uid).child("Myapply").exists()) {
                     MainActivity.checkapplylist = p0.child("Account").child(user!!.uid).child("Myapply").getValue(CheckApplyListData::class.java)!!
                     Log.d("checkcheck", checkapplylist!!.checklist!!.size.toString())
@@ -167,7 +167,69 @@ class MainActivity : AppCompatActivity() {
                     MainActivity.checkapplylist!!.checklist!!.removeAt(0)
                 }
 
+                if(MainActivity.checkapplylist!!.checklist!!.size>1)
+                {
+                    for ( i in 1..MainActivity.checkapplylist!!.checklist!!.size-1)
+                    //1부터인 이유 = 0번째는 "초기화"
+                    {
+                        //이미지난 매칭정보가 존재할 경우
 
+
+                        var s1 = MainActivity.checkapplylist!!.checklist!![i].split("/")[0]
+                        var s2 = MainActivity.checkapplylist!!.checklist!![i].split("/")[1]
+                        var s3 = MainActivity.checkapplylist!!.checklist!![i].split("/")[2]
+
+                        Log.d("ccaa",s1+s2+s3)
+
+                        val today = Date()
+                        var strdate: String? = null
+
+                        var format1: SimpleDateFormat? = null
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            format1 = SimpleDateFormat("yyyy-MM-dd")
+
+                            strdate = format1.format(today)
+                            Log.d("zczc", format1!!.format(today))
+
+                        }
+
+
+                        Log.d("ccaa1",s3+strdate)
+                        if(s3.compareTo(strdate!!)<0)
+                        {
+                            Log.d("ccaa2",s3+strdate+user!!.uid)
+
+
+                            val delquery: Query = myRef.child("Apply").child("SubwayStation").child(s1)
+                                    .child(s2).orderByChild("name").equalTo(user!!.uid)
+
+
+                            delquery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onCancelled(p0: DatabaseError) {
+                                }
+
+                                override fun onDataChange(p0: DataSnapshot) {
+
+                                    for (appleSnapshot in p0.getChildren()) {
+                                        appleSnapshot.getRef().removeValue()
+                                        Log.d("aaaaz", "삭제")
+
+                                        MainActivity.checkapplylist!!.checklist!!.removeAt(i)
+                                        myRef.child("Account").child(user!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
+
+
+                                    }
+
+                                }
+                            })
+                        }
+
+
+
+
+
+                    }
+                }
 
 
                if(str==null)
@@ -180,108 +242,100 @@ class MainActivity : AppCompatActivity() {
                    Log.d("zczc","계정이없음")
                    DirectSignUp()
                }
-                else if (p0.child("Account").child(str).exists()&&p0.child("Account").child(str).child("ChatNum").exists())
+
+                else if (p0.child("Account").child(str).exists() && p0.child("Account").child(str).child("ChatNum").exists())
                 {
 
                     //아이디가 존재할 경우 && 매칭상대가 존재할 경우
 
 
+
                     crd = p0.child("Account").child(str).child("ChatNum").getValue(ChatRoomData::class.java)!!
+                    if(crd!!.ChatRoom.size>0) {
+                        for (i in 0..crd!!.ChatRoom.size - 1) {
 
-                    for(i in 0..crd!!.ChatRoom.size-1 )
-                    {
-
-                        Log.d("matchhh", "gogo")
-                        MainActivity.ChatRoomNum = crd!!.ChatRoom[i]
-                        var strr = MainActivity.ChatRoomNum
+                            Log.d("matchhh", "gogo")
+                            MainActivity.ChatRoomNum = crd!!.ChatRoom[i]
+                            var strr = MainActivity.ChatRoomNum
 
 
-                        val today = Date()
-                        var strdate : String? = null
+                            val today = Date()
+                            var strdate: String? = null
 
-                        var format1 : SimpleDateFormat? = null
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            format1 = SimpleDateFormat("yyyy-MM-dd")
+                            var format1: SimpleDateFormat? = null
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                format1 = SimpleDateFormat("yyyy-MM-dd")
 
-                            strdate = format1.format(today)
-                            Log.d("zczc",format1!!.format(today))
+                                strdate = format1.format(today)
+                                Log.d("zczc", format1!!.format(today))
 
-                        }
+                            }
 
-                        if(p0.child("Chat").child(ChatRoomNum!!).exists())
-                        {
-                            //이미 지난 채팅방이 존재할 경우 삭제
+                            if (p0.child("Chat").child(ChatRoomNum!!).exists()) {
+                                //이미 지난 채팅방이 존재할 경우 삭제
 
-                            if(p0.child("Chat").child(ChatRoomNum!!).child("Info").child("ChatRoomList").child("meetDate").getValue(true).toString().compareTo(strdate!!)<0)
-                            {
-                                myRef.child("Chat").child(ChatRoomNum!!).removeValue()
+                                if (p0.child("Chat").child(ChatRoomNum!!).child("Info").child("ChatRoomList").child("meetDate").getValue(true).toString().compareTo(strdate!!) < 0) {
+                                    myRef.child("Chat").child(ChatRoomNum!!).removeValue()
+
+                                    strr = strr!!.replace(str, "")
+                                    Myuid = str
+                                    Log.d("cancellll", "zz지워짐" + strr + "/" + Myuid)
+
+
+
+                                    crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
+                                    for (i in 0..crdd!!.Token.size - 1) {
+                                        crdd!!.Token.remove(p0.child("Account").child(Myuid!!).child("fcmToken").getValue(true))
+                                    }
+                                    for (i in 0..crdd!!.ChatRoom.size - 1) {
+                                        crdd!!.ChatRoom.remove(ChatRoomNum!!)
+                                    }
+
+                                    for (i in 0..crd!!.Token.size - 1) {
+                                        crd!!.Token.remove(p0.child("Account").child(strr!!).child("fcmToken").getValue(true))
+                                    }
+                                    for (i in 0..crd!!.ChatRoom.size - 1) {
+                                        crd!!.ChatRoom.remove(ChatRoomNum!!)
+                                    }
+
+
+                                    myRef.child("Account").child(Myuid!!).child("ChatNum").setValue(crd)
+                                    myRef.child("Account").child(strr).child("ChatNum").setValue(crdd)
+                                    ChatRoomNum = null
+
+                                } else {
+                                    strr = strr!!.replace(str, "")
+                                    Myuid = str
+
+
+                                }
+
+
+                            } else {
 
                                 strr = strr!!.replace(str, "")
                                 Myuid = str
-                                Log.d("cancellll","zz지워짐"+strr+"/"+Myuid)
-
+                                Log.d("cancellll", "zz지워짐" + strr + "/" + Myuid)
 
 
                                 crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
-                                for(i in 0.. crdd!!.Token.size-1) {
-                                    crdd!!.Token.remove(p0.child("Account").child(Myuid!!).child("fcmToken").getValue(true))
-                                }
-                                for(i in 0..crdd!!.ChatRoom.size-1) {
-                                    crdd!!.ChatRoom.remove(ChatRoomNum!!)
-                                }
 
-                                for(i in 0.. crd!!.Token.size-1) {
+                                crdd!!.Token.remove(p0.child("Account").child(Myuid!!).child("fcmToken").getValue(true))
+                                crdd!!.ChatRoom.remove(ChatRoomNum!!)
+
                                 crd!!.Token.remove(p0.child("Account").child(strr!!).child("fcmToken").getValue(true))
-                                }
-                                for(i in 0.. crd!!.ChatRoom.size-1) {
-                                    crd!!.ChatRoom.remove(ChatRoomNum!!)
-                                }
+                                crd!!.ChatRoom.remove(ChatRoomNum!!)
 
 
                                 myRef.child("Account").child(Myuid!!).child("ChatNum").setValue(crd)
                                 myRef.child("Account").child(strr).child("ChatNum").setValue(crdd)
-                                ChatRoomNum=null
-
-                            }
-                            else
-                            {
-                                strr = strr!!.replace(str, "")
-                                Myuid = str
-
+                                ChatRoomNum = null
 
 
                             }
 
-
-
-
                         }
-                        else
-                        {
-
-                            strr = strr!!.replace(str, "")
-                            Myuid = str
-                            Log.d("cancellll","zz지워짐"+strr+"/"+Myuid)
-
-
-                            crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
-
-                            crdd!!.Token.remove(p0.child("Account").child(Myuid!!).child("fcmToken").getValue(true))
-                            crdd!!.ChatRoom.remove(ChatRoomNum!!)
-
-                            crd!!.Token.remove(p0.child("Account").child(strr!!).child("fcmToken").getValue(true))
-                            crd!!.ChatRoom.remove(ChatRoomNum!!)
-
-
-                            myRef.child("Account").child(Myuid!!).child("ChatNum").setValue(crd)
-                            myRef.child("Account").child(strr).child("ChatNum").setValue(crdd)
-                            ChatRoomNum=null
-
-
-                        }
-
                     }
-
 
 
                     val intent = Intent(this@MainActivity, LobbyActivity::class.java)
@@ -390,6 +444,7 @@ class MainActivity : AppCompatActivity() {
         var ChatRoomNum : String? = null
         var Token : String? = null
         var Myuid : String? = null
+        var Mysex : String? = null
         var crd  :ChatRoomData? = ChatRoomData()
         var crdtemp  :ChatRoomData? = ChatRoomData()
         var checkapplylist : CheckApplyListData? = CheckApplyListData()

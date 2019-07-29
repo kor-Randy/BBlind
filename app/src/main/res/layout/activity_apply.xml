@@ -22,21 +22,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ToggleButton
-                    android:id="@+id/Apply_Toggle_Sex"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:checked="false"
-                    android:textOff="Man"
-                    android:textOn="Woman"
-                    android:textSize="8sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 

@@ -59,8 +59,9 @@ class Chat : AppCompatActivity(), View.OnClickListener {
     private var chatdata : ChatData? = null
 
     private val fcmtoken : String? = null
-
+    var NowChatRoomList : ChatRoomListData = ChatRoomListData()
     val ref : DatabaseReference = database.reference
+    var temp : String? = null
 
 
 
@@ -107,20 +108,47 @@ class Chat : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-       // mEdtMessage = edit_message as EditText
+        // mEdtMessage = edit_message as EditText
         btn_send.setOnClickListener(this)
 
-      //  mBtnGoogleSignIn = btn_google_signin as SignInButton
-      //  mBtnGoogleSignOut = btn_google_signout as Button
+        //  mBtnGoogleSignIn = btn_google_signin as SignInButton
+        //  mBtnGoogleSignOut = btn_google_signout as Button
 //        mBtnGoogleSignIn!!.setOnClickListener(this)
-     //   mBtnGoogleSignOut!!.setOnClickListener(this)
+        //   mBtnGoogleSignOut!!.setOnClickListener(this)
 
-     //   mTxtProfileInfo = txt_profile_info as TextView
-     //   mImgProfile = img_profile as ImageView
+        //   mTxtProfileInfo = txt_profile_info as TextView
+        //   mImgProfile = img_profile as ImageView
     }
 
     private fun initFirebaseDatabase() {
+        mFirebaseDatabase!!.getReference("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
 
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                NowChatRoomList = p0.getValue(ChatRoomListData::class.java)!!
+
+                Log.d("casd",NowChatRoomList!!.LastMsg+NowChatRoomList!!.Subway+NowChatRoomList!!.LastMsg)
+                if(MainActivity.Mysex=="Man") {
+                    temp = NowChatRoomList!!.ManMsg
+
+                }
+                else {
+                    temp = NowChatRoomList!!.WomanMsg
+                }
+
+                if(MainActivity.Mysex=="Man") {
+                    NowChatRoomList!!.WomanMsg = "0"
+
+                }
+                else {
+                    NowChatRoomList!!.ManMsg= "0"
+                }
+
+            }
+        })
         if(MainActivity.nowChatRoomNum!=null) {
             Log.d("checkk", MainActivity.nowChatRoomNum!!.toString())
             ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("message")
@@ -194,26 +222,26 @@ class Chat : AppCompatActivity(), View.OnClickListener {
 
         if (user == null) {
             // 비 로그인 상태 (메시지를 전송할 수 없다.)
-           // mBtnGoogleSignIn!!.visibility = View.VISIBLE
-          //  mBtnGoogleSignOut!!.visibility = View.GONE
-           // mTxtProfileInfo!!.visibility = View.GONE
-           // mImgProfile!!.visibility = View.GONE
+            // mBtnGoogleSignIn!!.visibility = View.VISIBLE
+            //  mBtnGoogleSignOut!!.visibility = View.GONE
+            // mTxtProfileInfo!!.visibility = View.GONE
+            // mImgProfile!!.visibility = View.GONE
             btn_send.setVisibility(View.GONE)
             mAdapter!!.setEmail(null)
             mAdapter!!.notifyDataSetChanged()
         } else {
             // 로그인 상태
-           // mBtnGoogleSignIn!!.visibility = View.GONE
-           // mBtnGoogleSignOut!!.visibility = View.VISIBLE
+            // mBtnGoogleSignIn!!.visibility = View.GONE
+            // mBtnGoogleSignOut!!.visibility = View.VISIBLE
             //mTxtProfileInfo!!.visibility = View.VISIBLE
-           // mImgProfile!!.visibility = View.VISIBLE
+            // mImgProfile!!.visibility = View.VISIBLE
             btn_send.setVisibility(View.VISIBLE)
 
             userName = user!!.displayName // 채팅에 사용 될 닉네임 설정
             val email = user!!.uid
             val profile = StringBuilder()
             profile.append(userName).append("\n").append(user!!.uid)
-          //  mTxtProfileInfo!!.text = profile
+            //  mTxtProfileInfo!!.text = profile
             mAdapter!!.setEmail(user!!.uid)
             mAdapter!!.notifyDataSetChanged()
 
@@ -222,7 +250,7 @@ class Chat : AppCompatActivity(), View.OnClickListener {
             userData.userEmailID = user!!.uid
             ref.child(user!!.uid).child("fcmToken").addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                 }
+                }
 
                 override fun onDataChange(p0: DataSnapshot) {
                     userData.fcmToken = p0.getValue(true).toString()
@@ -337,8 +365,9 @@ class Chat : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
+
         when (v) {
-           btn_send -> {
+            btn_send -> {
                 val message = edit_message.text.toString()
                 if (!TextUtils.isEmpty(message)) {
                     edit_message!!.setText("")
@@ -348,11 +377,34 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                     chatData.time = System.currentTimeMillis()
                     chatData.userName = mAuth!!.currentUser!!.uid // 사용자 uid
                     Log.d("dedede","ChatRoomNum = "+MainActivity.nowChatRoomNum)
-                   ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("message").push().setValue(chatData)
-
-
+                    ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("message").push().setValue(chatData)
 
                     sendPostToFCM(message)
+
+
+
+
+                    Log.d("casd",NowChatRoomList.toString())
+
+
+                    if(MainActivity.Mysex=="Man") {
+                        Log.d("casd",temp + " "+ (Integer.parseInt(temp)+1))
+
+                        NowChatRoomList!!.ManMsg = (Integer.parseInt(temp)+1).toString()
+
+                    }
+                    else {
+                        NowChatRoomList!!.WomanMsg = (Integer.parseInt(temp)+1).toString()
+
+                    }
+
+                    NowChatRoomList!!.LastMsg = message
+
+
+                    ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").setValue(NowChatRoomList)
+
+
+
 
                 }
             }

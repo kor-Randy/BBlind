@@ -150,9 +150,9 @@ class Account : AppCompatActivity()
             else
             {
                 if (Account_Toggle_Boy.isChecked())
-                    sex = "Boy"
+                    sex = "Man"
                 else
-                    sex = "Girl"
+                    sex = "Woman"
 
                 val crd  = ChatRoomData()
 

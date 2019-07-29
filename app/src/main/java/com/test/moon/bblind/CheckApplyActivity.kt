@@ -19,8 +19,8 @@ class CheckApplyActivity :AppCompatActivity()
     var stringdata :ArrayList<CheckString>?= ArrayList<CheckString>()
     val database : FirebaseDatabase = FirebaseDatabase.getInstance()
 
-    var s1 : String? = null
-    var s2 : String? = null
+    var s1 : ArrayList<String> = ArrayList<String>()
+    var s2 : ArrayList<String> = ArrayList<String>()
     var v0 : String? = null
     var v1 : String? = null
     var v2 : String? = null
@@ -43,18 +43,24 @@ class CheckApplyActivity :AppCompatActivity()
 
       lv  = findViewById(R.id.check_lv)
 
+        s1.add("check")
+        s2.add("check")
+
+        for ( i in 1..MainActivity.checkapplylist!!.checklist!!.size-1)
+            //1부터인 이유 = 0번째는 "초기화"
+            {
+
+                Log.d("checkcheck",i.toString())
 
 
-        for ( i in 0..MainActivity.checkapplylist!!.checklist!!.size-1)
-        {
 
-            Log.d("checkcheck",i.toString())
-
-            s1 = MainActivity.checkapplylist!!.checklist!![i].split("/")[0]
-            s2 = MainActivity.checkapplylist!!.checklist!![i].split("/")[1]
+                s1.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[0])
+                s2.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[1])
 
 
-            ref.child("Apply").child("SubwayStation").child(s1!!).child(s2!!).orderByChild("name").equalTo(MainActivity.Myuid!!).addListenerForSingleValueEvent(object: ValueEventListener {
+            Log.d("checkcheck111",s1.toString()+s2)
+
+            ref.child("Apply").child("SubwayStation").child(s1[i]).child(s2[i]).orderByChild("name").equalTo(MainActivity.Myuid!!).addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
 
 
@@ -89,7 +95,7 @@ class CheckApplyActivity :AppCompatActivity()
                     v7 =  v7!!.split("=")[1]
 
 
-                    var cc : CheckString = CheckString(s1!!,s2!!,v1!!,v2!!)
+                    var cc : CheckString = CheckString(s1[i],s2[i],v1!!,v2!!)
 
                     stringdata!!.add(cc)
 

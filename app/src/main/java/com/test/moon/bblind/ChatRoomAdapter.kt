@@ -66,7 +66,11 @@ class ChatRoomAdapter(Data: ArrayList<ChatRoomListData>) : BaseAdapter() {
         NoticeDataPersonNum.setText(chatRoomListData[position].PersonNum)
         NoticeDataTitle.setText(chatRoomListData[position].Subway)
         NoticeLastMsg.setText(chatRoomListData[position].LastMsg)//change
-        NoticeCountMsg.setText(chatRoomListData[position].CountMsg.toString())//change
+        if(MainActivity.Mysex=="Man")
+        NoticeCountMsg.setText(chatRoomListData[position].WomanMsg.toString())//change
+        else
+            NoticeCountMsg.setText(chatRoomListData[position].ManMsg.toString())//change
+
         Log.d("aaaaz",""+NoticeDataCount.text +"  "+ NoticeDataPersonNum.text+NoticeDataTitle.text)
         return convertView!!
     }

@@ -74,7 +74,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
         Toast.makeText(context,"Restored",Toast.LENGTH_LONG).show()
     }
     override fun onBillingInitialized() {
-        Toast.makeText(context,"Initialized",Toast.LENGTH_LONG).show()
+       Log.d("BillingInitialized","Initialized")
 
     }
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
