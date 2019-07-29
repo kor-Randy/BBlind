@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="80dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/heart2"
-        android:background="@drawable/heart2"
         android:layout_width="0dp"
-        app:layout_constraintWidth_percent="0.2"
+        android:layout_height="match_parent"
+        android:background="@drawable/heart4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/name"
-        android:layout_height="match_parent" />
+        app:layout_constraintWidth_percent="0.2" />
     <TextView
         android:id="@+id/name"
+        android:text="  하트 50"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:gravity="center_vertical"
         android:layout_width="0dp"
         app:layout_constraintWidth_percent="0.4"
         app:layout_constraintLeft_toRightOf="@+id/heart2"
@@ -21,6 +26,11 @@
         android:layout_height="match_parent" />
     <TextView
         android:id ="@+id/price"
+        android:text="  8000원"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:gravity="center_vertical"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/name"
         android:layout_width="0dp"

@@ -1,15 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayout01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <ImageButton
-        android:id="@+id/btn"
+<LinearLayout android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="500dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"/>
+    <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"/>
+        <ToggleButton
+            android:id="@+id/childbtn"
+            android:text = "유아"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"/>
+        <ToggleButton
+            android:id="@+id/adultbtn"
+            android:text="성인"
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"/>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"/>
+    <ImageButton
+        android:layout_weight="0.6"
+        android:id="@+id/btn"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
         android:layout_centerInParent="true"
-        android:background="@drawable/roullet2"></ImageButton>
 
-</RelativeLayout>
+        android:background="@drawable/roullet2">
+
+    </ImageButton>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"/>
+</LinearLayout>
