@@ -81,6 +81,10 @@ class Chat : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 
 
     private fun initViews() {
@@ -146,6 +150,8 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                 else {
                     NowChatRoomList!!.ManMsg= "0"
                 }
+
+                mFirebaseDatabase!!.getReference("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").setValue(NowChatRoomList);
 
             }
         })

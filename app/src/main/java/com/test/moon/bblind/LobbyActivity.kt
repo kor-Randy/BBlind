@@ -84,43 +84,19 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         mBtnSignOut.setOnClickListener {
 
-            var params = TextTemplate.newBuilder("안뇽",
-            LinkObject.newBuilder().setWebUrl("https://developers.kakao.com").setMobileWebUrl("https://developers.kakao.com").build()).setButtonTitle("수상한 친구 만들러가기").build()
 
-           var serverCallbackArgs  = HashMap<String, String>();
-           var aa : Map<Any,Any> = HashMap<Any,Any>()
+            mBtnSignOut.setOnClickListener {
 
-            serverCallbackArgs.put("user_id", MainActivity.Myuid!!);
 
-            var aaa  = object : ResponseCallback<KakaoLinkResponse>(){
-                override fun onSuccess(result: KakaoLinkResponse?) {
-
-                    Log.d("ststst","성공")
-
-                }
-
-                override fun onFailure(errorResult: ErrorResult?) {
-
-                }
 
             }
 
-            KakaoLinkService.getInstance().sendDefault(this, params, serverCallbackArgs,aaa)
-
-
-
-
-            /* UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
-                 override fun onCompleteLogout() {
-                     FirebaseAuth.getInstance().signOut()
-
-                     //val handler = Handler(Looper.getMainLooper())
-                     //handler.post { updateUI() }
-                 }
-             })*/
         }
 
     }
+
+
+
 
     override fun onBackPressed() {
         val activity = MainActivity.activity as MainActivity
@@ -151,6 +127,40 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
             Toast.makeText(this,"자주묻는질문",Toast.LENGTH_LONG).show()
 
         } else if (eid == R.id.Nav_Recommend) {
+            var params = TextTemplate.newBuilder("추천인 아이디는 "+MainActivity.Myuid!!+" 입니다.",
+                    LinkObject.newBuilder().setAndroidExecutionParams("https://play.google.com/store/apps/details?id=com.test.moon.bblind").build()).setButtonTitle("수상한 친구 만들러가기").build()
+
+            var serverCallbackArgs  = HashMap<String, String>();
+            var aa : Map<Any,Any> = HashMap<Any,Any>()
+
+            serverCallbackArgs.put("user_id", MainActivity.Myuid!!);
+
+            var aaa  = object : ResponseCallback<KakaoLinkResponse>(){
+                override fun onSuccess(result: KakaoLinkResponse?) {
+
+                    Log.d("ststst","성공")
+
+                }
+
+                override fun onFailure(errorResult: ErrorResult?) {
+
+                }
+
+            }
+
+            KakaoLinkService.getInstance().sendDefault(this, params, serverCallbackArgs,aaa)
+
+
+
+
+            /* UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
+                 override fun onCompleteLogout() {
+                     FirebaseAuth.getInstance().signOut()
+
+                     //val handler = Handler(Looper.getMainLooper())
+                     //handler.post { updateUI() }
+                 }
+             })*/
             Toast.makeText(this,"추천인코드적기",Toast.LENGTH_LONG).show()
         }
 

@@ -41,33 +41,51 @@ class ChatRoom : Fragment() {
 
         Log.d("aaaaz : crdtemp",MainActivity.crdtemp!!.ChatRoom.size.toString())
 
-        ref.child("Chat").addListenerForSingleValueEvent(object: ValueEventListener {
+        ref.child("Chat").addChildEventListener(object: ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot) {
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
 
-                for (i in 0..MainActivity.crd!!.ChatRoom.size - 1) {
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+              }
 
-                    cd = p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").getValue(ChatRoomListData::class.java) as ChatRoomListData
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+           }
 
-                    al.add(cd!!)
+            override fun onChildRemoved(p0: DataSnapshot) {
 
-                    for(i in 0..al.size-1)
-                    {
-                        if(!all.contains(al.get(i)))
-                        {
-                            all.add(al.get(i))
-                        }
-                        else
-                        {
-                            Log.d("aaaaz","존재해서 안더함")
+            }
+        })
+
+            ref.child("Chat").addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+
+                    al.removeAll(al);
+
+                    for (i in 0..MainActivity.crd!!.ChatRoom.size - 1) {
+
+
+                        cd = p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").getValue(ChatRoomListData::class.java) as ChatRoomListData
+
+                        al.add(cd!!)
+
+                        for (i in 0..al.size - 1) {
+                            if (!all.contains(al.get(i))) {
+                                all.add(al.get(i))
+                            } else {
+                                Log.d("aaaaz", "존재해서 안더함")
+                            }
                         }
                     }
-
-                    Log.d("aaaaz : al",all.size.toString())
-                    Log.d("aaaaz : all",all.size.toString())
+                    Log.d("aaaaz : al", all.size.toString())
+                    Log.d("aaaaz : all", all.size.toString())
                     var adap = ChatRoomAdapter(all)
 
                     adap.notifyDataSetChanged()
@@ -78,8 +96,9 @@ class ChatRoom : Fragment() {
 
                 }
 
-            }
-        })
+
+            })
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
