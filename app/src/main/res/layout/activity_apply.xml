@@ -233,6 +233,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:backgroundTint="#0052A4"
                             android:onClick="OpenSubwayPopup"
                             android:text="1호선" />
 
@@ -242,7 +243,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
-
+                            android:backgroundTint="#009D3E"
                             android:text="2호선" />
 
                         <Button
@@ -251,7 +252,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
-
+                            android:backgroundTint="#EF7C1C"
                             android:text="3호선" />
 
                     </LinearLayout>
@@ -267,7 +268,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
-
+                            android:backgroundTint="#00A5DE"
                             android:text="4호선" />
 
                         <Button
@@ -276,7 +277,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
-
+                            android:backgroundTint="#996CAC"
                             android:text="5호선" />
 
                         <Button
@@ -285,7 +286,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
-
+                            android:backgroundTint="#CD7C2F"
                             android:text="6호선" />
                     </LinearLayout>
 
@@ -300,7 +301,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
-
+                            android:backgroundTint="#747F00"
                             android:text="7호선" />
 
                         <Button
@@ -309,7 +310,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
-
+                            android:backgroundTint="#BDB092	"
                             android:text="9호선" />
 
                         <Button
@@ -318,7 +319,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
-
+                            android:backgroundTint="#EA545D	"
                             android:text="8호선" />
                     </LinearLayout>
 
@@ -333,6 +334,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
+                            android:backgroundTint="#77C4A3"
                             android:text="경·중선" />
 
                         <Button
@@ -341,6 +343,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
+                            android:backgroundTint="#7CA8D5"
                             android:text="인천1호선" />
 
                         <Button
@@ -349,6 +352,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
+                            android:backgroundTint="#ED8B00"
                             android:text="인천2호선" />
                     </LinearLayout>
 
