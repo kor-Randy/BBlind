@@ -138,7 +138,7 @@ class ChatAdapter(context: Context, resource: Int) : ArrayAdapter<ChatData>(cont
 
     private inner class ViewHolderAnother {
 
-        private var mImgProfile: ImageView? = null
+       //private var mImgProfile: ImageView? = null
 
         private var mTxtUserName: TextView? = null
 
@@ -149,7 +149,7 @@ class ChatAdapter(context: Context, resource: Int) : ArrayAdapter<ChatData>(cont
 
         fun bindView(convertView: View) {
 
-            mImgProfile = convertView.findViewById(R.id.img_profile) as ImageView
+            //mImgProfile = convertView.findViewById(R.id.img_profile) as ImageView
 
             mTxtUserName = convertView.findViewById(R.id.txt_userName) as TextView
 

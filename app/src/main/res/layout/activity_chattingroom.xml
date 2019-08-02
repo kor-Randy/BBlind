@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,26 +14,34 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="#ffffff"
+        android:dividerHeight="0px"
+        android:divider="#ffffff"
         android:padding="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/darker_gray"
+        android:background="#fffaae"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edit_message"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
 
         <Button
             android:id="@+id/btn_send"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="SEND"/>
+            android:layout_weight="0.3"
+            android:fontFamily="@font/bmx"
+            android:textSize="20sp"
+
+            android:background="@android:color/holo_orange_dark"
+            android:text="전송" />
 
     </LinearLayout>
 </LinearLayout>
