@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     val database : FirebaseDatabase? = FirebaseDatabase.getInstance()
     val myRef : DatabaseReference = database!!.reference
     var auth : FirebaseAuth?=null
+    var myuid : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -64,6 +65,24 @@ class MainActivity : AppCompatActivity() {
 
         loginButton = findViewById<View>(R.id.login_button) as LoginButton
 
+        auth = FirebaseAuth.getInstance()
+        myRef.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                if(p0.child("Account").child(auth!!.currentUser!!.uid).exists())
+                {
+                    myuid = auth!!.currentUser!!.uid
+                }
+                else
+                {
+                    myuid = null
+                }
+                updateUI()
+            }
+        })
 
 
         Session.getCurrentSession().addCallback(KakaoSessionCallback())
@@ -72,21 +91,23 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         Toast.makeText(this,"MainActicity",Toast.LENGTH_LONG).show()
-        updateUI()
     }
 
     /**
      * Update UI based on Firebase's current user. Show Login Button if not logged in.
      */
     private fun updateUI() {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
+        if (!myuid.equals(null)) {
             loginButton.visibility = View.INVISIBLE
-            binding!!.setCurrentUser(currentUser)
+            binding!!.setCurrentUser(auth!!.currentUser)
+
+
             /**
              * SHOW LOGO FOR 2SEC
              */
-            DirectLobby(currentUser.uid)
+
+
+            DirectLobby(myuid!!)
             /*if (currentUser.photoUrl != null) {
                 Glide.with(this)
                         .load(currentUser.photoUrl)
@@ -156,9 +177,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                Mysex = p0.child("Account").child(user!!.uid).child("Sex").getValue(true).toString()
-                if(p0.child("Account").child(user!!.uid).child("Myapply").exists()) {
-                    MainActivity.checkapplylist = p0.child("Account").child(user!!.uid).child("Myapply").getValue(CheckApplyListData::class.java)!!
+
+                Mysex = p0.child("Account").child(str).child("Sex").getValue(true).toString()
+
+                if(p0.child("Account").child(str).child("Myapply").exists()) {
+                    MainActivity.checkapplylist = p0.child("Account").child(str).child("Myapply").getValue(CheckApplyListData::class.java)!!
                     Log.d("checkcheck", checkapplylist!!.checklist!!.size.toString())
                 }
                 else
@@ -197,11 +220,11 @@ class MainActivity : AppCompatActivity() {
                         Log.d("ccaa1",s3+strdate)
                         if(s3.compareTo(strdate!!)<0)
                         {
-                            Log.d("ccaa2",s3+strdate+user!!.uid)
+                            Log.d("ccaa2",s3+strdate+str)
 
 
                             val delquery: Query = myRef.child("Apply").child("SubwayStation").child(s1)
-                                    .child(s2).orderByChild("name").equalTo(user!!.uid)
+                                    .child(s2).orderByChild("name").equalTo(str)
 
 
                             delquery.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -215,7 +238,7 @@ class MainActivity : AppCompatActivity() {
                                         Log.d("aaaaz", "삭제")
 
                                         MainActivity.checkapplylist!!.checklist!!.removeAt(i)
-                                        myRef.child("Account").child(user!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
+                                        myRef.child("Account").child(str).child("Myapply").setValue(MainActivity.checkapplylist)
 
 
                                     }
@@ -398,23 +421,19 @@ class MainActivity : AppCompatActivity() {
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
 
-                       myRef.addListenerForSingleValueEvent(object: ValueEventListener {
-                           override fun onCancelled(p0: DatabaseError) {
-                              }
+                    myRef.addListenerForSingleValueEvent(object: ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError) {
+                        }
 
-                           override fun onDataChange(p0: DataSnapshot) {
+                        override fun onDataChange(p0: DataSnapshot) {
 
-                               if(p0.child("Account").child(auth!!.currentUser!!.uid).exists())
-                               {
-                                   DirectLobby(auth!!.currentUser!!.uid)
-                               }
-                                else
-                               {
-                                   DirectSignUp()
-                               }
-                           }
-                       })
-
+                            if (p0.child("Account").child(auth!!.currentUser!!.uid).exists()) {
+                                DirectLobby(auth!!.currentUser!!.uid)
+                            } else {
+                                DirectSignUp()
+                            }
+                        }
+                    })
 
 
 
@@ -453,6 +472,7 @@ class MainActivity : AppCompatActivity() {
         var crdd  :ChatRoomData? = ChatRoomData()
         var nowChatRoomNum : String? = null
         var nowToken : String? = null
+        var nowAc : String? = null
 
     }
 

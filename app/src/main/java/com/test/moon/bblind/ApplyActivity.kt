@@ -26,6 +26,9 @@ import java.lang.Exception
 import kotlin.random.Random
 import kotlin.random.nextInt
 import com.google.firebase.database.DataSnapshot
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 import java.util.Date;
@@ -33,6 +36,9 @@ import java.util.Date;
 
 class ApplyActivity : AppCompatActivity()
 {
+    private val FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send"
+    private val SERVER_KEY = "AAAAghhryJU:APA91bE5FeyIHILMSGcWRgWY4hp43aQv9a5haGPMw2A5ZM0G6-102amS9gh-6YKLRRs4qAAKBE-dCBE7A1fnUjoEi3A6mZgrjVIGz-Y34x_yuOYk4fHSM_wT969p36N5oYgYobr3tyCq"
+
     var Match = false
     private var mAuth: FirebaseAuth? = null
     private var user : FirebaseUser? = null
@@ -41,7 +47,12 @@ class ApplyActivity : AppCompatActivity()
     var selectyear : Int? = null
     var selectmonth : Int? = null
     var selectday : Int? = null
+    val database : FirebaseDatabase = FirebaseDatabase.getInstance()
 
+    var OppositeToken : String? = null
+
+
+    val ref : DatabaseReference = database.reference
     @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -64,11 +75,7 @@ class ApplyActivity : AppCompatActivity()
         var find : IdData? = null
         var delme : IdData? = null
         var iddata : IdData? = null
-        val database : FirebaseDatabase = FirebaseDatabase.getInstance()
 
-
-
-        val ref : DatabaseReference = database.reference
         val Chatref : DatabaseReference = database.getReference("Chat")
         val Applyref : DatabaseReference = database.getReference("Apply")
 
@@ -327,7 +334,9 @@ class ApplyActivity : AppCompatActivity()
 
                                                                 MainActivity.crd!!.ChatRoom.add(MainActivity.ChatRoomNum!!)
                                                                 MainActivity.crd!!.Token.add(p0.child(find!!.name!!).child("fcmToken").getValue(true).toString())
+                                                                OppositeToken=p0.child(find!!.name!!).child("fcmToken").getValue(true).toString();
                                                                 //내꺼에 상대방꺼 저장
+
                                                             }
                                                             else
                                                             {
@@ -373,7 +382,6 @@ class ApplyActivity : AppCompatActivity()
 
 
 
-
                                                             if (selectdatstr.length > 7) {
 
                                                                 val cr = ChatRoomListData(Apply_Textview_Subway.text.toString(),Apply_Spinner_PersonNum.selectedItem.toString(),selectdatstr,MainActivity.ChatRoomNum.toString(),"언행이 바른자가 미인을 얻는다.")
@@ -386,6 +394,7 @@ class ApplyActivity : AppCompatActivity()
 
                                                             Chatref.child(MainActivity.ChatRoomNum.toString()).child("message").push().setValue(cd)
 
+                                                            sendPostToFCM()
 
 
 
@@ -563,7 +572,53 @@ class ApplyActivity : AppCompatActivity()
     }
 
 
+    private fun sendPostToFCM() {
+        ref.child("Account")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
 
+                        Log.d("checkkk", MainActivity.crd!!.Token.toString())
+
+                        Thread(object : Runnable {
+
+                            override fun run() {
+                                try {
+
+                                    // FMC 메시지 생성 start
+                                    val root = JSONObject()
+                                    val notification = JSONObject()
+                                    notification.put("body", "등록한 매칭이 성사되었습니다.")
+                                    notification.put("title", getString(R.string.app_name))
+                                    root.put("notification", notification)
+                                    root.put("to", OppositeToken)   // FMC 메시지 생성 end
+
+                                    val Url = URL(FCM_MESSAGE_URL)
+                                    val conn = Url.openConnection() as HttpURLConnection
+                                    conn.requestMethod = "POST"
+                                    conn.doOutput = true
+                                    conn.doInput = true
+                                    conn.addRequestProperty("Authorization", "key=$SERVER_KEY")
+                                    conn.setRequestProperty("Accept", "application/json")
+                                    conn.setRequestProperty("Content-type", "application/json")
+                                    val os = conn.outputStream
+                                    os.write(root.toString().toByteArray(charset("utf-8")))
+                                    os.flush()
+                                    conn.responseCode
+
+
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+
+                            }
+                        }).start()
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+
+                    }
+                })
+    }
 
     fun  OpenSubwayPopup(view: View) {
 

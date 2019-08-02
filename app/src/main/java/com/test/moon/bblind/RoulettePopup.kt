@@ -19,10 +19,13 @@ class RoulettePopup : Activity() {
 
 
         setContentView(R.layout.roulette_popup)
-        val text : TextView = findViewById(R.id.txtText)
+        val name : TextView = findViewById(R.id.Game_Name)
+        val ex : TextView = findViewById(R.id.Game_Explain)
         val intent = intent
         val gameName : String = intent.getStringExtra("gameName")
-        text.text = gameName
+        val gameExplain : String = intent.getStringExtra("gameExplain")
+        name.text = gameName
+        ex.text = gameExplain
 
     }
     public fun mOnClose(v : View){

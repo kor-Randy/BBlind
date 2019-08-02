@@ -71,7 +71,6 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         tabLayout = findViewById(R.id.tabs)
         tabLayout!!.setupWithViewPager(viewPager)
         setupTabIcons()
-        var mBtnSignOut  : Button = findViewById(R.id.btn_google_signout)
         Toast.makeText(this,"Hi",Toast.LENGTH_LONG).show()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if(currentUser != null)
@@ -82,16 +81,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         }else{Toast.makeText(this,"null",Toast.LENGTH_LONG).show()}
 
-        mBtnSignOut.setOnClickListener {
 
-
-            mBtnSignOut.setOnClickListener {
-
-
-
-            }
-
-        }
 
     }
 

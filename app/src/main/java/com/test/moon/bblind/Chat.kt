@@ -78,11 +78,13 @@ class Chat : AppCompatActivity(), View.OnClickListener {
         initFirebaseAuth()
         initValues()
         user = mAuth!!.currentUser
+        MainActivity.nowAc="Chat"
 
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
+        MainActivity.nowAc="Lobby"
         finish()
     }
 
@@ -101,14 +103,7 @@ class Chat : AppCompatActivity(), View.OnClickListener {
         mListView!!.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val chatData = mAdapter!!.getItem(position)
             if (!TextUtils.isEmpty(chatData.userName)) {
-                val editText = EditText(this)
-                AlertDialog.Builder(this)
-                        .setMessage(chatData.userName + " 님 에게 메시지 보내기")
-                        .setView(editText!!)
-                        .setPositiveButton("보내기") { dialog, which -> sendPostToFCM(editText.text.toString()) }
-                        .setNegativeButton("취소") { dialog, which ->
-                            // not thing..
-                        }.show()
+
             }
         }
 
@@ -131,30 +126,29 @@ class Chat : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-
+            if(MainActivity.nowAc.equals("Chat")) {
                 NowChatRoomList = p0.getValue(ChatRoomListData::class.java)!!
 
-                Log.d("casd",NowChatRoomList!!.LastMsg+NowChatRoomList!!.Subway+NowChatRoomList!!.LastMsg)
-                if(MainActivity.Mysex=="Man") {
+                Log.d("casd", NowChatRoomList!!.LastMsg + NowChatRoomList!!.Subway + NowChatRoomList!!.LastMsg)
+                if (MainActivity.Mysex == "Man") {
                     temp = NowChatRoomList!!.ManMsg
 
-                }
-                else {
+                } else {
                     temp = NowChatRoomList!!.WomanMsg
                 }
 
-                if(MainActivity.Mysex=="Man") {
+                if (MainActivity.Mysex == "Man") {
                     NowChatRoomList!!.WomanMsg = "0"
 
-                }
-                else {
-                    NowChatRoomList!!.ManMsg= "0"
+                } else {
+                    NowChatRoomList!!.ManMsg = "0"
                 }
 
                 mFirebaseDatabase!!.getReference("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").setValue(NowChatRoomList);
-
+            }
             }
         })
+
         if(MainActivity.nowChatRoomNum!=null) {
             Log.d("checkk", MainActivity.nowChatRoomNum!!.toString())
             ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("message")
