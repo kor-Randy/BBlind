@@ -1,4 +1,5 @@
 package com.test.moon.bblind
+import android.app.Notification
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
@@ -17,6 +18,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     .setSmallIcon(R.mipmap.ic_launcher) // 알림 영역에 노출 될 아이콘.
                     .setContentTitle(getString(R.string.app_name)) // 알림 영역에 노출 될 타이틀
                     .setContentText(body) // Firebase Console 에서 사용자가 전달한 메시지내용
+                    .setDefaults(Notification.DEFAULT_VIBRATE)
 
             val notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext())
             notificationManagerCompat.notify(0x1001, notificationBuilder.build())

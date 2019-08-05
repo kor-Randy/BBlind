@@ -36,6 +36,7 @@ import com.kakao.util.exception.KakaoException
 import android.os.Handler
 import android.widget.Toast
 import com.android.volley.*
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_apply.*
 
@@ -434,6 +435,7 @@ class MainActivity : AppCompatActivity() {
                                 DirectLobby(auth!!.currentUser!!.uid)
                             } else {
                                 DirectSignUp()
+
                             }
                         }
                     })
@@ -461,6 +463,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
 
         var activity: Activity? = null
+        var Accountactivity : Activity? = null
         private val TAG = MainActivity::class.java.name
         var applyactivity : Activity? = null
         var ChatRoomNum : String? = null
