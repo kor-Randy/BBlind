@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    >
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -14,78 +16,33 @@
         app:layout_constraintTop_toTopOf="parent"
         >
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal">
+                android:layout_height="60dp"
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="인원"
-                    android:textSize="40sp" />
+                android:fontFamily="@font/bmx"
 
-                <Spinner
-                    android:id="@+id/Apply_Spinner_PersonNum"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                android:gravity="center"
+                android:text="미팅 신청"
+                android:textColor="#000000"
+                android:textSize="30sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#000000"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="평균나이"
-                    android:textSize="40sp" />
-
-                <Spinner
-                    android:id="@+id/Apply_Spinner_AverageAge"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="평균주량"
-                    android:textSize="40sp" />
-
-                <Spinner
-                    android:id="@+id/Apply_Spinner_Average_Drink"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -93,123 +50,154 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="만나는 날짜"
-                    android:textSize="30sp" />
+                    android:fontFamily="@font/bmx"
+                    android:gravity="center_vertical"
+                    android:text="  ⦁ 만나는 날짜"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
                 <Button
                     android:id="@+id/Apply_Date"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="날짜 설정"
-                    android:onClick="NoticeDate"
-                    android:gravity="center"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
 
+                    android:background="@android:drawable/editbox_background_normal"
+                    android:gravity="center"
+                    android:onClick="NoticeDate"
+                    android:text="날짜 설정" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="@android:drawable/editbox_background_normal"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/SampleBidYearText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="년"
+                    android:layout_width="333dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/bmx"
+                    android:text="2020.1.1"
+                    android:textColor="#000000"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/SampleBidMonthText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0"
                     android:gravity="right"
-                    android:text="월"
+
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/SampleBidDayText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0"
                     android:gravity="right"
-                    android:text="일"
+
                     android:textSize="20sp" />
+
+
+
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="만나는 시간"
-                    android:textSize="40sp" />
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
+                    android:text="  ⦁ 만나는 시간"
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
 
                     <Spinner
                         android:id="@+id/Apply_Spinner_Before_Time"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2" />
+                        android:layout_weight="0.4" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        android:layout_weight="0.2"
                         android:text="~"
+                        android:textColor="#000000"
+                        android:gravity="center"
                         android:textSize="40sp" />
 
                     <Spinner
                         android:id="@+id/Apply_Spinner_After_Time"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2" />
+                        android:layout_weight="0.4" />
                 </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
-                        android:gravity="center"
-                        android:text="만나는 장소"
-                        android:textSize="40sp" />
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/bmx"
+                        android:textColor="#000000"
+                        android:text="  ⦁ 만나는 장소"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/Apply_Textview_Subway"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="4"
+                        android:layout_weight="5"
                         android:text=""
+                        android:fontFamily="@font/bmx"
+                        android:textColor="#000000"
                         android:gravity="center"
                         android:textSize="20sp" />
 
@@ -220,6 +208,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
+
                     app:columnCount="1">
 
 
@@ -233,8 +222,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:backgroundTint="#0052A4"
                             android:onClick="OpenSubwayPopup"
+                            android:textStyle="bold"
                             android:text="1호선" />
 
                         <Button
@@ -244,6 +235,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#009D3E"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="2호선" />
 
                         <Button
@@ -253,6 +245,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#EF7C1C"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="3호선" />
 
                     </LinearLayout>
@@ -269,6 +262,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#00A5DE"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="4호선" />
 
                         <Button
@@ -278,6 +272,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#996CAC"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="5호선" />
 
                         <Button
@@ -287,6 +282,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#CD7C2F"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="6호선" />
                     </LinearLayout>
 
@@ -302,6 +298,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#747F00"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="7호선" />
 
                         <Button
@@ -311,6 +308,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#BDB092	"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="9호선" />
 
                         <Button
@@ -320,6 +318,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#EA545D	"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="8호선" />
                     </LinearLayout>
 
@@ -335,6 +334,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#77C4A3"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="경·중선" />
 
                         <Button
@@ -344,6 +344,7 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#7CA8D5"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="인천1호선" />
 
                         <Button
@@ -353,13 +354,100 @@
                             android:layout_weight="1"
                             android:onClick="OpenSubwayPopup"
                             android:backgroundTint="#ED8B00"
+                            android:background="@android:drawable/editbox_background_normal"
                             android:text="인천2호선" />
                     </LinearLayout>
 
                 </android.support.v7.widget.GridLayout>
+                <View
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#000000"/>
 
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
+                    android:text="  ⦁ 인원"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/Apply_Spinner_PersonNum"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/editbox_background_normal" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
+                    android:text="  ⦁ 평균나이"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/Apply_Spinner_AverageAge"
+                    android:background="@android:drawable/editbox_background_normal"
+                    android:layout_width="0dp"
+
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
+                    android:text="  ⦁ 평균주량"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/Apply_Spinner_Average_Drink"
+                    android:background="@android:drawable/editbox_background_normal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+
+
+
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -370,29 +458,39 @@
                     android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="30dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/bmx"
                     android:gravity="center"
                     android:text="우리를 5자로 소개하세요"
-                    android:textSize="35sp"
-                    android:layout_marginTop="30dp"/>
+                    android:textColor="#000000"
+                    android:textSize="35sp" />
 
                 <EditText
                     android:id="@+id/Apply_Edittext_Introduction"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="50dp"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:hint="또라이집합,사랑스러워"
-                    android:textSize="40sp"
+                    android:textSize="25sp"
                     android:gravity="center"
                     android:singleLine="true"
+                    android:background="#ffffff"
+                    android:dividerHeight="0px"
+                    android:divider="#ffffff"
                     android:nextFocusDown="@id/Apply_button_Notice"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="0.3"/>
 
                 <Button
                     android:id="@+id/Apply_button_Notice"
@@ -400,18 +498,29 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
-                    android:text="신청하기"
+                    android:background="@android:drawable/editbox_background_normal"
+                    android:fontFamily="@font/bmx"
+                    android:text="신청"
                     android:textSize="30sp" />
-
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="0.3"/>
                 <Button
                     android:id="@+id/Apply_button_Cancel"
+                    android:background="@android:drawable/editbox_background_normal"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="20dp"
 
                     android:layout_weight="1"
-                    android:text="취소하기"
+                    android:fontFamily="@font/bmx"
+                    android:text="취소"
                     android:textSize="30sp" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="0.3"/>
             </LinearLayout>
 
         </LinearLayout>

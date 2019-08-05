@@ -1,44 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="80dp"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="10dp"
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/Check_Subway"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="25sp"
-        android:layout_gravity="center"/>
+        android:layout_weight="0.5"
 
-    <TextView
-        android:id="@+id/Check_Date"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="25sp"
-        android:layout_gravity="center"
-        />
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/Check_Date"
+            android:gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="2019.4.25"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:fontFamily="@font/bmx"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/Check_Time"
+            android:gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="4:00"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:fontFamily="@font/bmx"
+            android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/Check_Time"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="25sp"
-        android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/Check_PersonNum"
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="25sp"
-        android:layout_gravity="center"/>
+        android:layout_weight="0.5"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Check_Subway"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="서울역"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:fontFamily="@font/bmx"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/Check_PersonNum"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="4명"
+            android:fontFamily="@font/bmx"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:layout_gravity="center"/>
+
+
+
+    </LinearLayout>
+
 </LinearLayout>

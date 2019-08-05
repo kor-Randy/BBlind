@@ -44,9 +44,9 @@ class CheckApplyActivity :AppCompatActivity()
         setContentView(R.layout.activity_check_apply)
 
 
-    MainActivity.nowAc="CheckApplyActivity"
+        MainActivity.nowAc="CheckApplyActivity"
 
-      lv  = findViewById(R.id.check_lv)
+        lv  = findViewById(R.id.check_lv)
 
 
 
@@ -56,16 +56,16 @@ class CheckApplyActivity :AppCompatActivity()
         s3.add("check")
 
         for ( i in 1..MainActivity.checkapplylist!!.checklist!!.size-1)
-            //1부터인 이유 = 0번째는 "초기화"
-            {
+        //1부터인 이유 = 0번째는 "초기화"
+        {
 
-                Log.d("checkcheck",i.toString())
+            Log.d("checkcheck",i.toString())
 
 
 
-                s1.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[0])
-                s2.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[1])
-                s3.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[2])
+            s1.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[0])
+            s2.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[1])
+            s3.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[2])
 
 
             Log.d("checkcheck111",s1.toString()+s2.toString()+s3.toString())
@@ -81,48 +81,48 @@ class CheckApplyActivity :AppCompatActivity()
 
 
 
-                        v0 = p0.getValue(true).toString().split("{")[2]
+                    v0 = p0.getValue(true).toString().split("{")[2]
 
-                        v1 = v0!!.split(",")[0]
-                        v2 = v0!!.split(",")[1]
-                        v3 = v0!!.split(",")[2]
-                        v4 = v0!!.split(",")[4]
-                        v5 = v0!!.split(",")[5]
-                        v6 = v0!!.split(",")[6]
-                        v7 = v0!!.split(",")[7]
-
-
-                        Log.d("checkcheck",
-                                v1 + v2 + v3 + v4 + v5 + v6 + v7
-                        )
-
-                        v1 = v1!!.split("=")[1]
-                        v2 = v2!!.split("=")[1]
-                        v3 = v3!!.split("=")[1]
-                        v4 = v4!!.split("=")[1]
-                        v5 = v5!!.split("=")[1]
-                        v6 = v6!!.split("=")[1]
-                        v7 = v7!!.split("=")[1]
+                    v1 = v0!!.split(",")[0]
+                    v2 = v0!!.split(",")[1]
+                    v3 = v0!!.split(",")[2]
+                    v4 = v0!!.split(",")[4]
+                    v5 = v0!!.split(",")[5]
+                    v6 = v0!!.split(",")[6]
+                    v7 = v0!!.split(",")[7]
 
 
-                        var cc: CheckString = CheckString(s1[i], s2[i], v1!!, v2!!)
+                    Log.d("checkcheck",
+                            v1 + v2 + v3 + v4 + v5 + v6 + v7
+                    )
 
-                        stringdata!!.add(cc)
+                    v1 = v1!!.split("=")[1]
+                    v2 = v2!!.split("=")[1]
+                    v3 = v3!!.split("=")[1]
+                    v4 = v4!!.split("=")[1]
+                    v5 = v5!!.split("=")[1]
+                    v6 = v6!!.split("=")[1]
+                    v7 = v7!!.split("=")[1]
 
-                        Log.d("checkcheck",
-                                v1 + " " + v2 + " " + v3 + " " + v4 + " " + v5 + " " + v6 + " " + v7
-                        )
 
-                        var adap: CheckApplyListAdapter = CheckApplyListAdapter(stringdata!!)
+                    var cc: CheckString = CheckString(s1[i], v1!!, v4!!+":00 ~ "+v5!!+":00", s2[i])
+
+                    stringdata!!.add(cc)
+
+                    Log.d("checkcheck",
+                            v1 + " " + v2 + " " + v3 + " " + v4 + " " + v5 + " " + v6 + " " + v7
+                    )
+
+                    var adap: CheckApplyListAdapter = CheckApplyListAdapter(stringdata!!)
 
 
-                        adap.notifyDataSetChanged()
+                    adap.notifyDataSetChanged()
 
-                        lv!!.adapter = adap
+                    lv!!.adapter = adap
 
-                        setListViewHeightBasedOnChildren(lv!!)
+                    setListViewHeightBasedOnChildren(lv!!)
 
-                        Log.d("checkcheck", lv!!.count.toString())
+                    Log.d("checkcheck", lv!!.count.toString())
 
                 }
             })
