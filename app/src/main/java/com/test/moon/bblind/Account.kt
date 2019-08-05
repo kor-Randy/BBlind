@@ -26,13 +26,26 @@ import android.telephony.PhoneNumberUtils
 import android.Manifest.permission.CALL_PHONE
 import android.Manifest.permission.CALL_PHONE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.annotation.NonNull
 import android.support.v4.app.ActivityCompat
+import android.view.Window
+import android.widget.ToggleButton
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.iid.FirebaseInstanceId
 
 
 class Account : AppCompatActivity()
 {
+    var firebaseanalytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+    var sf : SharedPreferences?  = null
+    var editor : SharedPreferences.Editor?  = null
+
+    var Matching : String? = null
+    var App : String? = null
+
+
+
 
 
 
@@ -40,6 +53,14 @@ class Account : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account)
+
+        MainActivity.Accountactivity = this
+
+        sf = getSharedPreferences("Alarm", 0)
+        editor = sf!!.edit();
+        editor!!.putString("Matching","false")
+        editor!!.putString("App","false")
+
 
         val id : Array<String> = arrayOf("id1","id2","id3")
         // val database : FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -117,6 +138,12 @@ class Account : AppCompatActivity()
         Account_Toggle_Girl.setChecked(false)
         Account_Radio_Student.setChecked(true)
 
+        Account_Toggle_Boy.setText("남자")
+        Account_Toggle_Boy.setTextOff("남자")
+        Account_Toggle_Boy.setTextOn("남자")
+        Account_Toggle_Girl.setText("여자")
+        Account_Toggle_Girl.setTextOff("여자")
+        Account_Toggle_Girl.setTextOn("여자")
         Account_Toggle_Boy.setOnClickListener(View.OnClickListener {
 
             if(Account_Toggle_Boy.isChecked())
@@ -171,7 +198,13 @@ class Account : AppCompatActivity()
                 else
                     myRef.child(currentUser!!.uid).child("isStudent").setValue("N")
 
+
+                firebaseanalytics!!.setUserProperty("MatchingAlarm", "true")
+                firebaseanalytics!!.setUserProperty("AppAlarm", "true")
+
+
                 i++
+                MainActivity.Myuid = currentUser!!.uid
                 DirectLobby()
             }
         })

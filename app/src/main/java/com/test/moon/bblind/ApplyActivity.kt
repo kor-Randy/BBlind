@@ -80,7 +80,6 @@ class ApplyActivity : AppCompatActivity()
         val Applyref : DatabaseReference = database.getReference("Apply")
 
 
-
         val keyboard : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         var personspinadapter = ArrayAdapter.createFromResource(this,R.array.person,R.layout.spinner_item)
         var agespinadapter = ArrayAdapter.createFromResource(this,R.array.age,R.layout.spinner_item)
@@ -186,6 +185,10 @@ class ApplyActivity : AppCompatActivity()
                     if(s4 == true)
                     {
                         throw NoSuchMethodException("Already Exist")
+                    }
+                    else if(Store.heart<10)
+                    {
+                        throw ReflectiveOperationException("Not Enough Heart")
                     }
                     else if(Apply_Edittext_Introduction.text.toString().length!=5)
                     {
@@ -336,121 +339,139 @@ class ApplyActivity : AppCompatActivity()
                                                                 MainActivity.crd!!.Token.add(p0.child(find!!.name!!).child("fcmToken").getValue(true).toString())
                                                                 OppositeToken=p0.child(find!!.name!!).child("fcmToken").getValue(true).toString();
                                                                 //내꺼에 상대방꺼 저장
+                                                                ref.child("Account").child(id!!).child("ChatNum").setValue(MainActivity.crd)
+
+                                                                if(!MainActivity.crdd!!.ChatRoom.contains(MainActivity.ChatRoomNum!!)) {
+
+                                                                    MainActivity.crdd!!.ChatRoom.add(MainActivity.ChatRoomNum!!)
+                                                                    MainActivity.crdd!!.Token.add(p0.child(id!!).child("fcmToken").getValue(true).toString())
+                                                                }
+                                                                ref.child("Account").child(find!!.name!!).child("ChatNum").setValue(MainActivity.crdd)
+
+
+
+
+
+                                                                MainActivity.checkapplylistt = p0.child(find!!.name!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
+
+
+                                                                MainActivity.checkapplylistt!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+"/" + selectdatstr)
+
+                                                                ref.child("Account").child(find!!.name!!).child("Myapply").setValue(MainActivity.checkapplylistt)
+
+
+
+
+
+                                                                MainActivity.checkapplylist = p0.child(iddata!!.name!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
+
+                                                                MainActivity.checkapplylist!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+"/" + selectdatstr)
+
+                                                                ref.child("Account").child(iddata!!.name!!).child("Myapply").setValue(MainActivity.checkapplylist)
+
+                                                                var cd: ChatData? = ChatData()
+
+                                                                cd!!.message = "언행이 바른자가 미인을 얻는다."
+                                                                cd!!.userName = "Notice"
+                                                                cd!!.time = System.currentTimeMillis()
+
+
+
+
+                                                                if (selectdatstr.length > 7) {
+
+                                                                    val cr = ChatRoomListData(Apply_Textview_Subway.text.toString(),Apply_Spinner_PersonNum.selectedItem.toString(),selectdatstr,MainActivity.ChatRoomNum.toString(),"언행이 바른자가 미인을 얻는다.")
+
+
+
+                                                                    Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ChatRoomList").setValue(cr)
+                                                                }
+
+
+                                                                Chatref.child(MainActivity.ChatRoomNum.toString()).child("message").push().setValue(cd)
+
+
+
+
+                                                                sendPostToFCM()
+
+                                                                val delquery: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
+                                                                        .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(id)
+
+                                                                delquery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                    override fun onCancelled(p0: DatabaseError) {
+                                                                    }
+
+                                                                    override fun onDataChange(p0: DataSnapshot) {
+
+                                                                        for (appleSnapshot in p0.getChildren()) {
+
+                                                                            if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
+
+                                                                                appleSnapshot.getRef().removeValue()
+                                                                                Log.d("aaaaz", "삭제")
+
+
+                                                                            }
+                                                                        }
+
+                                                                    }
+                                                                })
+
+                                                                val delquery1: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
+                                                                        .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(find!!.name)
+
+                                                                delquery1.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                    override fun onCancelled(p0: DatabaseError) {
+                                                                    }
+
+                                                                    override fun onDataChange(p0: DataSnapshot) {
+
+
+                                                                        for (appleSnapshot in p0.getChildren()) {
+
+                                                                            if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
+
+                                                                                appleSnapshot.getRef().removeValue()
+                                                                                Log.d("aaaaz", "삭제")
+
+                                                                            }
+                                                                        }
+
+                                                                    }
+                                                                })
+
+
+
+                                                                var findheart : Int = Integer.parseInt(p0.child(find!!.name!!).child("heart").getValue(true).toString())
+                                                                var myheart : Int = Integer.parseInt(p0.child(iddata!!.name!!).child("heart").getValue(true).toString())
+
+                                                                findheart -= 10
+                                                                myheart -= 10
+                                                                Log.d("hearttt","내꺼 : "+myheart.toString())
+                                                                Log.d("hearttt","상대꺼 : "+findheart.toString())
+
+                                                                database.getReference("Account").child(find!!.name!!).child("heart").setValue(findheart)
+
+                                                                database.getReference("Account").child(iddata!!.name!!).child("heart").setValue(myheart)
+
+
+
+                                                                Log.d("finddd", "매치는 트루 츠루")
+
+
+
+
+
 
                                                             }
                                                             else
                                                             {
-                                                                //이미 같은 채팅방이 존재함
+                                                                Log.d("hearttt","이미 같은사람과 매칭이 존재합니다.")
                                                             }
-
-                                                            ref.child("Account").child(id!!).child("ChatNum").setValue(MainActivity.crd)
-
-                                                            if(!MainActivity.crdd!!.ChatRoom.contains(MainActivity.ChatRoomNum!!)) {
-
-                                                                MainActivity.crdd!!.ChatRoom.add(MainActivity.ChatRoomNum!!)
-                                                                MainActivity.crdd!!.Token.add(p0.child(id!!).child("fcmToken").getValue(true).toString())
-                                                            }
-                                                            ref.child("Account").child(find!!.name!!).child("ChatNum").setValue(MainActivity.crdd)
-
-
-
-
-
-                                                            MainActivity.checkapplylistt = p0.child(find!!.name!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
-
-
-                                                            MainActivity.checkapplylistt!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+"/" + selectdatstr)
-
-                                                            ref.child("Account").child(find!!.name!!).child("Myapply").setValue(MainActivity.checkapplylistt)
-
-
-
-
-
-                                                            MainActivity.checkapplylist = p0.child(iddata!!.name!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
-
-                                                            MainActivity.checkapplylist!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+"/" + selectdatstr)
-
-                                                            ref.child("Account").child(iddata!!.name!!).child("Myapply").setValue(MainActivity.checkapplylist)
-
-                                                            var cd: ChatData? = ChatData()
-
-                                                            cd!!.message = "언행이 바른자가 미인을 얻는다."
-                                                            cd!!.userName = "Notice"
-                                                            cd!!.time = System.currentTimeMillis()
-
-
-
-
-                                                            if (selectdatstr.length > 7) {
-
-                                                                val cr = ChatRoomListData(Apply_Textview_Subway.text.toString(),Apply_Spinner_PersonNum.selectedItem.toString(),selectdatstr,MainActivity.ChatRoomNum.toString(),"언행이 바른자가 미인을 얻는다.")
-
-
-
-                                                                Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ChatRoomList").setValue(cr)
-                                                            }
-
-
-                                                            Chatref.child(MainActivity.ChatRoomNum.toString()).child("message").push().setValue(cd)
-
-                                                            sendPostToFCM()
-
-
-
-
-
-                                                            Log.d("finddd", "매치는 트루 츠루")
-
-                                                            val delquery: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
-                                                                    .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(id)
-
-                                                            delquery.addListenerForSingleValueEvent(object : ValueEventListener {
-                                                                override fun onCancelled(p0: DatabaseError) {
-                                                                }
-
-                                                                override fun onDataChange(p0: DataSnapshot) {
-
-                                                                    for (appleSnapshot in p0.getChildren()) {
-
-                                                                        if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
-
-                                                                            appleSnapshot.getRef().removeValue()
-                                                                            Log.d("aaaaz", "삭제")
-
-
-                                                                        }
-                                                                    }
-
-                                                                }
-                                                            })
-
-                                                            val delquery1: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
-                                                                    .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(find!!.name)
-
-                                                            delquery1.addListenerForSingleValueEvent(object : ValueEventListener {
-                                                                override fun onCancelled(p0: DatabaseError) {
-                                                                }
-
-                                                                override fun onDataChange(p0: DataSnapshot) {
-
-
-                                                                    for (appleSnapshot in p0.getChildren()) {
-
-                                                                        if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
-
-                                                                            appleSnapshot.getRef().removeValue()
-                                                                            Log.d("aaaaz", "삭제")
-
-                                                                        }
-                                                                    }
-
-                                                                }
-                                                            })
-
-
-
                                                             iddata = null
+                                                            find=null
+
                                                         }
                                                     })
 
@@ -528,12 +549,18 @@ class ApplyActivity : AppCompatActivity()
                 {
                     Toast.makeText(this@ApplyActivity,"이미 선택된 날짜로 매칭정보가 이미 존재합니다.",Toast.LENGTH_LONG).show()
                 }
+                catch (e:ReflectiveOperationException)
+                {
+                    Toast.makeText(this@ApplyActivity, "하트 개수가 부족합니다.",Toast.LENGTH_SHORT).show()
+
+                }
                 catch(e:Exception)
                 {
                     Log.d("aaaaz",e.toString())
                     Toast.makeText(this@ApplyActivity, "정보를 다시 확인해주세요.",Toast.LENGTH_SHORT).show()
 
                 }
+
 
 
 
@@ -562,9 +589,7 @@ class ApplyActivity : AppCompatActivity()
             selectmonth = Integer.parseInt((month + 1).toString())
             selectday = Integer.parseInt(dayOfMonth.toString())
 
-            SampleBidYearText.setText(year.toString() + "년")
-            SampleBidMonthText.setText((month + 1).toString() + "월")
-            SampleBidDayText.setText(dayOfMonth.toString() + "일")
+            SampleBidYearText.setText(year.toString() + "."+(month + 1).toString() + "."+dayOfMonth.toString())
         }, 2019, 0, 1)
 
 

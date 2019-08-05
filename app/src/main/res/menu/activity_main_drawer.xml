@@ -5,12 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view"
     >
-    <item  android:id="@+id/Nav_My_Matching"
-        android:title="내 매칭신청">
+    <item  android:id="@+id/Nav_Alram_Setting"
+        android:title="알림설정">
 
     </item>
     <item   android:id="@+id/Nav_Recommend"
-        android:title="추천하기">
+    android:title="추천하기">
+
+</item>
+    <item   android:id="@+id/Account_Destroy"
+        android:title="회원탈퇴">
 
     </item>
     <item android:title="이용관련">

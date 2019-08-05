@@ -30,7 +30,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
     val database : FirebaseDatabase = FirebaseDatabase.getInstance()
     val currentUser = FirebaseAuth.getInstance().currentUser
     val myRef : DatabaseReference = database.getReference("Account/"+currentUser!!.uid+"/heart")
-    var heart : Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var fragmentManager = fragmentManager!!.fragments
@@ -44,7 +44,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
             override fun onDataChange(p0: DataSnapshot) {
                 var value : String = p0.value.toString()
                 heart = Integer.parseInt(value)
-                Log.d("value","heart : "+heart)
+                Log.d("hearttt","heart가 바꼈음(Store) : "+ heart)
             }
         })
 
@@ -114,5 +114,8 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
         {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+    companion object {
+        var heart : Int = 0
     }
 }

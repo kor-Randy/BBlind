@@ -1,4 +1,5 @@
 package com.test.moon.bblind
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
@@ -22,6 +24,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.kakao.kakaolink.v2.KakaoLinkResponse
@@ -41,7 +44,9 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
     internal val tabIcons = intArrayOf(R.drawable.homed,R.drawable.chatd, R.drawable.heartd)
     private var viewPager: ViewPager? = null
     private var tabLayout: TabLayout? = null
-
+    val database : FirebaseDatabase? = FirebaseDatabase.getInstance()
+    val myRef : DatabaseReference = database!!.reference
+    var firebaseanalytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
     override fun onResume() {
         super.onResume()
@@ -49,6 +54,11 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         if(MainActivity.applyactivity!=null)
         MainActivity.applyactivity!!.finish()
+
+        if(MainActivity.Accountactivity!=null)
+        {
+            MainActivity.Accountactivity!!.finish()
+        }
 
 
 
@@ -110,8 +120,63 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         } else if (eid == R.id.nav_Information) {
             Toast.makeText(this,"이용안내",Toast.LENGTH_LONG).show()
 
-        } else if (eid == R.id.Nav_My_Matching) {
-            Toast.makeText(this,"내 매칭정보",Toast.LENGTH_LONG).show()
+        } else if (eid == R.id.Account_Destroy) {
+            Toast.makeText(this,"회원탈퇴",Toast.LENGTH_LONG).show()
+
+            if(MainActivity.checkapplylist!!.checklist!!.size>1||MainActivity.crd!!.ChatRoom.size>0||MainActivity.crd!!.Token.size>0)
+            {
+                Toast.makeText(LobbyActivity@this,"내 매칭신청 글과 매칭채팅방을 삭제한 뒤에 시도해주세요.",Toast.LENGTH_LONG).show()
+            }
+            else
+            {
+
+                val alt_bld = AlertDialog.Builder(this@LobbyActivity)
+                alt_bld!!.setMessage("회원정보를 삭제하시겠습니까?").setCancelable(true).setPositiveButton("네",
+                        object: DialogInterface.OnClickListener {
+
+                            override fun onClick(p0: DialogInterface?, p1: Int) {
+
+                                Log.d("deldeldel","1")
+
+                                val delquery: Query = myRef.child("Account").child(MainActivity.Myuid!!)
+
+
+
+                                delquery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onCancelled(p0: DatabaseError) {
+                                    }
+
+                                    override fun onDataChange(p0: DataSnapshot) {
+
+                                        for (appleSnapshot in p0.getChildren()) {
+
+
+                                                appleSnapshot.getRef().removeValue()
+
+
+                                            }
+                                        }
+
+                                    })
+
+
+
+                            }
+                        }).setNegativeButton("아니요", object : DialogInterface.OnClickListener{
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        p0!!.cancel()
+                    }})
+                alt_bld.create().show()
+
+            }
+
+
+
+        }else if (eid == R.id.Nav_Alram_Setting) {
+
+            val intent = Intent(this@LobbyActivity, AlarmSetting::class.java)
+            startActivity(intent)
+            Toast.makeText(this,"알림설정",Toast.LENGTH_LONG).show()
 
         } else if (eid == R.id.nav_QnA) {
             Toast.makeText(this,"자주묻는질문",Toast.LENGTH_LONG).show()
