@@ -380,6 +380,8 @@ class ApplyActivity : AppCompatActivity()
 
                                                                 sendPostToFCM()
 
+
+
                                                                 val delquery: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
                                                                         .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(id)
 
@@ -585,12 +587,13 @@ class ApplyActivity : AppCompatActivity()
                         Thread(object : Runnable {
 
                             override fun run() {
-                                try {
+                                try
+                                {
 
                                     // FMC 메시지 생성 start
                                     val root = JSONObject()
                                     val notification = JSONObject()
-                                    notification.put("body", "등록한 매칭이 성사되었습니다.")
+                                    notification.put("body", "등록한 매칭이 성사되었습니다.\n상대방의 한마디 : "+Apply_Edittext_Introduction.text.toString())
                                     notification.put("title", getString(R.string.app_name))
                                     root.put("notification", notification)
                                     root.put("to", OppositeToken)   // FMC 메시지 생성 end

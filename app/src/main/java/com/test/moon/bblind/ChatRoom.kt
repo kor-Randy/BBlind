@@ -1,5 +1,6 @@
 package com.test.moon.bblind
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -19,6 +20,7 @@ import kotlin.collections.ArrayList
 
 class ChatRoom : Fragment() {
     private lateinit var list: ListView
+    var posi : Int?=null
     var cd : ChatRoomListData? = null
     var al = ArrayList<ChatRoomListData>()
     var all = ArrayList<ChatRoomListData>()
@@ -117,111 +119,53 @@ class ChatRoom : Fragment() {
             override fun onItemLongClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long): Boolean {
 
 
-                val alt_bld = context?.let { AlertDialog.Builder(it) }
-                alt_bld!!.setMessage("매칭을 삭제하시겠습니까?").setCancelable(true).setPositiveButton("네",
-                        object: DialogInterface.OnClickListener {
 
-                            override fun onClick(p0: DialogInterface?, p1: Int) {
+                ref.child("Chat").addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
 
-                                MainActivity.nowChatRoomNum = al[position].ChatRoomNum
+                    }
 
+                    override fun onDataChange(p0: DataSnapshot)
+                    {
 
-
-                                ref.addListenerForSingleValueEvent(object: ValueEventListener {
-                                    override fun onCancelled(p0: DatabaseError) {
+                        if(p0.child(al[position].ChatRoomNum!!).exists()) {
 
 
-                                    }
+                            MainActivity.nowChatRoomNum = al[position].ChatRoomNum
+                            val num = MainActivity.crd!!.ChatRoom.indexOf(MainActivity.nowChatRoomNum)
+                            Log.d("aaaaz : num", num.toString() + MainActivity.crd!!.Token.size.toString())
+                            MainActivity.nowToken = MainActivity.crd!!.Token[num]
 
-                                    override fun onDataChange(p0: DataSnapshot) {
+                            val intent : Intent = Intent(context,DeclarationPopup::class.java)
 
+                            startActivityForResult(intent,2)
 
+                            posi= position
+                        }
+                        else
+                        {
+                            Toast.makeText(context, "이미 삭제된 채팅방입니다.",Toast.LENGTH_LONG).show()
+                            al.removeAt(position)
+                            var adap = ChatRoomAdapter(al)
 
-                                        val crld : ChatRoomListData = p0.child("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").getValue(ChatRoomListData::class.java)!!
+                            adap.notifyDataSetChanged()
 
-                                        crld.MeetDate="0"
+                            list.adapter = adap
+                            setListViewHeightBasedOnChildren(list)
+                        }
 
-                                        ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").setValue(crld)
-
-
-                                        MainActivity.crd = p0.child("Account").child(MainActivity.Myuid!!).child("ChatNum").getValue(ChatRoomData::class.java)!!
-
-
-                                        Log.d("zczc111", "1")
-
-                                                var strr = MainActivity.nowChatRoomNum!!
-
-
-                                                val today = Date()
-                                                var strdate: String? = null
-
-                                                var format1: SimpleDateFormat? = null
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                                    format1 = SimpleDateFormat("yyyy-MM-dd")
-
-                                                    strdate = format1.format(today)
-                                                    Log.d("zczc111", format1!!.format(today))
-
-                                                }
-
-                                                if (p0.child("Chat").child(MainActivity.nowChatRoomNum!!).exists()) {
-                                                    //이미 지난 채팅방이 존재할 경우 삭제
-
-                                                    Log.d("zczc111", "2")
-
-                                                        Log.d("zczc111", "3")
-                                                        ref.child("Chat").child(MainActivity.nowChatRoomNum!!).removeValue()
-
-                                                        strr = strr!!.replace(MainActivity.Myuid!!, "")
-                                                        Log.d("cancellll", "zz지워짐" + strr + "/" + MainActivity.Myuid)
-
-
-                                                        Log.d("zczc111", "4")
-
-                                                        MainActivity.crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
-                                                        for (i in 0..MainActivity.crdd!!.Token.size - 1) {
-                                                            MainActivity.crdd!!.Token.remove(p0.child("Account").child(MainActivity.Myuid!!).child("fcmToken").getValue(true))
-                                                        }
-                                                        for (i in 0..MainActivity.crdd!!.ChatRoom.size - 1) {
-                                                            MainActivity.crdd!!.ChatRoom.remove(MainActivity.ChatRoomNum!!)
-                                                        }
-
-                                                        for (i in 0..MainActivity.crd!!.Token.size - 1) {
-                                                            MainActivity.crd!!.Token.remove(p0.child("Account").child(strr!!).child("fcmToken").getValue(true))
-                                                        }
-                                                        for (i in 0..MainActivity.crd!!.ChatRoom.size - 1) {
-                                                            MainActivity.crd!!.ChatRoom.remove(MainActivity.ChatRoomNum!!)
-                                                        }
-
-
-                                                        ref.child("Account").child(MainActivity.Myuid!!).child("ChatNum").setValue(MainActivity.crd)
-                                                       ref.child("Account").child(strr).child("ChatNum").setValue(MainActivity.crdd)
-                                                        MainActivity.ChatRoomNum = null
+                    }
+                })
 
 
 
 
-                                                }
 
 
 
-                                        al.removeAt(position)
-                                        var adap = ChatRoomAdapter(al)
-
-                                        adap.notifyDataSetChanged()
-
-                                        list.adapter = adap
-                                        setListViewHeightBasedOnChildren(list)
-                                    }
-                                })
 
 
-                            }
-                        }).setNegativeButton("아니요", object :DialogInterface.OnClickListener{
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        p0!!.cancel()
-                    }})
-                alt_bld.create().show()
+
 
                 return true
 
@@ -283,6 +227,136 @@ class ChatRoom : Fragment() {
         return view
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                //데이터 받기
+
+        when(data!!.getStringExtra("select"))
+        {
+
+            "0"->
+            {
+                var intent : Intent = Intent(context,Declaration::class.java)
+                intent.putExtra("id",MainActivity.nowChatRoomNum!!.replace(MainActivity.Myuid!!,""))
+                startActivity(intent)
+
+
+            }
+            "1"-> {
+                val alt_bld = context?.let { AlertDialog.Builder(it) }
+                alt_bld!!.setMessage("매칭을 삭제하시겠습니까?").setCancelable(true).setPositiveButton("네",
+                        object : DialogInterface.OnClickListener {
+
+                            override fun onClick(p0: DialogInterface?, p1: Int) {
+
+
+                                MainActivity.nowChatRoomNum = al[posi!!].ChatRoomNum
+
+
+
+                                ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onCancelled(p0: DatabaseError) {
+
+
+                                    }
+
+                                    override fun onDataChange(p0: DataSnapshot) {
+
+
+                                        val crld: ChatRoomListData = p0.child("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").getValue(ChatRoomListData::class.java)!!
+
+                                        crld.MeetDate = "0"
+
+                                        ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").setValue(crld)
+
+
+                                        MainActivity.crd = p0.child("Account").child(MainActivity.Myuid!!).child("ChatNum").getValue(ChatRoomData::class.java)!!
+
+
+                                        Log.d("zczc111", "1")
+
+                                        var strr = MainActivity.nowChatRoomNum!!
+
+
+                                        val today = Date()
+                                        var strdate: String? = null
+
+                                        var format1: SimpleDateFormat? = null
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                            format1 = SimpleDateFormat("yyyy-MM-dd")
+
+                                            strdate = format1.format(today)
+                                            Log.d("zczc111", format1!!.format(today))
+
+                                        }
+
+                                        if (p0.child("Chat").child(MainActivity.nowChatRoomNum!!).exists()) {
+                                            //이미 지난 채팅방이 존재할 경우 삭제
+
+                                            Log.d("zczc111", "2")
+
+                                            Log.d("zczc111", "3")
+                                            ref.child("Chat").child(MainActivity.nowChatRoomNum!!).removeValue()
+
+                                            strr = strr!!.replace(MainActivity.Myuid!!, "")
+                                            Log.d("cancellll", "zz지워짐" + strr + "/" + MainActivity.Myuid)
+
+
+                                            Log.d("zczc111", "4")
+
+                                            MainActivity.crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
+                                            for (i in 0..MainActivity.crdd!!.Token.size - 1) {
+                                                MainActivity.crdd!!.Token.remove(p0.child("Account").child(MainActivity.Myuid!!).child("fcmToken").getValue(true))
+                                            }
+                                            for (i in 0..MainActivity.crdd!!.ChatRoom.size - 1) {
+                                                MainActivity.crdd!!.ChatRoom.remove(MainActivity.ChatRoomNum!!)
+                                            }
+
+                                            for (i in 0..MainActivity.crd!!.Token.size - 1) {
+                                                MainActivity.crd!!.Token.remove(p0.child("Account").child(strr!!).child("fcmToken").getValue(true))
+                                            }
+                                            for (i in 0..MainActivity.crd!!.ChatRoom.size - 1) {
+                                                MainActivity.crd!!.ChatRoom.remove(MainActivity.ChatRoomNum!!)
+                                            }
+
+
+                                            ref.child("Account").child(MainActivity.Myuid!!).child("ChatNum").setValue(MainActivity.crd)
+                                            ref.child("Account").child(strr).child("ChatNum").setValue(MainActivity.crdd)
+                                            MainActivity.ChatRoomNum = null
+
+
+                                        }
+
+
+
+                                        al.removeAt(posi!!)
+                                        var adap = ChatRoomAdapter(al)
+
+                                        adap.notifyDataSetChanged()
+
+                                        list.adapter = adap
+                                        setListViewHeightBasedOnChildren(list)
+                                    }
+                                })
+
+
+                            }
+                        }).setNegativeButton("아니요", object : DialogInterface.OnClickListener {
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        p0!!.cancel()
+                    }
+                })
+                alt_bld.create().show()
+            }
+        }
+            }
+
+        }
+
+    }
     fun setListViewHeightBasedOnChildren(listView: ListView) {
         val listAdapter = listView.adapter
                 ?: // pre-condition

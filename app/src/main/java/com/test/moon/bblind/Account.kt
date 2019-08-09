@@ -27,6 +27,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.support.annotation.NonNull
 import android.support.v4.app.ActivityCompat
+import android.util.Log
+import android.util.TypedValue
 import android.view.Window
 import android.widget.ToggleButton
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -144,21 +146,41 @@ class Account : AppCompatActivity()
         Account_Toggle_Girl.setText("여자")
         Account_Toggle_Girl.setTextOff("여자")
         Account_Toggle_Girl.setTextOn("여자")
+
+
+        Account_Toggle_Boy.setTextSize(TypedValue.COMPLEX_UNIT_SP,30f)
+        Account_Toggle_Girl.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
         Account_Toggle_Boy.setOnClickListener(View.OnClickListener {
 
             if(Account_Toggle_Boy.isChecked())
+            {
                 Account_Toggle_Girl.setChecked(false)
+                Account_Toggle_Boy.setTextSize(TypedValue.COMPLEX_UNIT_SP,30f)
+                Account_Toggle_Girl.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
+            }
             else
+            {
                 Account_Toggle_Girl.setChecked(true)
+                Account_Toggle_Boy.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
+                Account_Toggle_Girl.setTextSize(TypedValue.COMPLEX_UNIT_SP,30f)
+            }
+
 
         })
         Account_Toggle_Girl.setOnClickListener(View.OnClickListener{
 
             if(Account_Toggle_Girl.isChecked())
+            {
                 Account_Toggle_Boy.setChecked(false)
+                Account_Toggle_Boy.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
+                Account_Toggle_Girl.setTextSize(TypedValue.COMPLEX_UNIT_SP,30f)
+            }
             else
+            {
                 Account_Toggle_Boy.setChecked(true)
-
+                Account_Toggle_Boy.setTextSize(TypedValue.COMPLEX_UNIT_SP,30f)
+                Account_Toggle_Girl.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
+            }
         })
 
         var i = 0
@@ -187,21 +209,41 @@ class Account : AppCompatActivity()
 
                 MainActivity.checkapplylist!!.checklist!!.add("초기화")
 
-                myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
-                myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
-                myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
-                myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
-                myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
-                myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
-                myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
 
-                if(!Account_Edit_Inviter.text.toString().equals(null))
+
+
+                if(Account_Edit_Inviter.text.toString().length==0)
                 {
+                    myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
+                    myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
+                    myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
+                    myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
+                    myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
+                    myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
+                    myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
+                    myRef.child(currentUser!!.uid).child("heart").setValue(20)
+                    if (Account_Radio_Student.isChecked())
+                        myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
+                    else
+                        myRef.child(currentUser!!.uid).child("isStudent").setValue("N")
 
+
+                    firebaseanalytics!!.setUserProperty("MatchingAlarm", "true")
+                    firebaseanalytics!!.setUserProperty("AppAlarm", "true")
+
+
+                    i++
+                    MainActivity.Myuid = currentUser!!.uid
+                    DirectLobby()
+
+                }
+                else
+                {
                     myRef.addListenerForSingleValueEvent(object : ValueEventListener
                     {
                         override fun onCancelled(p0: DatabaseError)
                         {
+
 
 
                         }
@@ -216,10 +258,29 @@ class Account : AppCompatActivity()
                                 var Inviterheart: Int = Integer.parseInt(p0.child(Account_Edit_Inviter.text.toString()).child("heart").getValue(true).toString())
 
                                 Inviterheart += 5
+                                myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
+                                myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
+                                myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
+                                myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
+                                myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
+                                myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
+                                myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
 
                                 myRef.child(currentUser!!.uid).child("heart").setValue(30)
                                 myRef.child(Account_Edit_Inviter.text.toString()).child("heart").setValue(Inviterheart)
+                                if (Account_Radio_Student.isChecked())
+                                    myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
+                                else
+                                    myRef.child(currentUser!!.uid).child("isStudent").setValue("N")
 
+
+                                firebaseanalytics!!.setUserProperty("MatchingAlarm", "true")
+                                firebaseanalytics!!.setUserProperty("AppAlarm", "true")
+
+
+                                i++
+                                MainActivity.Myuid = currentUser!!.uid
+                                DirectLobby()
 
                             }
                             else
@@ -235,26 +296,9 @@ class Account : AppCompatActivity()
                     })
 
                 }
-                else
-                {
-
-                    myRef.child(currentUser!!.uid).child("heart").setValue(20)
-                }
 
 
-                if (Account_Radio_Student.isChecked())
-                    myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
-                else
-                    myRef.child(currentUser!!.uid).child("isStudent").setValue("N")
 
-
-                firebaseanalytics!!.setUserProperty("MatchingAlarm", "true")
-                firebaseanalytics!!.setUserProperty("AppAlarm", "true")
-
-
-                i++
-                MainActivity.Myuid = currentUser!!.uid
-                DirectLobby()
             }
         })
 

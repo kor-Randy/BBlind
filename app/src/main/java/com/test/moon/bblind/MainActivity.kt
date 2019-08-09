@@ -441,6 +441,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onSessionOpenFailed(exception: KakaoException?) {
             if (exception != null) {
+                Log.e(TAG,"2" + exception.toString())
             }
         }
     }
