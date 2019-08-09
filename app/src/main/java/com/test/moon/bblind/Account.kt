@@ -15,8 +15,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_account.*
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.spinner_item.*
@@ -32,6 +30,7 @@ import android.support.v4.app.ActivityCompat
 import android.view.Window
 import android.widget.ToggleButton
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.database.*
 import com.google.firebase.iid.FirebaseInstanceId
 
 
@@ -58,8 +57,9 @@ class Account : AppCompatActivity()
 
         sf = getSharedPreferences("Alarm", 0)
         editor = sf!!.edit();
-        editor!!.putString("Matching","false")
-        editor!!.putString("App","false")
+        editor!!.putString("Matching","true")
+        editor!!.putString("App","true")
+        editor!!.commit()
 
 
         val id : Array<String> = arrayOf("id1","id2","id3")
@@ -176,6 +176,8 @@ class Account : AppCompatActivity()
             }
             else
             {
+
+
                 if (Account_Toggle_Boy.isChecked())
                     sex = "Man"
                 else
@@ -192,7 +194,49 @@ class Account : AppCompatActivity()
                 myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
                 myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
                 myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
-                myRef.child(currentUser!!.uid).child("heart").setValue(0)
+
+                if(!Account_Edit_Inviter.text.toString().equals(null))
+                {
+
+                    myRef.addListenerForSingleValueEvent(object : ValueEventListener
+                    {
+                        override fun onCancelled(p0: DatabaseError)
+                        {
+
+
+                        }
+
+                        override fun onDataChange(p0: DataSnapshot)
+                        {
+
+                            if (p0.child(Account_Edit_Inviter.text.toString()).exists())
+                            {
+
+
+                                var Inviterheart: Int = Integer.parseInt(p0.child(Account_Edit_Inviter.text.toString()).child("heart").getValue(true).toString())
+
+                                Inviterheart += 5
+
+                                myRef.child(currentUser!!.uid).child("heart").setValue(10)
+                                myRef.child(Account_Edit_Inviter.text.toString()).child("heart").setValue(Inviterheart)
+
+
+                            }
+                            else
+                            {
+
+                                Toast.makeText(this@Account,"존재하지 않는 추천인코드입니다.",Toast.LENGTH_LONG).show()
+
+                            }
+
+
+                        }
+
+                    })
+
+                }
+
+
                 if (Account_Radio_Student.isChecked())
                     myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
                 else
@@ -249,11 +293,12 @@ class Account : AppCompatActivity()
         {
             if(grantResults.count()>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED)
             {
-                Toast.makeText(this,"ㅇㅇ됐어",Toast.LENGTH_SHORT).show()
 
                 if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.READ_PHONE_STATE)!=PackageManager.PERMISSION_GRANTED)
                 {
-                    Toast.makeText(this,"리얼로 됨",Toast.LENGTH_SHORT).show()
+
+
+
                 }
 
             }

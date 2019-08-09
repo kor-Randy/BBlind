@@ -47,7 +47,6 @@ class Home : Fragment(), View.OnClickListener
 
             override fun onDataChange(p0: DataSnapshot) {
 
-                Log.d("chcheck","checklist가 바뀜")
                 if(p0.child(MainActivity.Myuid!!).child("Myapply").exists())
                 MainActivity.checkapplylist = p0.child(MainActivity.Myuid!!).child("Myapply").getValue(CheckApplyListData::class.java)
             }
@@ -64,7 +63,6 @@ class Home : Fragment(), View.OnClickListener
             bu ->
             {
 
-                            Log.d("zczc","고고")
                             val it : Intent = Intent(activity,ApplyActivity::class.java)
                             startActivityForResult(it,0)
 

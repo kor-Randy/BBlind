@@ -71,6 +71,8 @@ class AlarmSetting : AppCompatActivity()
 
                 }
 
+                editor!!.commit()
+
 
             }
         });
@@ -92,6 +94,7 @@ class AlarmSetting : AppCompatActivity()
                 }
 
 
+                editor!!.commit()
             }
         });
 

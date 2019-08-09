@@ -25,7 +25,6 @@ class SubwayPopup : Activity()
         val SubwayNum = intent.getStringExtra("Subway")
         var subList: Array<String>? = null
 
-        Log.d("Tag",SubwayNum)
 
 
 

@@ -225,7 +225,6 @@ class ApplyActivity : AppCompatActivity()
                                 Apply_Spinner_AverageAge.selectedItem.toString(),
                                 Apply_Spinner_Average_Drink.selectedItem.toString(),
                                 Apply_Edittext_Introduction.text.toString())
-                        Log.d("chattt", "온다1")
 
 
 
@@ -233,21 +232,17 @@ class ApplyActivity : AppCompatActivity()
 
 
                             //*********************************************여기서 나와 같은 조건의 상대성별 확인
-                            Log.d("aaaaz","one")
                             MainActivity.checkapplylist!!.checklist!!.add(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()+"/" + selectdatstr)
 
-                            Log.d("aaaaz","two")
                             ref.child("Account").child(id!!).child("Myapply").setValue(MainActivity.checkapplylist)
 
 
-                            Log.d("aaaaz","three")
 
                             Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
                                     .child(Apply_Spinner_PersonNum.selectedItem.toString())
                                     .push().setValue(iddata)
 
 
-                            Log.d("aaaaz","four")
 
 
                             Applyref.child("SubwayStation/" + Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()).limitToFirst(1).addChildEventListener(object : ChildEventListener {
@@ -266,26 +261,19 @@ class ApplyActivity : AppCompatActivity()
                                     //ex) 3개 있으면 메소드가 3번 실행됨
 
 
-                                    Log.d("aaaaz11", p0.getValue(IdData::class.java)!!.name.toString())
 
                                     var deldata: DataSnapshot? = null
-                                    Log.d("aaaaz", "111")
-                                    if (Match == false) {
 
-                                        Log.d("aaaaz", "222")
 
                                         find = p0.getValue(IdData::class.java)
 
-                                        Log.d("aaaaz", find!!.name!!.toString())
                                         if (iddata!!.date.equals(find!!.date)) {
 
 
-                                            Log.d("aaaaz", "333")
                                             if (!find!!.sex.equals(sex))//성이 다르면 add
                                             {
 
 
-                                                Log.d("aaaaz", "444")
                                                 if ((find!!.from!!.toString() <= iddata!!.from!! && find!!.to!!.toString() >= iddata!!.from!!)
                                                         || (find!!.from!!.toString() <= iddata!!.to!! && find!!.to!!.toString() >= iddata!!.to!!)) {
 
@@ -293,10 +281,7 @@ class ApplyActivity : AppCompatActivity()
                                                     //시간조건이 겹치지 않음.
 
 
-                                                    Log.d("aaaaz", "555")
                                                     //시간 조건이 겹침
-                                                    Match = true
-                                                    Log.d("chat", "온다2")
 
                                                     if (sex.equals("Man")) {
 
@@ -409,7 +394,6 @@ class ApplyActivity : AppCompatActivity()
                                                                             if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
 
                                                                                 appleSnapshot.getRef().removeValue()
-                                                                                Log.d("aaaaz", "삭제")
 
 
                                                                             }
@@ -433,7 +417,6 @@ class ApplyActivity : AppCompatActivity()
                                                                             if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
 
                                                                                 appleSnapshot.getRef().removeValue()
-                                                                                Log.d("aaaaz", "삭제")
 
                                                                             }
                                                                         }
@@ -448,8 +431,6 @@ class ApplyActivity : AppCompatActivity()
 
                                                                 findheart -= 10
                                                                 myheart -= 10
-                                                                Log.d("hearttt","내꺼 : "+myheart.toString())
-                                                                Log.d("hearttt","상대꺼 : "+findheart.toString())
 
                                                                 database.getReference("Account").child(find!!.name!!).child("heart").setValue(findheart)
 
@@ -457,7 +438,6 @@ class ApplyActivity : AppCompatActivity()
 
 
 
-                                                                Log.d("finddd", "매치는 트루 츠루")
 
 
 
@@ -467,7 +447,6 @@ class ApplyActivity : AppCompatActivity()
                                                             }
                                                             else
                                                             {
-                                                                Log.d("hearttt","이미 같은사람과 매칭이 존재합니다.")
                                                             }
                                                             iddata = null
                                                             find=null
@@ -479,10 +458,7 @@ class ApplyActivity : AppCompatActivity()
 
 
 
-                                                    Log.d("aaaaz", "인텐트로비")
-                                                    val it: Intent = Intent(this@ApplyActivity, LobbyActivity::class.java)
-                                                    it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                                                    startActivity(it);
+                                                    finish()
 
 
                                                 } else {
@@ -495,7 +471,7 @@ class ApplyActivity : AppCompatActivity()
 
                                         }
 
-                                    }
+
 
 
                                 }
@@ -510,10 +486,7 @@ class ApplyActivity : AppCompatActivity()
 
 
 
-                        val it: Intent = Intent(this@ApplyActivity, LobbyActivity::class.java)
-
-                        it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                       startActivity(it);
+                       finish()
 
 
                     }
@@ -578,6 +551,11 @@ class ApplyActivity : AppCompatActivity()
 
 
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     fun NoticeDate(view: View) {

@@ -50,7 +50,6 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     override fun onResume() {
         super.onResume()
-        Log.d("chcheck","꺼졌엉")
 
         if(MainActivity.applyactivity!=null)
         MainActivity.applyactivity!!.finish()

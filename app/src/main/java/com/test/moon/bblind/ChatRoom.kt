@@ -44,10 +44,6 @@ class ChatRoom : Fragment() {
         }
 
 
-        Log.d("aaaaz : crd",MainActivity.crd!!.ChatRoom.size.toString())
-
-        Log.d("aaaaz : crdtemp",MainActivity.crdtemp!!.ChatRoom.size.toString())
-
         ref.child("Chat").addChildEventListener(object: ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {
 

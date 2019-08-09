@@ -71,7 +71,6 @@ class ChatRoomAdapter(Data: ArrayList<ChatRoomListData>) : BaseAdapter() {
         else
             NoticeCountMsg.setText(chatRoomListData[position].ManMsg.toString())//change
 
-        Log.d("aaaaz",""+NoticeDataCount.text +"  "+ NoticeDataPersonNum.text+NoticeDataTitle.text)
         return convertView!!
     }
 

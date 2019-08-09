@@ -59,8 +59,6 @@ class CheckApplyActivity :AppCompatActivity()
         //1부터인 이유 = 0번째는 "초기화"
         {
 
-            Log.d("checkcheck",i.toString())
-
 
 
             s1.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[0])
@@ -68,7 +66,6 @@ class CheckApplyActivity :AppCompatActivity()
             s3.add(MainActivity.checkapplylist!!.checklist!![i].split("/")[2])
 
 
-            Log.d("checkcheck111",s1.toString()+s2.toString()+s3.toString())
 
             ref.child("Apply").child("SubwayStation").child(s1[i]).child(s2[i]).orderByChild("name").equalTo(MainActivity.Myuid!!).addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
@@ -92,10 +89,6 @@ class CheckApplyActivity :AppCompatActivity()
                     v7 = v0!!.split(",")[7]
 
 
-                    Log.d("checkcheck",
-                            v1 + v2 + v3 + v4 + v5 + v6 + v7
-                    )
-
                     v1 = v1!!.split("=")[1]
                     v2 = v2!!.split("=")[1]
                     v3 = v3!!.split("=")[1]
@@ -109,9 +102,6 @@ class CheckApplyActivity :AppCompatActivity()
 
                     stringdata!!.add(cc)
 
-                    Log.d("checkcheck",
-                            v1 + " " + v2 + " " + v3 + " " + v4 + " " + v5 + " " + v6 + " " + v7
-                    )
 
                     var adap: CheckApplyListAdapter = CheckApplyListAdapter(stringdata!!)
 
@@ -122,7 +112,6 @@ class CheckApplyActivity :AppCompatActivity()
 
                     setListViewHeightBasedOnChildren(lv!!)
 
-                    Log.d("checkcheck", lv!!.count.toString())
 
                 }
             })
@@ -139,13 +128,9 @@ class CheckApplyActivity :AppCompatActivity()
 
                             override fun onClick(p0: DialogInterface?, p1: Int) {
 
-                                Log.d("deldeldel","1")
                                 val delquery: Query = ref.child("Apply").child("SubwayStation").child(s1[position+1])
                                         .child(s2[position+1]).orderByChild("name").equalTo(MainActivity.Myuid!!)
 
-                                Log.d("deldeldel","2")
-
-                                Log.d("deldeldel",s1[position+1]+"/"+s2[position+1]+"/"+s3[position+1])
 
                                 delquery.addListenerForSingleValueEvent(object : ValueEventListener {
                                     override fun onCancelled(p0: DatabaseError) {
@@ -155,20 +140,15 @@ class CheckApplyActivity :AppCompatActivity()
 
                                         for (appleSnapshot in p0.getChildren()) {
 
-                                            Log.d("deldeldel","3")
                                             if(appleSnapshot.child("date").getValue(true).toString().equals(s3[position+1])) {
 
                                                 appleSnapshot.getRef().removeValue()
-                                                Log.d("aaaaz", "삭제")
-
-                                                Log.d("deldeldel","4")
                                                 val count = MainActivity.checkapplylist!!.checklist!!.indexOf(s1[position+1]+"/"+s2[position+1]+"/"+s3[position+1])
 
                                                 MainActivity.checkapplylist!!.checklist!!.removeAt(count)
 
                                                 ref.child("Account").child(MainActivity.Myuid!!).child("Myapply").setValue(MainActivity.checkapplylist)
 
-                                                Log.d("deldeldel","5")
 
                                                 MainActivity.nowAc="Main"
                                                 finish()

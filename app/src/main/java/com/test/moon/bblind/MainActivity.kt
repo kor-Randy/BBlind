@@ -94,7 +94,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Toast.makeText(this,"MainActicity",Toast.LENGTH_LONG).show()
     }
 
     /**
@@ -159,7 +158,6 @@ class MainActivity : AppCompatActivity() {
                 source.setException(e)
             }
         }, Response.ErrorListener { error ->
-            Log.e(TAG, "3" +error.toString())
             source.setException(error)
         }) {
             override fun getParams(): Map<String, String> {
@@ -186,7 +184,6 @@ class MainActivity : AppCompatActivity() {
 
                 if(p0.child("Account").child(str).child("Myapply").exists()) {
                     MainActivity.checkapplylist = p0.child("Account").child(str).child("Myapply").getValue(CheckApplyListData::class.java)!!
-                    Log.d("checkcheck", checkapplylist!!.checklist!!.size.toString())
                 }
                 else
                 {
@@ -216,15 +213,12 @@ class MainActivity : AppCompatActivity() {
                             format1 = SimpleDateFormat("yyyy-MM-dd")
 
                             strdate = format1.format(today)
-                            Log.d("zczc", format1!!.format(today))
 
                         }
 
 
-                        Log.d("ccaa1",s3+strdate)
                         if(s3.compareTo(strdate!!)<0)
                         {
-                            Log.d("ccaa2",s3+strdate+str)
 
 
                             val delquery: Query = myRef.child("Apply").child("SubwayStation").child(s1)
@@ -239,7 +233,6 @@ class MainActivity : AppCompatActivity() {
 
                                     for (appleSnapshot in p0.getChildren()) {
                                         appleSnapshot.getRef().removeValue()
-                                        Log.d("aaaaz", "삭제")
 
                                         MainActivity.checkapplylist!!.checklist!!.removeAt(i)
                                         myRef.child("Account").child(str).child("Myapply").setValue(MainActivity.checkapplylist)
@@ -261,12 +254,12 @@ class MainActivity : AppCompatActivity() {
 
                if(str==null)
                {
-                   Log.d("zczc","uid없음")
+                   Toast.makeText(this@MainActivity,"기기의 uid 오류",Toast.LENGTH_SHORT).show()
 
                }
                 else if(!p0.child("Account").child(str).exists())
                {
-                   Log.d("zczc","계정이없음")
+
                    DirectSignUp()
                }
 
@@ -281,7 +274,6 @@ class MainActivity : AppCompatActivity() {
                     if(crd!!.ChatRoom.size>0) {
                         for (i in 0..crd!!.ChatRoom.size - 1) {
 
-                            Log.d("matchhh", "gogo")
                             MainActivity.ChatRoomNum = crd!!.ChatRoom[i]
                             var strr = MainActivity.ChatRoomNum
 
@@ -294,7 +286,6 @@ class MainActivity : AppCompatActivity() {
                                 format1 = SimpleDateFormat("yyyy-MM-dd")
 
                                 strdate = format1.format(today)
-                                Log.d("zczc", format1!!.format(today))
 
                             }
 
@@ -306,7 +297,6 @@ class MainActivity : AppCompatActivity() {
 
                                     strr = strr!!.replace(str, "")
                                     Myuid = str
-                                    Log.d("cancellll", "zz지워짐" + strr + "/" + Myuid)
 
 
 
@@ -342,7 +332,6 @@ class MainActivity : AppCompatActivity() {
 
                                 strr = strr!!.replace(str, "")
                                 Myuid = str
-                                Log.d("cancellll", "zz지워짐" + strr + "/" + Myuid)
 
 
                                 crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
@@ -384,8 +373,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-                   Log.d("matchhh", "nono")
                    val intent = Intent(this@MainActivity, LobbyActivity::class.java)
                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -446,7 +433,6 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(applicationContext, "Failed to create a Firebase user.", Toast.LENGTH_LONG).show()
                     if (task.exception != null) {
-                        Log.e(TAG, "11111" + task.exception!!.toString())
                     }
                 }
             }
@@ -454,7 +440,6 @@ class MainActivity : AppCompatActivity() {
 
         override fun onSessionOpenFailed(exception: KakaoException?) {
             if (exception != null) {
-                Log.e(TAG,"2" + exception.toString())
             }
         }
     }

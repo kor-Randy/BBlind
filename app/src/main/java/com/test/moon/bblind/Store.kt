@@ -38,13 +38,11 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
         bp.initialize()
         myRef.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                Log.e("value","error : " + p0.toString())
             }
 
             override fun onDataChange(p0: DataSnapshot) {
                 var value : String = p0.value.toString()
                 heart = Integer.parseInt(value)
-                Log.d("hearttt","heart가 바꼈음(Store) : "+ heart)
             }
         })
 
@@ -74,7 +72,6 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
         Toast.makeText(context,"Restored",Toast.LENGTH_LONG).show()
     }
     override fun onBillingInitialized() {
-       Log.d("BillingInitialized","Initialized")
 
     }
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
@@ -109,7 +106,6 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
         super.onDestroy()
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.d("Activity","InFragment")
         if(!bp.handleActivityResult(requestCode,resultCode,data))
         {
             super.onActivityResult(requestCode, resultCode, data)

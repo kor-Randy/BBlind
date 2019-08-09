@@ -95,8 +95,6 @@ class Chat : AppCompatActivity(), View.OnClickListener {
 
         mAdapter = ChatAdapter(this, 0)
 
-        Log.d("cccc",mAdapter.toString())
-        Log.d("cccc",con.toString())
 
 
         mListView!!.adapter = mAdapter
@@ -129,7 +127,6 @@ class Chat : AppCompatActivity(), View.OnClickListener {
             if(MainActivity.nowAc.equals("Chat")) {
                 NowChatRoomList = p0.getValue(ChatRoomListData::class.java)!!
 
-                Log.d("casd", NowChatRoomList!!.LastMsg + NowChatRoomList!!.Subway + NowChatRoomList!!.LastMsg)
                 if (MainActivity.Mysex == "Man") {
                     temp = NowChatRoomList!!.ManMsg
 
@@ -150,7 +147,6 @@ class Chat : AppCompatActivity(), View.OnClickListener {
         })
 
         if(MainActivity.nowChatRoomNum!=null) {
-            Log.d("checkk", MainActivity.nowChatRoomNum!!.toString())
             ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("message")
                     .addChildEventListener(object : ChildEventListener {
                         override fun onCancelled(p0: DatabaseError) {
@@ -165,7 +161,6 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                         override fun onChildAdded(p0: DataSnapshot, p1: String?) {
 
                             chatdata = p0.getValue(ChatData::class.java)
-                            Log.d("checkk", p0.getValue(ChatData::class.java).toString())
                             chatdata!!.firebaseKey = p0.key
                             mAdapter!!.add(chatdata)
                             mListView!!.smoothScrollToPosition(mAdapter!!.count)
@@ -279,7 +274,6 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                        Log.d("checkkk", dataSnapshot.toString())
 
                         Thread(object : Runnable {
 
@@ -376,7 +370,6 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                     chatData.message = message
                     chatData.time = System.currentTimeMillis()
                     chatData.userName = mAuth!!.currentUser!!.uid // 사용자 uid
-                    Log.d("dedede","ChatRoomNum = "+MainActivity.nowChatRoomNum)
                     ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("message").push().setValue(chatData)
 
                     sendPostToFCM(message)
@@ -384,11 +377,9 @@ class Chat : AppCompatActivity(), View.OnClickListener {
 
 
 
-                    Log.d("casd",NowChatRoomList.toString())
 
 
                     if(MainActivity.Mysex=="Man") {
-                        Log.d("casd",temp + " "+ (Integer.parseInt(temp)+1))
 
                         NowChatRoomList!!.ManMsg = (Integer.parseInt(temp)+1).toString()
 

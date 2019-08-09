@@ -46,7 +46,6 @@ class KakaoSignupActivity : Activity(){
                     Toast.makeText(this@KakaoSignupActivity, "카카오톡 서버의 네트워크가 불안정합니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@KakaoSignupActivity,"오류로 로그인 실패", Toast.LENGTH_SHORT).show()
-                    Log.d("TAG", "오류로 카카오로그인 실패 ")
                     redirectLoginActivity()
                 }
             }

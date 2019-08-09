@@ -89,7 +89,6 @@ class LoginActivity :AppCompatActivity() {
         override fun onSessionOpenFailed(exception: KakaoException?) {
             if (exception != null) {
                 Toast.makeText(this@LoginActivity,"세션실패",Toast.LENGTH_SHORT).show()
-                Log.d("TAG", "Session CallBack Error > " + exception.message)
                 setContentView(R.layout.activity_login)
             }
         }
