@@ -217,7 +217,7 @@ class Account : AppCompatActivity()
 
                                 Inviterheart += 5
 
-                                myRef.child(currentUser!!.uid).child("heart").setValue(10)
+                                myRef.child(currentUser!!.uid).child("heart").setValue(30)
                                 myRef.child(Account_Edit_Inviter.text.toString()).child("heart").setValue(Inviterheart)
 
 
@@ -234,6 +234,11 @@ class Account : AppCompatActivity()
 
                     })
 
+                }
+                else
+                {
+
+                    myRef.child(currentUser!!.uid).child("heart").setValue(20)
                 }
 
 

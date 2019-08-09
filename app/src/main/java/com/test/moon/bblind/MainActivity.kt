@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        Toast.makeText(this,"MainActicity",Toast.LENGTH_LONG).show()
     }
 
     /**
@@ -152,6 +153,8 @@ class MainActivity : AppCompatActivity() {
 
         val request = object : JsonObjectRequest(Request.Method.POST, url, JSONObject(validationObject), Response.Listener { response ->
             try {
+
+
                 val firebaseToken = response.getString("firebase_token")
                 source.setResult(firebaseToken)
             } catch (e: Exception) {
@@ -166,7 +169,7 @@ class MainActivity : AppCompatActivity() {
                 return params
             }
         }
-      // request.setRetryPolicy(DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT))
+        // request.setRetryPolicy(DefaultRetryPolicy( 20000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT))
         queue.add(request)
         return source.task
     }
@@ -188,7 +191,7 @@ class MainActivity : AppCompatActivity() {
                 else
                 {
                     for(i in 1..MainActivity.checkapplylist!!.checklist!!.size)
-                    MainActivity.checkapplylist!!.checklist!!.removeAt(0)
+                        MainActivity.checkapplylist!!.checklist!!.removeAt(0)
                 }
 
                 if(MainActivity.checkapplylist!!.checklist!!.size>1)
@@ -203,7 +206,6 @@ class MainActivity : AppCompatActivity() {
                         var s2 = MainActivity.checkapplylist!!.checklist!![i].split("/")[1]
                         var s3 = MainActivity.checkapplylist!!.checklist!![i].split("/")[2]
 
-                        Log.d("ccaa",s1+s2+s3)
 
                         val today = Date()
                         var strdate: String? = null
@@ -252,16 +254,14 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
-               if(str==null)
-               {
-                   Toast.makeText(this@MainActivity,"기기의 uid 오류",Toast.LENGTH_SHORT).show()
+                if(str==null)
+                {
 
-               }
+                }
                 else if(!p0.child("Account").child(str).exists())
-               {
-
-                   DirectSignUp()
-               }
+                {
+                    DirectSignUp()
+                }
 
                 else if (p0.child("Account").child(str).exists() && p0.child("Account").child(str).child("ChatNum").exists())
                 {
@@ -360,23 +360,24 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-               else {
-                   //매칭 상대가 없을 경우
+                else {
+                    //매칭 상대가 없을 경우
 
 
 
-                 //  crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
+                    //  crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
 
 
-                   Myuid =FirebaseAuth.getInstance().uid
+                    Myuid =FirebaseAuth.getInstance().uid
 
 
 
 
-                   val intent = Intent(this@MainActivity, LobbyActivity::class.java)
-                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-                   startActivity(intent)
+                    val intent = Intent(this@MainActivity, LobbyActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+                    startActivity(intent)
 
                 }
 
