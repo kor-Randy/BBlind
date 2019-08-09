@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="5dp"
+    android:background="#ffffff"
     tools:context=".Account">
     <!--title-->
     <LinearLayout
@@ -59,6 +60,7 @@
             android:layout_weight="3"
             android:background="@android:drawable/editbox_background_normal"
             android:backgroundTint="#3cc1ff"
+            android:fontFamily="@font/bmx"
             android:text="남자"
             android:textSize="30sp" />
         <ImageView
@@ -73,6 +75,7 @@
             android:layout_weight="3"
             android:backgroundTint="#f8acff"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/bmx"
             android:text="여자"
             android:textSize="30sp" />
         <ImageView
@@ -100,8 +103,8 @@
             android:layout_weight="1"
             android:fontFamily="@font/bmx"
             android:textColor="#000000"
-            android:gravity="center"
-            android:text="⦁ 출생년도"
+            android:gravity="center_vertical"
+            android:text="    ⦁ 출생년도"
             android:textSize="20sp" />
 
         <Spinner
@@ -178,10 +181,10 @@
             android:layout_weight="1"
             android:fontFamily="@font/bmx"
             android:textColor="#000000"
-            android:text="⦁ 닉네임"
+            android:text="    ⦁ 닉네임"
 
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:textSize="20sp" />
 
         <EditText
@@ -214,8 +217,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/bmx"
-            android:gravity="center"
-            android:text="⦁ 추천인"
+            android:gravity="center_vertical"
+            android:text="    ⦁ 추천인"
             android:textColor="#000000"
             android:textSize="20sp"  />
 
