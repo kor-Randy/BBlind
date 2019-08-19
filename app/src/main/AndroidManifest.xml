@@ -22,16 +22,29 @@
             android:name="com.kakao.sdk.AppKey"
 
             android:value="@string/kakao_app_key" />
-        <activity android:name="com.test.moon.bblind.Loading"></activity>>
-        <activity android:name="com.test.moon.bblind.LobbyActivity"> <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name="com.test.moon.bblind.Loading">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>>
+        <activity android:name="com.test.moon.bblind.LobbyActivity">
+
+
+        </activity>
         <activity android:name="com.test.moon.bblind.LoginActivity">
 
         </activity>
+        <activity android:name="com.test.moon.bblind.AlarmSetting"></activity>
+        <activity android:name="com.test.moon.bblind.QnA"></activity>
         <activity android:name="com.test.moon.bblind.KakaoSignupActivity"></activity>
+        <activity android:name="com.test.moon.bblind.roulette" android:theme="@android:style/Theme.Dialog">></activity>
+        <activity android:name="com.test.moon.bblind.RoulettePopup" android:theme="@android:style/Theme.Dialog">></activity>
+        <activity android:name="com.test.moon.bblind.DeclarationPopup" android:theme="@android:style/Theme.Dialog">></activity>
+        <activity android:name="com.test.moon.bblind.Declaration" android:theme="@android:style/Theme.Dialog">></activity>
+        <activity android:name="com.test.moon.bblind.Chat"></activity>
+        <activity android:name="com.test.moon.bblind.CheckApplyActivity"></activity>
         <activity android:name="com.test.moon.bblind.MainActivity"></activity>
 
         <activity android:name="com.test.moon.bblind.Account"></activity>
