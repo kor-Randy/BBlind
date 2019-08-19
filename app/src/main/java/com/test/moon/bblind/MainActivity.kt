@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Toast.makeText(this,"MainActicity",Toast.LENGTH_LONG).show()
+
     }
 
     /**

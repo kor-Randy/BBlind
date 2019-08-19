@@ -114,7 +114,20 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
             Toast.makeText(this,"앱정보",Toast.LENGTH_LONG).show()
             // Handle the camera action
         } else if (eid == R.id.nav_Chat) {
-            Toast.makeText(this,"채팅문의",Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"문의하기",Toast.LENGTH_LONG).show()
+
+           val email = Intent(Intent.ACTION_SEND);
+            email.setType("plain/Text");
+            val address = arrayOf("dotdopdeep@gmail.com")
+
+
+            email.putExtra(Intent.EXTRA_EMAIL, address);
+
+            email.putExtra(Intent.EXTRA_TEXT, "");
+            email.setType("message/rfc822");
+            startActivity(email);
+
+
 
         } else if (eid == R.id.nav_Information) {
             Toast.makeText(this,"이용안내",Toast.LENGTH_LONG).show()
@@ -179,9 +192,11 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         } else if (eid == R.id.nav_QnA) {
             Toast.makeText(this,"자주묻는질문",Toast.LENGTH_LONG).show()
+            val intent = Intent(this@LobbyActivity, QnA::class.java)
+            startActivity(intent)
 
         } else if (eid == R.id.Nav_Recommend) {
-            var params = TextTemplate.newBuilder("추천인 아이디는 "+MainActivity.Myuid!!+" 입니다.",
+            var params = TextTemplate.newBuilder("두근두근! 콩닥콩닥! \n얼굴도 모르는 사람과의 하루의 인연\n추천인 아이디는 "+MainActivity.Myuid!!+" 입니다.",
                     LinkObject.newBuilder().setAndroidExecutionParams("https://play.google.com/store/apps/details?id=com.test.moon.bblind").build()).setButtonTitle("수상한 친구 만들러가기").build()
 
             var serverCallbackArgs  = HashMap<String, String>();

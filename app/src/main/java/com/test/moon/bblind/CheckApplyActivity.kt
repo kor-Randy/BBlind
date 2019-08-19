@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.Toast
 import com.google.firebase.database.*
@@ -37,6 +38,7 @@ class CheckApplyActivity :AppCompatActivity()
 
     val ref : DatabaseReference = database.reference
     var lv : ListView? = null
+    var iv : ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +49,18 @@ class CheckApplyActivity :AppCompatActivity()
         MainActivity.nowAc="CheckApplyActivity"
 
         lv  = findViewById(R.id.check_lv)
+        iv = findViewById(R.id.check_iv)
 
-
+        if(MainActivity.checkapplylist!!.checklist!!.size>1)
+        {
+            lv!!.visibility = View.VISIBLE
+            iv!!.visibility = View.GONE
+        }
+        else
+        {
+            lv!!.visibility = View.GONE
+            iv!!.visibility = View.VISIBLE
+        }
 
 
         s1.add("check")

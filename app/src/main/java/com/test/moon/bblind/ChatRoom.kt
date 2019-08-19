@@ -20,6 +20,7 @@ import kotlin.collections.ArrayList
 
 class ChatRoom : Fragment() {
     private lateinit var list: ListView
+    private lateinit var imageview: ImageView
     var posi : Int?=null
     var cd : ChatRoomListData? = null
     var al = ArrayList<ChatRoomListData>()
@@ -37,33 +38,44 @@ class ChatRoom : Fragment() {
         MainActivity.crdtemp =  ChatRoomData()
         al = all
 
-        for(i in 0..MainActivity.crd!!.ChatRoom.size-1)
+
+        if(MainActivity.crd!!.ChatRoom.size>0)
         {
-            if(!MainActivity.crdtemp!!.ChatRoom.contains(MainActivity.crd!!.ChatRoom.get(i)))
-            {
-                MainActivity.crdtemp!!.ChatRoom.add(MainActivity.crd!!.ChatRoom.get(i))
-            }
+            list.visibility=View.VISIBLE
+            imageview.visibility = View.GONE
+        }
+        else
+        {
+            list.visibility=View.GONE
+            imageview.visibility = View.VISIBLE
         }
 
 
-        ref.child("Chat").addChildEventListener(object: ChildEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-
+            for (i in 0..MainActivity.crd!!.ChatRoom.size - 1) {
+                if (!MainActivity.crdtemp!!.ChatRoom.contains(MainActivity.crd!!.ChatRoom.get(i))) {
+                    MainActivity.crdtemp!!.ChatRoom.add(MainActivity.crd!!.ChatRoom.get(i))
+                }
             }
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-            }
 
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-              }
+            ref.child("Chat").addChildEventListener(object : ChildEventListener {
+                override fun onCancelled(p0: DatabaseError) {
 
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-           }
+                }
 
-            override fun onChildRemoved(p0: DataSnapshot) {
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                }
 
-            }
-        })
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                }
+
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+
+                }
+            })
 
             ref.child("Chat").addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
@@ -104,6 +116,8 @@ class ChatRoom : Fragment() {
 
             })
 
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -111,8 +125,17 @@ class ChatRoom : Fragment() {
         val view = inflater!!.inflate(R.layout.chat, container, false) as View
 
         list = view.findViewById(R.id.list)
-
-
+        imageview = view.findViewById(R.id.imageView)
+        if(MainActivity.crd!!.ChatRoom.size>0)
+        {
+            list.visibility=View.VISIBLE
+            imageview.visibility = View.GONE
+        }
+        else
+        {
+            list.visibility=View.GONE
+            imageview.visibility = View.VISIBLE
+        }
 
 
         list.setOnItemLongClickListener(object: AdapterView.OnItemLongClickListener {

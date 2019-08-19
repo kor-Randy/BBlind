@@ -308,14 +308,18 @@ class ApplyActivity : AppCompatActivity()
                                                         override fun onDataChange(p0: DataSnapshot) {
                                                             if (p0.child(id!!).child("ChatNum").getValue(ChatRoomData::class.java) == null) {
                                                                 MainActivity.crd = ChatRoomData()
+                                                                Log.d("zczc","나의chatnum이 null")
                                                             } else {
                                                                 MainActivity.crd = p0.child(id!!).child("ChatNum").getValue(ChatRoomData::class.java)
+                                                                Log.d("zczc","나의chatnum이 null이 아님")
 
                                                             }
                                                             if (p0.child(find!!.name!!).child("ChatNum").getValue(ChatRoomData::class.java) == null) {
                                                                 MainActivity.crdd = ChatRoomData()
+                                                                Log.d("zczc","상대의chatnum이 null")
                                                             } else {
                                                                 MainActivity.crdd = p0.child(find!!.name!!).child("ChatNum").getValue(ChatRoomData::class.java)
+                                                                Log.d("zczc","상대의chatnum이 null이 아님")
                                                             }
 
                                                             if(!MainActivity.crd!!.ChatRoom.contains(MainActivity.ChatRoomNum!!)) {
@@ -376,16 +380,17 @@ class ApplyActivity : AppCompatActivity()
                                                                 Chatref.child(MainActivity.ChatRoomNum.toString()).child("message").push().setValue(cd)
 
 
-
+                                                                Log.d("zczc","fcm보내기 전")
 
                                                                 sendPostToFCM()
 
 
+                                                                Log.d("zczc","fcm보낸 후")
 
                                                                 val delquery: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
                                                                         .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(id)
-
-                                                                delquery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                Log.d("zczc",Apply_Textview_Subway.text.toString()+"/"+Apply_Spinner_PersonNum.selectedItem.toString()+"/"+id)
+                                                                delquery.addValueEventListener(object : ValueEventListener {
                                                                     override fun onCancelled(p0: DatabaseError) {
                                                                     }
 
@@ -395,9 +400,14 @@ class ApplyActivity : AppCompatActivity()
 
                                                                             if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
 
+                                                                                Log.d("zczc","내꺼 삭제")
                                                                                 appleSnapshot.getRef().removeValue()
 
 
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                Log.d("zczc","내꺼 삭제 안함"+selectdatstr!!)
                                                                             }
                                                                         }
 
@@ -407,7 +417,7 @@ class ApplyActivity : AppCompatActivity()
                                                                 val delquery1: Query = Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
                                                                         .child(Apply_Spinner_PersonNum.selectedItem.toString()).orderByChild("name").equalTo(find!!.name)
 
-                                                                delquery1.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                delquery1.addValueEventListener(object : ValueEventListener {
                                                                     override fun onCancelled(p0: DatabaseError) {
                                                                     }
 
@@ -419,7 +429,12 @@ class ApplyActivity : AppCompatActivity()
                                                                             if(appleSnapshot.child("date").getValue(true).toString().equals(selectdatstr!!)) {
 
                                                                                 appleSnapshot.getRef().removeValue()
+                                                                                Log.d("zczc","상대꺼 삭제")
 
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                Log.d("zczc","상대꺼 삭제 안함"+selectdatstr!!)
                                                                             }
                                                                         }
 
