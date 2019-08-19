@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/pushedhouse"
         android:state_selected="true"></item>
-    <item android:drawable="@drawable/chaticon4"></item>
+    <item android:drawable="@drawable/house2d"></item>
 
 
 </selector>
