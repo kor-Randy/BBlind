@@ -22,7 +22,7 @@ class ChatRoom : Fragment() {
     private lateinit var list: ListView
     private lateinit var imageview: ImageView
     var posi : Int?=null
-    var cd : ChatRoomListData? = null
+
     var al = ArrayList<ChatRoomListData>()
     var all = ArrayList<ChatRoomListData>()
     private var mFirebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -70,6 +70,7 @@ class ChatRoom : Fragment() {
                 }
 
                 override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+
                 }
 
                 override fun onChildRemoved(p0: DataSnapshot) {
@@ -87,9 +88,9 @@ class ChatRoom : Fragment() {
                     al.removeAll(al);
 
                     for (i in 0..MainActivity.crd!!.ChatRoom.size - 1) {
-
-
-                        cd = p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").getValue(ChatRoomListData::class.java) as ChatRoomListData
+                        Log.d("zczc","사이즈"+MainActivity.crd!!.ChatRoom.size.toString())
+                        Log.d("zczc",MainActivity.crd!!.ChatRoom[i])
+                      val  cd = p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").getValue(ChatRoomListData::class.java) as ChatRoomListData
 
                         al.add(cd!!)
 
@@ -331,18 +332,19 @@ class ChatRoom : Fragment() {
                                             Log.d("zczc111", "4")
 
                                             MainActivity.crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
+
                                             for (i in 0..MainActivity.crdd!!.Token.size - 1) {
                                                 MainActivity.crdd!!.Token.remove(p0.child("Account").child(MainActivity.Myuid!!).child("fcmToken").getValue(true))
                                             }
                                             for (i in 0..MainActivity.crdd!!.ChatRoom.size - 1) {
-                                                MainActivity.crdd!!.ChatRoom.remove(MainActivity.ChatRoomNum!!)
+                                                MainActivity.crdd!!.ChatRoom.remove(MainActivity.nowChatRoomNum!!)
                                             }
 
                                             for (i in 0..MainActivity.crd!!.Token.size - 1) {
                                                 MainActivity.crd!!.Token.remove(p0.child("Account").child(strr!!).child("fcmToken").getValue(true))
                                             }
                                             for (i in 0..MainActivity.crd!!.ChatRoom.size - 1) {
-                                                MainActivity.crd!!.ChatRoom.remove(MainActivity.ChatRoomNum!!)
+                                                MainActivity.crd!!.ChatRoom.remove(MainActivity.nowChatRoomNum!!)
                                             }
 
 

@@ -1,6 +1,8 @@
 package com.test.moon.bblind
 
 import android.app.Activity
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.icu.text.SimpleDateFormat
@@ -59,8 +61,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         activity = this
+        //어플의 모든 푸시알림 삭제
+        val  notifiyMgr : NotificationManager= getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-
+        notifiyMgr.cancelAll();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
@@ -78,9 +82,11 @@ class MainActivity : AppCompatActivity() {
                 if(auth!!.currentUser==null)
                 {
                     myuid = null
+                    loginButton.visibility=View.VISIBLE
                 }
                 else if(p0.child("Account").child(auth!!.currentUser!!.uid).exists())
                 {
+                    loginButton.visibility=View.GONE
                     myuid = auth!!.currentUser!!.uid
                 }
 
@@ -224,7 +230,7 @@ class MainActivity : AppCompatActivity() {
 
 
                             val delquery: Query = myRef.child("Apply").child("SubwayStation").child(s1)
-                                    .child(s2).orderByChild("name").equalTo(str)
+                                    .child(s2).child(Mysex!!).orderByChild("name").equalTo(str)
 
 
                             delquery.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -269,7 +275,7 @@ class MainActivity : AppCompatActivity() {
                     //아이디가 존재할 경우 && 매칭상대가 존재할 경우
 
 
-
+                    Log.d("crdcheck","오잖아")
                     crd = p0.child("Account").child(str).child("ChatNum").getValue(ChatRoomData::class.java)!!
                     if(crd!!.ChatRoom.size>0) {
                         for (i in 0..crd!!.ChatRoom.size - 1) {

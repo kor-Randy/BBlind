@@ -1,4 +1,5 @@
 package com.test.moon.bblind
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -64,7 +65,7 @@ class Home : Fragment(), View.OnClickListener
             {
 
                             val it : Intent = Intent(activity,ApplyActivity::class.java)
-                            startActivityForResult(it,0)
+                            startActivity(it)
 
             }
 
@@ -79,6 +80,8 @@ class Home : Fragment(), View.OnClickListener
         }
 
     }
+
+
 
 
 }

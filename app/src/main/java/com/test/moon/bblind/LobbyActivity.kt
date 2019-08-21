@@ -41,7 +41,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     private val backpress : BackPress = BackPress(this)
     private lateinit var adapter : ViewPagerAdapter
-    internal val tabIcons = intArrayOf(R.drawable.homed,R.drawable.chatd, R.drawable.heartd)
+    internal val tabIcons = intArrayOf(R.drawable.homed,R.drawable.chatd, R.drawable.heartd, R.drawable.gamed)
     private var viewPager: ViewPager? = null
     private var tabLayout: TabLayout? = null
     val database : FirebaseDatabase? = FirebaseDatabase.getInstance()
@@ -51,9 +51,10 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
     override fun onResume() {
         super.onResume()
 
-        if(MainActivity.applyactivity!=null)
-        MainActivity.applyactivity!!.finish()
-
+        if(MainActivity.nowAc.equals("apply")) {
+            Toast.makeText(this@LobbyActivity,"Apply종료",Toast.LENGTH_LONG).show()
+            MainActivity.applyactivity!!.finish()
+        }
         if(MainActivity.Accountactivity!=null)
         {
             MainActivity.Accountactivity!!.finish()
@@ -67,14 +68,14 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
-
+        Toast.makeText(this@LobbyActivity,"LobbyActivityCreate",Toast.LENGTH_LONG).show()
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
 
-        val fab : FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { val intent = Intent(this@LobbyActivity, roulette::class.java) ; startActivity(intent) }
-
+        // val fab : FloatingActionButton = findViewById(R.id.fab)
+        // fab.setOnClickListener { val intent = Intent(this@LobbyActivity, roulette::class.java) ; startActivity(intent) }
+        
         viewPager = findViewById(R.id.viewpager)
         setupViewPager(viewPager)
         tabLayout = findViewById(R.id.tabs)
@@ -92,12 +93,32 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
 
 
+        myRef.child("Account").child(MainActivity.Myuid!!).child("ChatNum").addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                if(p0.exists()) {
+                    Log.d("crdcheck", "Change바뀌기전 crd 사이즈 : " + MainActivity.crd!!.ChatRoom.size)
+                    MainActivity.crd = p0.getValue(ChatRoomData::class.java)!!
+                    Log.d("crdcheck", "Change바뀐후 crd 사이즈 : " + MainActivity.crd!!.ChatRoom.size)
+                }
+
+            }
+        })
+
+
+
     }
 
 
 
 
-    override fun onBackPressed() {
+    override fun onBackPressed()
+    {
         val activity = MainActivity.activity as MainActivity
         activity.finish()
 
@@ -240,7 +261,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
     }
 
     private fun setupTabIcons() {
-        for(i in 0..2) {
+        for(i in 0..3) {
             val view1 = layoutInflater.inflate(R.layout.customtab, null) as View
             view1.findViewById<ImageView>(R.id.icon).setBackgroundResource(tabIcons[i])
             tabLayout!!.getTabAt(i)!!.setCustomView(view1)
@@ -253,6 +274,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         adapter.addFrag(Home(), "HOME")
         adapter.addFrag(ChatRoom(), "CHAT")
         adapter.addFrag(Store(), "STORE")
+        adapter.addFrag(Game(),"GAME")
         //adapter.addFrag(heart(), "HEART")
         viewPager!!.adapter = adapter
         viewPager.offscreenPageLimit= 7         // 한번에 5개의 ViewPager를 띄우겠다 -> 성능향상
@@ -262,7 +284,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         Log.d("Activity","InActivity")
         super.onActivityResult(requestCode, resultCode, data)
         val fragmentManager = supportFragmentManager
-        val fragment = adapter.getItem(2)
+        val fragment = adapter.getItem(3)
         if (fragment != null) {
             Log.d("Activity","toFragment")
             (fragment as Store).onActivityResult(requestCode, resultCode, data)
@@ -273,6 +295,8 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
 
     }
+
+
 
     ///////////////////////////////////// Adapter ///////////////////////////////////////////////////////////////
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {

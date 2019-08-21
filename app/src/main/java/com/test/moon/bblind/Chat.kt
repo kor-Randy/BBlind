@@ -285,14 +285,19 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                                     val notification = JSONObject()
                                     notification.put("body", message)
                                     notification.put("title", getString(R.string.app_name))
+
                                     root.put("notification", notification)
+                                    root.put("collapse_key", "Chat")
                                     root.put("to", MainActivity.nowToken)   // FMC 메시지 생성 end
+
 
                                     val Url = URL(FCM_MESSAGE_URL)
                                     val conn = Url.openConnection() as HttpURLConnection
+
                                     conn.requestMethod = "POST"
                                     conn.doOutput = true
                                     conn.doInput = true
+
                                     conn.addRequestProperty("Authorization", "key=$SERVER_KEY")
                                     conn.setRequestProperty("Accept", "application/json")
                                     conn.setRequestProperty("Content-type", "application/json")

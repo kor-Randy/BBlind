@@ -79,7 +79,7 @@ class CheckApplyActivity :AppCompatActivity()
 
 
 
-            ref.child("Apply").child("SubwayStation").child(s1[i]).child(s2[i]).orderByChild("name").equalTo(MainActivity.Myuid!!).addListenerForSingleValueEvent(object: ValueEventListener {
+            ref.child("Apply").child("SubwayStation").child(s1[i]).child(s2[i]).child(MainActivity.Mysex!!).orderByChild("name").equalTo(MainActivity.Myuid!!).addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
 
 
@@ -110,7 +110,7 @@ class CheckApplyActivity :AppCompatActivity()
                     v7 = v7!!.split("=")[1]
 
 
-                    var cc: CheckString = CheckString(s1[i], v1!!, v4!!+":00 ~ "+v5!!+":00", s2[i])
+                    var cc: CheckString = CheckString(s1[i], s3[i]!!, v4!!+":00 ~ "+v5!!+":00", s2[i])
 
                     stringdata!!.add(cc)
 
@@ -141,7 +141,7 @@ class CheckApplyActivity :AppCompatActivity()
                             override fun onClick(p0: DialogInterface?, p1: Int) {
 
                                 val delquery: Query = ref.child("Apply").child("SubwayStation").child(s1[position+1])
-                                        .child(s2[position+1]).orderByChild("name").equalTo(MainActivity.Myuid!!)
+                                        .child(s2[position+1]).child(MainActivity.Mysex!!).orderByChild("name").equalTo(MainActivity.Myuid!!)
 
 
                                 delquery.addListenerForSingleValueEvent(object : ValueEventListener {

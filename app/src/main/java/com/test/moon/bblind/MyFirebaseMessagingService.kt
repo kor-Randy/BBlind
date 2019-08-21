@@ -1,5 +1,7 @@
 package com.test.moon.bblind
 import android.app.Notification
+import android.app.NotificationManager
+import android.content.Context
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
@@ -18,10 +20,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     .setSmallIcon(R.mipmap.ic_launcher) // 알림 영역에 노출 될 아이콘.
                     .setContentTitle(getString(R.string.app_name)) // 알림 영역에 노출 될 타이틀
                     .setContentText(body) // Firebase Console 에서 사용자가 전달한 메시지내용
+                    .setNumber(0)
                     .setDefaults(Notification.DEFAULT_VIBRATE)
 
-            val notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext())
-            notificationManagerCompat.notify(0x1001, notificationBuilder.build())
+            val no : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            no.notify(0,notificationBuilder.build())
+
+
+
+
+
+
         }
     }
 
