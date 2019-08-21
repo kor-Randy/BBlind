@@ -52,7 +52,7 @@ class SubwayPopup : Activity()
         }
 
 
-        val adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,subList)
+        val adapter = ArrayAdapter<String>(this,R.layout.list_black,R.id.list_content,subList)
         var SubString : String =""
         Pop_List_Subway.adapter = adapter
 

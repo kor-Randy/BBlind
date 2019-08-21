@@ -12,10 +12,11 @@
         <TextView
             android:id="@+id/Game_Name"
             android:text="Notice"
+            android:fontFamily="@font/bmx"
             android:textSize="20sp"
             android:textColor="#fff"
             android:gravity="center"
-            android:background="#ff7a00"
+            android:background="#ff857b"
             android:layout_width="match_parent"
             android:layout_height="53dp" />
     </LinearLayout>
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/Game_Explain"
+            android:fontFamily="@font/bmx"
             android:text="헤헤헤헤헤헤!"
             android:inputType="textMultiLine"
             android:textSize="15sp"
@@ -50,7 +52,7 @@
         <Button
             android:text="확인"
             android:textSize="15sp"
-            android:textColor="#ff7a00"
+            android:textColor="#262626"
             android:padding="16dp"
             android:gravity="center"
             android:background="#00000000"

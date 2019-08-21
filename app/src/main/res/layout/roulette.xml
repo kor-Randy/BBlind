@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="500dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     >
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1"/>
-    <LinearLayout
-        android:layout_width="300dp"
+        android:layout_weight="0.05"/>
+    <TextView
+        android:textColor="#1d1d1d"
+        android:gravity="center"
+        android:text="술게임 룰렛"
+        android:fontFamily="@font/bmx"
+        android:textSize="40sp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2"
+        android:layout_weight="0.1"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
         android:orientation="horizontal">
         <ImageView
             android:layout_width="0dp"
@@ -21,7 +35,11 @@
             android:layout_weight="0.1"/>
         <ToggleButton
             android:id="@+id/childbtn"
-            android:text = "유아"
+            android:background="@android:drawable/editbox_background_normal"
+            android:backgroundTint="#a6e3ff"
+            android:fontFamily="@font/bmx"
+            android:text="일반"
+            android:textSize="30sp"
             android:layout_width="0dp"
             android:layout_weight="0.3"
             android:layout_height="match_parent" />
@@ -31,7 +49,11 @@
             android:layout_weight="0.2"/>
         <ToggleButton
             android:id="@+id/adultbtn"
+            android:background="@android:drawable/editbox_background_normal"
+            android:backgroundTint="#ffc7c3"
+            android:fontFamily="@font/bmx"
             android:text="성인"
+            android:textSize="30sp"
             android:layout_weight="0.3"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
@@ -40,21 +62,27 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.1"/>
     </LinearLayout>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.1"/>
-    <ImageButton
-        android:layout_weight="0.6"
-        android:id="@+id/btn"
-        android:layout_width="250dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_centerInParent="true"
 
-        android:background="@drawable/roullet2">
+    <ImageButton
+        android:id="@+id/btn"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+
+
+        android:background="@drawable/roul">
 
     </ImageButton>
+    <TextView
+        android:textColor="#1d1d1d"
+        android:gravity="center"
+        android:text="돌려주세요!!"
+        android:fontFamily="@font/bmx"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
