@@ -46,9 +46,9 @@ class AlarmSetting : AppCompatActivity()
         }
 
         if (App.equals("true")) {
-            tb1!!.setChecked(true)
+            tb2!!.setChecked(true)
         } else {
-            tb1!!.setChecked(false)
+            tb2!!.setChecked(false)
         }
 
 

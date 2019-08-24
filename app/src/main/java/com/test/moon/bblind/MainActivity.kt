@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.icu.text.SimpleDateFormat
 import android.os.Build
@@ -36,6 +38,7 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.util.exception.KakaoException
 
 import android.os.Handler
+import android.util.Base64
 import android.widget.Toast
 import com.android.volley.*
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -43,6 +46,9 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_apply.*
 
 import org.json.JSONObject
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import java.security.Signature
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -60,6 +66,10 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
+
+
+
+
         activity = this
         //어플의 모든 푸시알림 삭제
         val  notifiyMgr : NotificationManager= getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -73,30 +83,44 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
 
-        myRef.addListenerForSingleValueEvent(object: ValueEventListener {
+        Log.d("crdcheck","first"+auth!!.currentUser)
+        if(auth!!.currentUser==null)
+        {
+            Log.d("crdcheck","1111"+auth!!.currentUser)
+            myuid = null
+            loginButton.visibility=View.VISIBLE
+        }
+        else
+        {
+
+            loginButton.visibility=View.GONE
+            myuid = auth!!.currentUser!!.uid
+        }
+        updateUI()
+
+       /* myRef.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
 
-                if(auth!!.currentUser==null)
+
+
+                if(p0.child("Account").child(auth!!.currentUser!!.uid).exists())
                 {
-                    myuid = null
-                    loginButton.visibility=View.VISIBLE
-                }
-                else if(p0.child("Account").child(auth!!.currentUser!!.uid).exists())
-                {
+                    Log.d("crdcheck","2222"+auth!!.currentUser)
                     loginButton.visibility=View.GONE
                     myuid = auth!!.currentUser!!.uid
                 }
+                Log.d("crdcheck","second"+auth!!.currentUser)
 
-                updateUI()
             }
-        })
+        })*/
 
 
         Session.getCurrentSession().addCallback(KakaoSessionCallback())
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -107,6 +131,7 @@ class MainActivity : AppCompatActivity() {
      * Update UI based on Firebase's current user. Show Login Button if not logged in.
      */
     private fun updateUI() {
+        Log.d("crdcheck","updateUI"+myuid)
         if (!myuid.equals(null)) {
             loginButton.visibility = View.INVISIBLE
             binding!!.setCurrentUser(auth!!.currentUser)
