@@ -75,7 +75,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         // val fab : FloatingActionButton = findViewById(R.id.fab)
         // fab.setOnClickListener { val intent = Intent(this@LobbyActivity, roulette::class.java) ; startActivity(intent) }
-        
+
         viewPager = findViewById(R.id.viewpager)
         setupViewPager(viewPager)
         tabLayout = findViewById(R.id.tabs)
