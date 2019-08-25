@@ -331,6 +331,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
                                     crdd = p0.child("Account").child(strr).child("ChatNum").getValue(ChatRoomData::class.java)!!
                                     for (i in 0..crdd!!.Token.size - 1) {
                                         crdd!!.Token.remove(p0.child("Account").child(Myuid!!).child("fcmToken").getValue(true))

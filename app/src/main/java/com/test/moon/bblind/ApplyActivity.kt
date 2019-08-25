@@ -99,6 +99,15 @@ class ApplyActivity : AppCompatActivity()
         Apply_Spinner_Before_Time.adapter = timespinadapter
         Apply_Spinner_Average_Drink.adapter = drinkspinadapter
 
+        sex = MainActivity.Mysex
+        if(sex.equals("Man"))
+        {
+            oppositesex = "Woman"
+        }
+        else
+        {
+            oppositesex = "Man"
+        }
 
         //  Apply_Toggle_Sex.
 
@@ -200,15 +209,7 @@ class ApplyActivity : AppCompatActivity()
 
                             id = user!!.uid
 
-                            sex = MainActivity.Mysex
-                            if(sex.equals("Man"))
-                            {
-                                oppositesex = "Woman"
-                            }
-                            else
-                            {
-                                oppositesex = "Man"
-                            }
+
 
 
 
@@ -251,21 +252,23 @@ class ApplyActivity : AppCompatActivity()
                                 override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                                     //메소드가 find의 개수만큼 실행된다.
                                     //ex) 3개 있으면 메소드가 3번 실행됨
-                                    var finddate: String? = null
-                                    var findsex: String? = null
-                                    var findfrom: String? = null
-                                    var findto: String? = null
-                                    var findname: String? = null
+
+                                    if (Match == false) {
+                                        var finddate: String? = null
+                                        var findsex: String? = null
+                                        var findfrom: String? = null
+                                        var findto: String? = null
+                                        var findname: String? = null
 
 
 
 
-                                            find = p0.getValue(IdData::class.java)
-                                            finddate = find!!.date!!
-                                            findsex = find!!.sex!!
-                                            findfrom = find!!.from!!
-                                            findto = find!!.to!!
-                                            findname = find!!.name!!
+                                        find = p0.getValue(IdData::class.java)
+                                        finddate = find!!.date!!
+                                        findsex = find!!.sex!!
+                                        findfrom = find!!.from!!
+                                        findto = find!!.to!!
+                                        findname = find!!.name!!
 
 
                                         if (selectdatstr.equals(finddate)) {
@@ -396,7 +399,7 @@ class ApplyActivity : AppCompatActivity()
 
 
 
-                                                                     ref.child("Apply").child("SubwayStation").child(Apply_Textview_Subway.text.toString())
+                                                                ref.child("Apply").child("SubwayStation").child(Apply_Textview_Subway.text.toString())
                                                                         .child(Apply_Spinner_PersonNum.selectedItem.toString()).child(sex!!).orderByChild("date").equalTo(selectdatstr).addListenerForSingleValueEvent(object : ValueEventListener {
                                                                             override fun onCancelled(p0: DatabaseError) {
 
@@ -471,7 +474,7 @@ class ApplyActivity : AppCompatActivity()
                                                                 iddata = null
                                                                 find = null
                                                                 Match = true
-
+                                                                finish()
                                                             } else {
                                                             }
 
@@ -483,7 +486,6 @@ class ApplyActivity : AppCompatActivity()
 
 
                                                     Log.d("zczc", "finish 1번")
-                                                    finish()
 
 
                                                 } else {
@@ -494,15 +496,12 @@ class ApplyActivity : AppCompatActivity()
                                             }
 
 
-
-
-
+                                        }
                                     }
                                 }
+                                    override fun onChildRemoved(p0: DataSnapshot) {
 
-                                override fun onChildRemoved(p0: DataSnapshot) {
-
-                                }
+                                    }
 
 
                             })

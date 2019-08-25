@@ -27,6 +27,7 @@ class ChatRoom : Fragment() {
     var all = ArrayList<ChatRoomListData>()
     private var mFirebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     val ref : DatabaseReference = mFirebaseDatabase.reference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -58,25 +59,7 @@ class ChatRoom : Fragment() {
             }
 
 
-            ref.child("Chat").addChildEventListener(object : ChildEventListener {
-                override fun onCancelled(p0: DatabaseError) {
 
-                }
-
-                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                }
-
-                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                }
-
-                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-
-                }
-
-                override fun onChildRemoved(p0: DataSnapshot) {
-
-                }
-            })
 
             ref.child("Chat").addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
@@ -90,7 +73,16 @@ class ChatRoom : Fragment() {
                     for (i in 0..MainActivity.crd!!.ChatRoom.size - 1) {
                         Log.d("zczc","사이즈"+MainActivity.crd!!.ChatRoom.size.toString())
                         Log.d("zczc",MainActivity.crd!!.ChatRoom[i])
-                      val  cd = p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").getValue(ChatRoomListData::class.java) as ChatRoomListData
+                        var cd : ChatRoomListData = ChatRoomListData()
+                        cd.ChatRoomNum= p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").child("chatRoomNum").getValue(true).toString()!!
+                        cd.LastMsg= p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").child("lastMsg").getValue(true).toString()!!
+                        cd.ManMsg= p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").child("manMsg").getValue(true).toString()!!
+                        cd.MeetDate= p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").child("meetDate").getValue(true).toString()!!
+                        cd.PersonNum= p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").child("personNum").getValue(true).toString()!!
+                        cd.Subway= p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").child("subway").getValue(true).toString()!!
+                        cd.WomanMsg= p0.child(MainActivity.crd!!.ChatRoom[i]).child("Info").child("ChatRoomList").child("womanMsg").getValue(true).toString()!!
+
+                        Log.d("zczc", cd.ChatRoomNum+"/"+cd.LastMsg+"/"+cd.ManMsg+"/"+cd.MeetDate+"/"+cd.PersonNum+"/"+cd.Subway+"/"+cd.WomanMsg)
 
                         al.add(cd!!)
 

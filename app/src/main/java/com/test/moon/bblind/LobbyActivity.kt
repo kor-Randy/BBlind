@@ -284,7 +284,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         Log.d("Activity","InActivity")
         super.onActivityResult(requestCode, resultCode, data)
         val fragmentManager = supportFragmentManager
-        val fragment = adapter.getItem(3)
+        val fragment = adapter.getItem(2)
         if (fragment != null) {
             Log.d("Activity","toFragment")
             (fragment as Store).onActivityResult(requestCode, resultCode, data)
