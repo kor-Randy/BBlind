@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_editor_absoluteY="105dp">
+
+
     <ImageView
         app:layout_constraintVertical_chainStyle="packed"
         android:id="@+id/pad1"
@@ -19,19 +21,43 @@
         app:layout_constraintHeight_percent="0.05"
         />
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/img"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
-        android:background="@drawable/char2"
+        android:orientation="vertical"
+        android:background="@android:drawable/editbox_background"
         app:layout_constraintBottom_toTopOf="@+id/pad2"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pad1"
-        app:layout_constraintWidth_percent="0.8" />
+        app:layout_constraintWidth_percent="0.8" >
+
+        <TextView
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:fontFamily="@font/bmx"
+            android:textSize="25sp"
+            android:textColor="#ff8f84"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:text="HOT!!"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e26d6d"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.85">
+
+        </ListView>
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/pad2"
         android:layout_width="wrap_content"

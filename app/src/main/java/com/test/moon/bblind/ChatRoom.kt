@@ -20,7 +20,7 @@ import kotlin.collections.ArrayList
 
 class ChatRoom : Fragment() {
     private lateinit var list: ListView
-    private lateinit var imageview: ImageView
+    private lateinit var layout : LinearLayout
     var posi : Int?=null
 
     var al = ArrayList<ChatRoomListData>()
@@ -43,12 +43,12 @@ class ChatRoom : Fragment() {
         if(MainActivity.crd!!.ChatRoom.size>0)
         {
             list.visibility=View.VISIBLE
-            imageview.visibility = View.GONE
+            layout.visibility = View.GONE
         }
         else
         {
             list.visibility=View.GONE
-            imageview.visibility = View.VISIBLE
+            layout.visibility = View.VISIBLE
         }
 
 
@@ -118,16 +118,16 @@ class ChatRoom : Fragment() {
         val view = inflater!!.inflate(R.layout.chat, container, false) as View
 
         list = view.findViewById(R.id.list)
-        imageview = view.findViewById(R.id.imageView)
+        layout = view.findViewById(R.id.check_chat)
         if(MainActivity.crd!!.ChatRoom.size>0)
         {
             list.visibility=View.VISIBLE
-            imageview.visibility = View.GONE
+            layout.visibility = View.GONE
         }
         else
         {
             list.visibility=View.GONE
-            imageview.visibility = View.VISIBLE
+            layout.visibility = View.VISIBLE
         }
 
 
