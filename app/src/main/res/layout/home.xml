@@ -39,23 +39,70 @@
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15"
+            android:layout_weight="0.11"
             android:fontFamily="@font/bmx"
-            android:textSize="25sp"
-            android:textColor="#ff8f84"
+            android:textSize="22sp"
+            android:textColor="#ff877b"
             android:textStyle="bold"
             android:gravity="center_vertical"
             android:text="HOT!!"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:background="#e26d6d"/>
-        <ListView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.85">
+            android:layout_weight="0.03"
+            />
+        <Button
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:fontFamily="@font/bmx"
+            android:textColor="#ffa2a2"
+            android:textSize="20sp"
+            android:text="신촌역"
+            android:background="@android:drawable/editbox_background"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.03"
+            />
+        <Button
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:fontFamily="@font/bmx"
+            android:textColor="#ffa2a2"
+            android:textSize="20sp"
+            android:text="홍대입구역"
+            android:background="@android:drawable/editbox_background"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.03"
+            />
+        <Button
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:fontFamily="@font/bmx"
+            android:textColor="#ffa2a2"
+            android:textSize="20sp"
+            android:text="강남역"
+            android:background="@android:drawable/editbox_background"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.03"
+            />
 
-        </ListView>
+
+
     </LinearLayout>
 
     <ImageView
