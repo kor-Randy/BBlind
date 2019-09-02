@@ -3,10 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:fontFamily="@font/bmx"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:text="자주묻는 질문"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="#000000"
+        android:layout_marginBottom="20dp"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -15,135 +29,163 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="10dp"
                     android:text="계정삭제를 하고 싶습니다." />
 
                 <TextView
                     android:id="@+id/qna1"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:layout_marginBottom="10dp"
                     android:text="TextView" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="10dp"
                     android:text="마카롱을 결제했는데 마카롱이 들어오지 않아요." />
 
                 <TextView
                     android:id="@+id/qna2"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:layout_marginBottom="10dp"
                     android:text="TextView" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
+                    android:fontFamily="@font/bmx"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#000000"
                     android:text="푸시 알림을 끄고 싶어요." />
 
                 <TextView
                     android:id="@+id/qna3"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="2"
                     android:text="TextView" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
                     android:textSize="20sp"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
                     android:text="어플리케이션이 가끔씩 깜빡거려요." />
 
                 <TextView
                     android:id="@+id/qna4"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="TextView" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:textSize="20sp"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
                     android:text="추천하기 이벤트는 무엇인가요?" />
 
                 <TextView
                     android:id="@+id/qna5"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="TextView" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
                     android:textSize="20sp"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
                     android:text="이뤄진 매칭(채팅방)을 삭제하고 싶어요." />
 
                 <TextView
                     android:id="@+id/qna6"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="2"
                     android:text="TextView" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
                     android:textSize="20sp"
+                    android:fontFamily="@font/bmx"
+                    android:textColor="#000000"
                     android:text="상대방을 신고하고 싶어요." />
 
                 <TextView
                     android:id="@+id/qna7"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:layout_marginBottom="10dp"
                     android:text="TextView" />
             </LinearLayout>
         </LinearLayout>
