@@ -21,6 +21,7 @@ import kotlin.collections.ArrayList
 class ChatRoom : Fragment() {
     private lateinit var list: ListView
     private lateinit var layout : LinearLayout
+    private lateinit var bu : Button
     var posi : Int?=null
 
     var al = ArrayList<ChatRoomListData>()
@@ -30,6 +31,8 @@ class ChatRoom : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
     }
 
     override fun onResume() {
@@ -38,6 +41,7 @@ class ChatRoom : Fragment() {
        all = ArrayList<ChatRoomListData>()
         MainActivity.crdtemp =  ChatRoomData()
         al = all
+
 
 
         if(MainActivity.crd!!.ChatRoom.size>0)
@@ -119,6 +123,7 @@ class ChatRoom : Fragment() {
 
         list = view.findViewById(R.id.list)
         layout = view.findViewById(R.id.check_chat)
+        bu = view.findViewById(R.id.chat_apply)
         if(MainActivity.crd!!.ChatRoom.size>0)
         {
             list.visibility=View.VISIBLE
@@ -130,6 +135,14 @@ class ChatRoom : Fragment() {
             layout.visibility = View.VISIBLE
         }
 
+        bu.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+
+                val it : Intent = Intent(activity,ApplyActivity::class.java)
+                startActivity(it)
+
+            }
+        })
 
         list.setOnItemLongClickListener(object: AdapterView.OnItemLongClickListener {
             override fun onItemLongClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long): Boolean {

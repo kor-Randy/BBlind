@@ -47,14 +47,15 @@
             />
 
         <Button
+            android:id="@+id/chat_apply"
             android:layout_width="200dp"
             android:layout_height="60dp"
-            android:layout_gravity="center"
 
+            android:layout_gravity="center"
+            android:background="@android:drawable/editbox_background"
             android:fontFamily="@font/bmx"
-            android:textSize="15sp"
             android:text="신청하기"
-            android:background="@android:drawable/editbox_background" />
+            android:textSize="15sp" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"

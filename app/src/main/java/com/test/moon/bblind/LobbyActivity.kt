@@ -36,6 +36,7 @@ import com.kakao.network.callback.ResponseCallback
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.util.helper.log.Logger
+import com.test.moon.bblind.MainActivity.Companion.activity
 
 class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
 
@@ -68,9 +69,12 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
+
+
         Toast.makeText(this@LobbyActivity,"LobbyActivityCreate",Toast.LENGTH_LONG).show()
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
+
 
 
         // val fab : FloatingActionButton = findViewById(R.id.fab)

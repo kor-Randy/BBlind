@@ -65,8 +65,11 @@ class MainActivity : AppCompatActivity() {
     val myRef : DatabaseReference = database!!.reference
     var auth : FirebaseAuth?=null
     var myuid : String? = null
-    var license1 : TextView? = null
-    var license2 : TextView? = null
+    var tv_license1 : TextView? = null
+    var tv_license2 : TextView? = null
+    var tv1 : TextView? = null
+    var tv2 : TextView? = null
+    var tv3 : TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -83,20 +86,43 @@ class MainActivity : AppCompatActivity() {
         notifiyMgr.cancelAll();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        license1 = findViewById(R.id.textView4)
-        license2 = findViewById(R.id.textView5)
+        tv_license1 = findViewById(R.id.Main_text2)
+        tv_license2 = findViewById(R.id.Main_text4)
 
         val content : SpannableString = SpannableString("이용약관")
         content.setSpan(UnderlineSpan(),0,content.length,0)
-        license1!!.setText(content)
+        tv_license1!!.setText(content)
 
         val content1 : SpannableString = SpannableString("개인정보취급방침")
         content1.setSpan(UnderlineSpan(),0,content1.length,0)
-        license2!!.setText(content1)
+        tv_license2!!.setText(content1)
+
+        tv1 = findViewById(R.id.Main_text1)
+        tv2 = findViewById(R.id.Main_text3)
+        tv3 = findViewById(R.id.Main_text5)
 
         loginButton = findViewById<View>(R.id.login_button) as LoginButton
 
         auth = FirebaseAuth.getInstance()
+
+        tv_license1!!.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+
+                val intent = Intent(this@MainActivity, license1::class.java)
+
+                startActivity(intent)
+
+            }
+        })
+        tv_license2!!.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+
+                val intent = Intent(this@MainActivity, license2::class.java)
+
+                startActivity(intent)
+
+            }
+        })
 
 
         Log.d("crdcheck","first"+auth!!.currentUser)
@@ -105,11 +131,21 @@ class MainActivity : AppCompatActivity() {
             Log.d("crdcheck","1111"+auth!!.currentUser)
             myuid = null
             loginButton.visibility=View.VISIBLE
+            tv1!!.visibility = View.VISIBLE
+            tv2!!.visibility = View.VISIBLE
+            tv3!!.visibility = View.VISIBLE
+            tv_license1!!.visibility = View.VISIBLE
+            tv_license2!!.visibility = View.VISIBLE
         }
         else
         {
 
             loginButton.visibility=View.GONE
+            tv1!!.visibility = View.GONE
+            tv2!!.visibility = View.GONE
+            tv3!!.visibility = View.GONE
+            tv_license1!!.visibility = View.GONE
+            tv_license2!!.visibility = View.GONE
             myuid = auth!!.currentUser!!.uid
         }
         updateUI()

@@ -1,6 +1,7 @@
 package com.test.moon.bblind
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.google.firebase.database.*
+import com.test.moon.bblind.MainActivity.Companion.activity
 import com.test.moon.bblind.MainActivity.Companion.checkapplylist
 import kotlinx.android.synthetic.main.activity_apply.*
 
@@ -42,6 +44,7 @@ class CheckApplyActivity :AppCompatActivity()
 
         setContentView(R.layout.activity_check_apply)
 
+        val bu : Button = findViewById(R.id.check_apply)
 
         MainActivity.nowAc="CheckApplyActivity"
 
@@ -58,6 +61,15 @@ class CheckApplyActivity :AppCompatActivity()
             lv!!.visibility = View.GONE
             iv!!.visibility = View.VISIBLE
         }
+
+        bu.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+
+                val it : Intent = Intent(activity,ApplyActivity::class.java)
+                startActivity(it)
+
+            }
+        })
 
 
         s1.add("check")

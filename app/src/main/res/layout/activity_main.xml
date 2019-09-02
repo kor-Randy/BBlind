@@ -26,64 +26,64 @@
             android:padding="16dp" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/Main_text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="201dp"
-            android:text="아래의 버튼을 눌러 회원 가입시"
             android:gravity="center"
+            android:text="아래의 버튼을 눌러 회원 가입시"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/Main_text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="72dp"
             android:layout_marginBottom="157dp"
-            android:text="이용약관"
-
             android:gravity="center"
+
+            android:text="이용약관"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/Main_text3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="142dp"
             android:layout_marginBottom="157dp"
-            android:text=" / "
             android:gravity="center"
+            android:text=" / "
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/Main_text4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="162dp"
             android:layout_marginBottom="157dp"
-            android:text="개인정보취급방침"
             android:gravity="center"
+            android:text="개인정보취급방침"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/Main_text5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="2dp"
             android:layout_marginBottom="118dp"
-            android:text="에 동의한 것이 됩니다."
             android:gravity="center"
+            android:text="에 동의한 것이 됩니다."
             android:textSize="20sp" />
 
 
