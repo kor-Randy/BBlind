@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
+import android.graphics.Paint
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +18,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.LinearLayout
 
 import com.android.volley.toolbox.JsonObjectRequest
@@ -38,6 +40,8 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.util.exception.KakaoException
 
 import android.os.Handler
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Base64
 import android.widget.Toast
 import com.android.volley.*
@@ -61,6 +65,8 @@ class MainActivity : AppCompatActivity() {
     val myRef : DatabaseReference = database!!.reference
     var auth : FirebaseAuth?=null
     var myuid : String? = null
+    var license1 : TextView? = null
+    var license2 : TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -77,6 +83,16 @@ class MainActivity : AppCompatActivity() {
         notifiyMgr.cancelAll();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        license1 = findViewById(R.id.textView4)
+        license2 = findViewById(R.id.textView5)
+
+        val content : SpannableString = SpannableString("이용약관")
+        content.setSpan(UnderlineSpan(),0,content.length,0)
+        license1!!.setText(content)
+
+        val content1 : SpannableString = SpannableString("개인정보취급방침")
+        content1.setSpan(UnderlineSpan(),0,content1.length,0)
+        license2!!.setText(content1)
 
         loginButton = findViewById<View>(R.id.login_button) as LoginButton
 

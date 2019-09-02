@@ -1,5 +1,6 @@
 package com.test.moon.bblind
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
@@ -78,55 +79,19 @@ class Account : AppCompatActivity()
 
             var permissionResult = checkSelfPermission(android.Manifest.permission.READ_PHONE_STATE)
 
-            if(permissionResult == PackageManager.PERMISSION_DENIED)
-            {
+            if(permissionResult == PackageManager.PERMISSION_DENIED) {
 
 
-                if (shouldShowRequestPermissionRationale(android.Manifest.permission.READ_PHONE_STATE))
-                {
-                    var dialog =  AlertDialog.Builder(this);
-                    dialog.setTitle("권한이 필요합니다.")
-                            .setMessage("이 기능을 사용하기 위해서는 단말기의 \"전화걸기\" 권한이 필요합니다. 계속 하시겠습니까?")
-                            .setPositiveButton("네", DialogInterface.OnClickListener()
-                            { dialogInterface: DialogInterface, i: Int ->
-                                fun onClick(dialog:DialogInterface, which:Integer)
-                            {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                                { // CALL_PHONE 권한을 Android OS에 요청한다.
-
-                                    requestPermissions(arrayOf(android.Manifest.permission.READ_PHONE_STATE), 1000)
-
-                                }
-                            }
-                            })
-                            .setNegativeButton("아니오",DialogInterface.OnClickListener()
-                            {
-                                dialogInterface: DialogInterface, i: Int ->
-
-                                fun onClick(dialog:DialogInterface , which:Integer) {
-                                    Toast.makeText(this, "기능을 취소했습니다", Toast.LENGTH_SHORT).show();
-                                }
+                if (shouldShowRequestPermissionRationale(android.Manifest.permission.READ_PHONE_STATE)) {
 
 
-                            }).create().show()
-                }
-                else
-                {
                     requestPermissions(arrayOf(android.Manifest.permission.READ_PHONE_STATE), 1000)
 
+
+                } else {
+                    Toast.makeText(this, "됐냐", Toast.LENGTH_SHORT).show()
                 }
-
-
-
-
-
-
             }
-            else
-            {
-                Toast.makeText(this,"됐냐",Toast.LENGTH_SHORT).show()
-            }
-
         }
 
 
@@ -209,93 +174,113 @@ class Account : AppCompatActivity()
 
                 MainActivity.checkapplylist!!.checklist!!.add("초기화")
 
-
-
-
-                if(Account_Edit_Inviter.text.toString().length==0)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 {
-                    myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
-                    myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
-                    myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
-                    myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
-                    myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
-                    myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
-                    myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
-                    myRef.child(currentUser!!.uid).child("heart").setValue(20)
-                    if (Account_Radio_Student.isChecked())
-                        myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
-                    else
-                        myRef.child(currentUser!!.uid).child("isStudent").setValue("N")
 
+                    var permissionResult = checkSelfPermission(android.Manifest.permission.READ_PHONE_STATE)
 
-                    firebaseanalytics!!.setUserProperty("MatchingAlarm", "true")
-                    firebaseanalytics!!.setUserProperty("AppAlarm", "true")
-
-
-                    i++
-                    MainActivity.Myuid = currentUser!!.uid
-                    DirectLobby()
-
-                }
-                else
-                {
-                    myRef.addListenerForSingleValueEvent(object : ValueEventListener
+                    if(permissionResult == PackageManager.PERMISSION_DENIED)
                     {
-                        override fun onCancelled(p0: DatabaseError)
+
+
+
+
+
+
+                        requestPermissions(arrayOf(android.Manifest.permission.READ_PHONE_STATE), 1000)
+
+                    }
+                    else
+                    {
+
+                        if(Account_Edit_Inviter.text.toString().length==0)
                         {
-
-
-
-                        }
-
-                        override fun onDataChange(p0: DataSnapshot)
-                        {
-
-                            if (p0.child(Account_Edit_Inviter.text.toString()).exists())
-                            {
-
-
-                                var Inviterheart: Int = Integer.parseInt(p0.child(Account_Edit_Inviter.text.toString()).child("heart").getValue(true).toString())
-
-                                Inviterheart += 5
-                                myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
-                                myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
-                                myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
-                                myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
-                                myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
-                                myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
-                                myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
-
-                                myRef.child(currentUser!!.uid).child("heart").setValue(30)
-                                myRef.child(Account_Edit_Inviter.text.toString()).child("heart").setValue(Inviterheart)
-                                if (Account_Radio_Student.isChecked())
-                                    myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
-                                else
-                                    myRef.child(currentUser!!.uid).child("isStudent").setValue("N")
-
-
-                                firebaseanalytics!!.setUserProperty("MatchingAlarm", "true")
-                                firebaseanalytics!!.setUserProperty("AppAlarm", "true")
-
-
-                                i++
-                                MainActivity.Myuid = currentUser!!.uid
-                                DirectLobby()
-
-                            }
+                            myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
+                            myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
+                            myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
+                            myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
+                            myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
+                            myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
+                            myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
+                            myRef.child(currentUser!!.uid).child("heart").setValue(20)
+                            if (Account_Radio_Student.isChecked())
+                                myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
                             else
+                                myRef.child(currentUser!!.uid).child("isStudent").setValue("N")
+
+
+                            firebaseanalytics!!.setUserProperty("MatchingAlarm", "true")
+                            firebaseanalytics!!.setUserProperty("AppAlarm", "true")
+
+
+                            i++
+                            MainActivity.Myuid = currentUser!!.uid
+                            DirectLobby()
+
+                        }
+                        else
+                        {
+                            myRef.addListenerForSingleValueEvent(object : ValueEventListener
                             {
+                                override fun onCancelled(p0: DatabaseError)
+                                {
 
-                                Toast.makeText(this@Account,"존재하지 않는 추천인코드입니다.",Toast.LENGTH_LONG).show()
 
-                            }
 
+                                }
+
+                                override fun onDataChange(p0: DataSnapshot)
+                                {
+
+                                    if (p0.child(Account_Edit_Inviter.text.toString()).exists())
+                                    {
+
+
+                                        var Inviterheart: Int = Integer.parseInt(p0.child(Account_Edit_Inviter.text.toString()).child("heart").getValue(true).toString())
+
+                                        Inviterheart += 5
+                                        myRef.child(currentUser!!.uid).child("Nickname").setValue(Account_Edit_Nickname.text.toString())
+                                        myRef.child(currentUser!!.uid).child("Year").setValue(Account_Spinner_Year.selectedItem.toString())
+                                        myRef.child(currentUser!!.uid).child("Sex").setValue(sex)
+                                        myRef.child(currentUser!!.uid).child("Phone").setValue(getPhoneNumber())
+                                        myRef.child(currentUser!!.uid).child("ChatNum").setValue(crd)
+                                        myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
+                                        myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
+
+                                        myRef.child(currentUser!!.uid).child("heart").setValue(30)
+                                        myRef.child(Account_Edit_Inviter.text.toString()).child("heart").setValue(Inviterheart)
+                                        if (Account_Radio_Student.isChecked())
+                                            myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
+                                        else
+                                            myRef.child(currentUser!!.uid).child("isStudent").setValue("N")
+
+
+                                        firebaseanalytics!!.setUserProperty("MatchingAlarm", "true")
+                                        firebaseanalytics!!.setUserProperty("AppAlarm", "true")
+
+
+                                        i++
+                                        MainActivity.Myuid = currentUser!!.uid
+                                        DirectLobby()
+
+                                    }
+                                    else
+                                    {
+
+                                        Toast.makeText(this@Account,"존재하지 않는 추천인코드입니다.",Toast.LENGTH_LONG).show()
+
+                                    }
+
+
+                                }
+
+                            })
 
                         }
 
-                    })
-
+                    }
                 }
+
 
 
 
