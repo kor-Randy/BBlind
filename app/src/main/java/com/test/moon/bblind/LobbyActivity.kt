@@ -23,6 +23,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -47,6 +48,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
     private var tabLayout: TabLayout? = null
     val database : FirebaseDatabase? = FirebaseDatabase.getInstance()
     val myRef : DatabaseReference = database!!.reference
+    var heartNum : TextView? = null
     var firebaseanalytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
     override fun onResume() {
@@ -70,6 +72,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
 
+        heartNum = findViewById(R.id.Lobby_Macaron)
 
         Toast.makeText(this@LobbyActivity,"LobbyActivityCreate",Toast.LENGTH_LONG).show()
         val navigationView = findViewById(R.id.nav_view) as NavigationView
@@ -95,7 +98,18 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         }else{Toast.makeText(this,"null",Toast.LENGTH_LONG).show()}
 
+        myRef.child("Account").child(MainActivity.Myuid!!).child("heart").addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
 
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+               heartNum!!.text = p0.getValue(true).toString()
+
+            }
+        })
 
         myRef.child("Account").child(MainActivity.Myuid!!).child("ChatNum").addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {

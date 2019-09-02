@@ -55,46 +55,52 @@
             android:layout_height="0dp"
             android:layout_weight="0.03"
             />
+
         <Button
-            android:layout_marginHorizontal="10dp"
+            android:id="@+id/Home_Hot1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_weight="0.25"
+            android:background="@android:drawable/editbox_background"
             android:fontFamily="@font/bmx"
-            android:textColor="#ffa2a2"
-            android:textSize="20sp"
             android:text="신촌역"
-            android:background="@android:drawable/editbox_background"/>
+            android:textColor="#ffa2a2"
+            android:textSize="20sp" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.03"
             />
+
         <Button
-            android:layout_marginHorizontal="10dp"
+            android:id="@+id/Home_Hot2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_weight="0.25"
+            android:background="@android:drawable/editbox_background"
             android:fontFamily="@font/bmx"
-            android:textColor="#ffa2a2"
-            android:textSize="20sp"
             android:text="홍대입구역"
-            android:background="@android:drawable/editbox_background"/>
+            android:textColor="#ffa2a2"
+            android:textSize="20sp" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.03"
             />
+
         <Button
-            android:layout_marginHorizontal="10dp"
+            android:id="@+id/Home_Hot3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_weight="0.25"
+            android:background="@android:drawable/editbox_background"
             android:fontFamily="@font/bmx"
-            android:textColor="#ffa2a2"
-            android:textSize="20sp"
             android:text="강남역"
-            android:background="@android:drawable/editbox_background"/>
+            android:textColor="#ffa2a2"
+            android:textSize="20sp" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"

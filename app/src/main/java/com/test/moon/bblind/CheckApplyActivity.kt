@@ -66,6 +66,7 @@ class CheckApplyActivity :AppCompatActivity()
             override fun onClick(v: View?) {
 
                 val it : Intent = Intent(activity,ApplyActivity::class.java)
+                it.putExtra("Subway","")
                 startActivity(it)
 
             }

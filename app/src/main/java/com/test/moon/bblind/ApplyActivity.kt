@@ -60,6 +60,9 @@ class ApplyActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_apply)
 
+        val intent : Intent = intent
+        val hot : String = intent.getStringExtra("Subway")
+        Apply_Textview_Subway.setText(hot)
 
         MainActivity.nowAc="apply"
         MainActivity.applyactivity=this
@@ -80,6 +83,8 @@ class ApplyActivity : AppCompatActivity()
 
         val Chatref : DatabaseReference = database.getReference("Chat")
         val Applyref : DatabaseReference = database.getReference("Apply")
+        val Hotref : DatabaseReference = database.getReference("Hot")
+
 
 
         val keyboard : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -234,6 +239,30 @@ class ApplyActivity : AppCompatActivity()
                                     .child(Apply_Spinner_PersonNum.selectedItem.toString())
                                     .child(sex!!)
                                     .push().setValue(iddata)
+
+                            Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").addListenerForSingleValueEvent(object: ValueEventListener {
+                                override fun onCancelled(p0: DatabaseError) {
+
+
+                                }
+
+                                override fun onDataChange(p0: DataSnapshot) {
+                                    var cnt: Int? = 0
+                                    if(p0.exists()) {
+                                        cnt = Integer.parseInt(p0.getValue(true).toString())
+                                        cnt++
+
+                                    }
+                                    else
+                                    {
+                                       cnt = 1
+                                    }
+                                        Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").setValue(cnt)
+
+
+                                }
+                            })
+
 
 
 
@@ -469,6 +498,23 @@ class ApplyActivity : AppCompatActivity()
 
                                                                 database.getReference("Account").child(id!!).child("heart").setValue(myheart)
 
+                                                                Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").addListenerForSingleValueEvent(object: ValueEventListener {
+                                                                    override fun onCancelled(p0: DatabaseError) {
+
+
+                                                                    }
+
+                                                                    override fun onDataChange(p0: DataSnapshot) {
+
+                                                                        var cnt : Int = Integer.parseInt(p0.getValue(true).toString())
+
+                                                                        cnt-=2
+
+
+                                                                        Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").setValue(cnt)
+
+                                                                    }
+                                                                })
 
 
                                                                 iddata = null
