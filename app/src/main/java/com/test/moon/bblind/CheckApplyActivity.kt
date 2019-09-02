@@ -6,10 +6,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import com.google.firebase.database.*
 import com.test.moon.bblind.MainActivity.Companion.checkapplylist
 import kotlinx.android.synthetic.main.activity_apply.*
@@ -38,7 +35,7 @@ class CheckApplyActivity :AppCompatActivity()
 
     val ref : DatabaseReference = database.reference
     var lv : ListView? = null
-    var iv : ImageView? = null
+    var iv : LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
