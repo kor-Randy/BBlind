@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/cash2"
+    <item android:drawable="@drawable/storeselected"
         android:state_selected="true"></item>
-    <item android:drawable="@drawable/cash"></item>
+    <item android:drawable="@drawable/store"></item>
 </selector>
