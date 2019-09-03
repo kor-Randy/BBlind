@@ -7,11 +7,13 @@ import android.view.Window
 import android.widget.CompoundButton
 import android.widget.ToggleButton
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class AlarmSetting : AppCompatActivity()
 {
-    var mFirebaseDatabase: FirebaseDatabase? = null
+    val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+    val myRef : DatabaseReference = database.getReference("Account")
     var tb1: ToggleButton? = null
     var tb2: ToggleButton? = null
     var firebaseanalytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -35,8 +37,8 @@ class AlarmSetting : AppCompatActivity()
         Matching = sf!!.getString("Matching", "")
         App = sf!!.getString("App", "")
 
-        tb1 = findViewById(R.id.toggleButton1)
-        tb2 = findViewById(R.id.toggleButton2)
+        tb1 = findViewById(R.id.toggleButton2)//Matching
+        tb2 = findViewById(R.id.toggleButton1)//APp
 
 
         if (Matching.equals("true")) {
@@ -61,11 +63,15 @@ class AlarmSetting : AppCompatActivity()
 
                     editor!!.putString("Matching", "true")
 
+                   myRef.child(MainActivity.Myuid!!).child("Alram").setValue("true")
+
                     firebaseanalytics!!.setUserProperty("MatchingAlarm", "true")
 
                 } else {
 
                     editor!!.putString("Matching", "false")
+
+                    myRef.child(MainActivity.Myuid!!).child("Alram").setValue("false")
 
                     firebaseanalytics!!.setUserProperty("MatchingAlarm", "false")
 

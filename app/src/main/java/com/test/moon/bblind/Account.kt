@@ -203,6 +203,7 @@ class Account : AppCompatActivity()
                             myRef.child(currentUser!!.uid).child("fcmToken").setValue(FirebaseInstanceId.getInstance().token)
                             myRef.child(currentUser!!.uid).child("Myapply").setValue(MainActivity.checkapplylist)
                             myRef.child(currentUser!!.uid).child("heart").setValue(20)
+                            myRef.child(currentUser!!.uid).child("Alram").setValue("true")
                             if (Account_Radio_Student.isChecked())
                                 myRef.child(currentUser!!.uid).child("isStudent").setValue("Y")
                             else

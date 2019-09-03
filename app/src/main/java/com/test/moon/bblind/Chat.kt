@@ -62,6 +62,7 @@ class Chat : AppCompatActivity(), View.OnClickListener {
     var NowChatRoomList : ChatRoomListData = ChatRoomListData()
     val ref : DatabaseReference = database.reference
     var temp : String? = null
+    var OppositeId : String? = null
 
 
 
@@ -118,14 +119,24 @@ class Chat : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initFirebaseDatabase() {
-        mFirebaseDatabase!!.getReference("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").addValueEventListener(object: ValueEventListener {
+        mFirebaseDatabase!!.getReference("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+
+                if(MainActivity.Myuid!!.equals(p0.child("ManId")))
+                {
+                    OppositeId = p0.child("WomanId").getValue(true).toString()
+                }
+                else
+                {
+                    OppositeId = p0.child("ManId").getValue(true).toString()
+                }
+
             if(MainActivity.nowAc.equals("Chat")) {
-                NowChatRoomList = p0.getValue(ChatRoomListData::class.java)!!
+                NowChatRoomList = p0.child("ChatRoomList").getValue(ChatRoomListData::class.java)!!
 
                 if (MainActivity.Mysex == "Man") {
                     temp = NowChatRoomList!!.ManMsg
@@ -273,46 +284,50 @@ class Chat : AppCompatActivity(), View.OnClickListener {
         mFirebaseDatabase!!.getReference("Account")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val check : String = dataSnapshot.child(OppositeId!!).child("Alram").getValue(true).toString()
+                        if(check.equals("true")) {
 
 
-                        Thread(object : Runnable {
+                            Thread(object : Runnable {
 
-                            override fun run() {
-                                try {
+                                override fun run() {
+                                    try {
 
-                                    // FMC 메시지 생성 start
-                                    val root = JSONObject()
-                                    val notification = JSONObject()
-                                    notification.put("body", message)
-                                    notification.put("title", getString(R.string.app_name))
+                                        // FMC 메시지 생성 start
+                                        val root = JSONObject()
+                                        val notification = JSONObject()
+                                        notification.put("body", message)
+                                        notification.put("title", getString(R.string.app_name))
 
-                                    root.put("notification", notification)
-                                    root.put("collapse_key", "Chat")
-                                    root.put("to", MainActivity.nowToken)   // FMC 메시지 생성 end
-
-
-                                    val Url = URL(FCM_MESSAGE_URL)
-                                    val conn = Url.openConnection() as HttpURLConnection
-
-                                    conn.requestMethod = "POST"
-                                    conn.doOutput = true
-                                    conn.doInput = true
-
-                                    conn.addRequestProperty("Authorization", "key=$SERVER_KEY")
-                                    conn.setRequestProperty("Accept", "application/json")
-                                    conn.setRequestProperty("Content-type", "application/json")
-                                    val os = conn.outputStream
-                                    os.write(root.toString().toByteArray(charset("utf-8")))
-                                    os.flush()
-                                    conn.responseCode
+                                        root.put("notification", notification)
+                                        root.put("collapse_key", "Chat")
+                                        root.put("to", MainActivity.nowToken)   // FMC 메시지 생성 end
 
 
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
+                                        val Url = URL(FCM_MESSAGE_URL)
+                                        val conn = Url.openConnection() as HttpURLConnection
+
+                                        conn.requestMethod = "POST"
+                                        conn.doOutput = true
+                                        conn.doInput = true
+
+                                        conn.addRequestProperty("Authorization", "key=$SERVER_KEY")
+                                        conn.setRequestProperty("Accept", "application/json")
+                                        conn.setRequestProperty("Content-type", "application/json")
+                                        val os = conn.outputStream
+                                        os.write(root.toString().toByteArray(charset("utf-8")))
+                                        os.flush()
+                                        conn.responseCode
+
+
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+
                                 }
+                            }).start()
+                        }
 
-                            }
-                        }).start()
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {

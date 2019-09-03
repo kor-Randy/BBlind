@@ -51,7 +51,7 @@ class Home : Fragment(), View.OnClickListener
         checkbu.setOnClickListener(this)
 
 
-        ref.child("Hot").orderByChild("Count").limitToLast(3).addListenerForSingleValueEvent(object: ValueEventListener {
+        ref.child("Hot").orderByChild("Count").limitToFirst(3).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
 
