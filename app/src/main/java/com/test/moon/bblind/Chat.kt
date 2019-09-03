@@ -63,6 +63,8 @@ class Chat : AppCompatActivity(), View.OnClickListener {
     val ref : DatabaseReference = database.reference
     var temp : String? = null
     var OppositeId : String? = null
+    var MyNick : String? = null
+    var OppositeNick : String? = null
 
 
 
@@ -119,6 +121,10 @@ class Chat : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initFirebaseDatabase() {
+
+
+
+
         mFirebaseDatabase!!.getReference("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
@@ -154,6 +160,21 @@ class Chat : AppCompatActivity(), View.OnClickListener {
 
                 mFirebaseDatabase!!.getReference("Chat").child(MainActivity.nowChatRoomNum!!).child("Info").child("ChatRoomList").setValue(NowChatRoomList);
             }
+            }
+        })
+
+        mFirebaseDatabase!!.getReference("Account").addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                MyNick = p0.child(MainActivity.Myuid!!).child("Nickname").getValue(true).toString()
+
+
+
             }
         })
 
@@ -248,7 +269,7 @@ class Chat : AppCompatActivity(), View.OnClickListener {
             val profile = StringBuilder()
             profile.append(userName).append("\n").append(user!!.uid)
             //  mTxtProfileInfo!!.text = profile
-            mAdapter!!.setEmail(user!!.uid)
+            mAdapter!!.setEmail(MyNick)
             mAdapter!!.notifyDataSetChanged()
 
 
@@ -389,7 +410,7 @@ class Chat : AppCompatActivity(), View.OnClickListener {
                     chatData.firebaseKey = null
                     chatData.message = message
                     chatData.time = System.currentTimeMillis()
-                    chatData.userName = mAuth!!.currentUser!!.uid // 사용자 uid
+                    chatData.userName = MyNick
                     ref.child("Chat").child(MainActivity.nowChatRoomNum!!).child("message").push().setValue(chatData)
 
                     sendPostToFCM(message)
