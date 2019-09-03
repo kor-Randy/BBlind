@@ -50,6 +50,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
     val myRef : DatabaseReference = database!!.reference
     var heartNum : TextView? = null
     var firebaseanalytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+    private lateinit var navbtn : Button
 
     override fun onResume() {
         super.onResume()
@@ -71,7 +72,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
-
+        navbtn = findViewById(R.id.navbtn)
         heartNum = findViewById(R.id.Lobby_Macaron)
 
         Toast.makeText(this@LobbyActivity,"LobbyActivityCreate",Toast.LENGTH_LONG).show()
@@ -79,7 +80,11 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         navigationView.setNavigationItemSelectedListener(this)
 
 
-
+            navbtn.setOnClickListener {
+                val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+                if(!drawer.isDrawerOpen(GravityCompat.START)){drawer.openDrawer(GravityCompat.START)}
+                else drawer.closeDrawer(GravityCompat.END)
+            }
         // val fab : FloatingActionButton = findViewById(R.id.fab)
         // fab.setOnClickListener { val intent = Intent(this@LobbyActivity, roulette::class.java) ; startActivity(intent) }
 

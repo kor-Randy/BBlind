@@ -30,7 +30,7 @@ class DeclarationPopup : Activity() {
 
         list = resources.getStringArray(R.array.declaration)
 
-        val adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list)
+        val adapter = ArrayAdapter<String>(this,R.layout.list_declare,R.id.declare_content,list)
 
         Pop_List_Declaration.adapter = adapter
 
