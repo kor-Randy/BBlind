@@ -1,5 +1,6 @@
 package com.test.moon.bblind
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -18,6 +19,7 @@ import android.util.Log
 import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlin.math.log
 
 
 class Store : Fragment(),BillingProcessor.IBillingHandler{
@@ -30,9 +32,16 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
     val database : FirebaseDatabase = FirebaseDatabase.getInstance()
     val currentUser = FirebaseAuth.getInstance().currentUser
     val myRef : DatabaseReference = database.getReference("Account/"+currentUser!!.uid+"/heart")
-
+    lateinit var pdid : String
+    lateinit var  asyncDialog : ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        asyncDialog = ProgressDialog(
+                activity)
+        asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+
+
+
         var fragmentManager = fragmentManager!!.fragments
         bp = BillingProcessor(activity, resources.getString(R.string.license), this)
         bp.initialize()
@@ -60,8 +69,19 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
 
         list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             when(position){
-                0 ->bp.purchase(activity,"heart50")
-                1 ->bp.purchase(activity,"heart100")
+
+                0 ->{
+                    pdid = "heart50"
+                    bp.purchase(activity,"heart50")
+                    asyncDialog.show()
+
+                }
+                1 ->{
+                    pdid = "heart100"
+                    bp.purchase(activity,"heart100")
+                    asyncDialog.show()
+
+                }
             }
 
         }
@@ -73,6 +93,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
     }
     override fun onBillingInitialized() {
 
+
     }
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
         when(productId){
@@ -81,19 +102,36 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
         }
         myRef.setValue(heart)
         Toast.makeText(context,"Success",Toast.LENGTH_LONG).show()
+
         bp.consumePurchase(productId)
+        asyncDialog.dismiss()
         val builder = AlertDialog.Builder(context!!)
         builder.setMessage("구매 성공 하였습니다.")
                 .setCancelable(false)
                 .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id ->
                     // to do action
                 })
+
         val alert = builder.create()
         alert.show()
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
-        Toast.makeText(context,errorCode.toString() +"   "+error.toString(),Toast.LENGTH_LONG).show()
+        asyncDialog.dismiss()
+        Log.d("Bill","Bill  "+pdid)
+        if(errorCode == 7)//이미 소유해서 구매불가
+        {
+
+            Log.d("Bill","Bill  "+pdid)
+            Toast.makeText(context,pdid,Toast.LENGTH_SHORT).show()
+            bp.consumePurchase(pdid)
+        }
+        else if(errorCode == 8)
+        {
+            Log.d("Bill","Bill  "+errorCode+pdid)
+            Toast.makeText(context,errorCode.toString()+pdid,Toast.LENGTH_SHORT).show()
+        }
+        //Toast.makeText(context,errorCode.toString() +"   "+error.toString(),Toast.LENGTH_LONG).show()
 
     }
 
