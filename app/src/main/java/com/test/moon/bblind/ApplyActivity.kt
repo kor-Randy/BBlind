@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.os.Debug
 import android.support.constraint.solver.widgets.Snapshot
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
@@ -130,463 +132,485 @@ class ApplyActivity : AppCompatActivity()
         Apply_button_Notice.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
 
+                val alt_bld = AlertDialog.Builder(this@ApplyActivity)
+                alt_bld!!.setMessage("매칭이 될 시 하트 20개가 소모됩니다. \n신청을 하시겠습니까?").setCancelable(true).setPositiveButton("네",
+                        object: DialogInterface.OnClickListener {
 
-                if (Match == false) {
-                    Log.d("aaaaz", "Click Notice")
+                            override fun onClick(p0: DialogInterface?, p1: Int) {
 
-
-                    val today = Date()
-                    var strdate: String? = null
-
-                    var format1: SimpleDateFormat? = null
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        format1 = SimpleDateFormat("yyyy-MM-dd")
-
-                        strdate = format1.format(today)
+                                if (Match == false) {
+                                    Log.d("aaaaz", "Click Notice")
 
 
-                    }
+                                    val today = Date()
+                                    var strdate: String? = null
 
-                    var selectday: Date? = null
-                    var selectdatstr: String? = null
-                    var format2: SimpleDateFormat? = null
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        format2 = SimpleDateFormat("yyyy-MM-dd")
-                        if (datee == null) {
-                            Toast.makeText(this@ApplyActivity, "날짜를 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+                                    var format1: SimpleDateFormat? = null
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                        format1 = SimpleDateFormat("yyyy-MM-dd")
 
-                        } else {
+                                        strdate = format1.format(today)
 
-                            selectday = format2.parse(datee)
-                            selectdatstr = format2.format(selectday)
-                        }
-
-                    }
-
-                    Log.d("aaaaz", "Try 전")
-                    try {
-
-                        var s4: Boolean? = null
-
-                        if (MainActivity.checkapplylist!!.checklist!!.size > 1) {
-
-                            Log.d("aaaaz", "1111")
-                            for (i in 1..MainActivity.checkapplylist!!.checklist!!.size - 1)
-                            //1부터인 이유 = 0번째는 "초기화"
-                            {
-                                //이미지난 매칭정보가 존재할 경우
-
-
-                                Log.d("aaaaz", "2222")
-                                var s1 = MainActivity.checkapplylist!!.checklist!![i].split("/")[0]
-                                var s2 = MainActivity.checkapplylist!!.checklist!![i].split("/")[1]
-                                var s3 = MainActivity.checkapplylist!!.checklist!![i].split("/")[2]
-
-                                if (s3.equals(selectdatstr)) {
-
-                                    Log.d("aaaaz", "3333")
-                                    s4 = true
-                                }
-
-                                Log.d("aaaaz", "4444")
-
-                            }
-                        }
-
-
-                        if (s4 == true) {
-                            throw NoSuchMethodException("Already Exist")
-                        } else if (Store.heart < 10) {
-                            throw ReflectiveOperationException("Not Enough Heart")
-                        } else if (Apply_Edittext_Introduction.text.toString().length != 5) {
-                            throw ArithmeticException("Five Introduction")
-                        } else if (Apply_Spinner_Before_Time.selectedItem.toString().toInt() + 1 > Apply_Spinner_After_Time.selectedItem.toString().toInt()) {
-
-                            throw ArrayStoreException("Can't use Time")
-
-                        } else if (selectdatstr!!.compareTo(strdate!!) <= 0 || selectdatstr.length < 7) {
-                            throw NoSuchElementException("OverDate")
-                        } else if (Apply_Textview_Subway.text.toString().equals("")) {
-                            throw CloneNotSupportedException("Please set Venue")
-                        } else {
-
-                            Log.d("aaaaz", "5555")
-
-                            id = user!!.uid
-
-
-
-
-
-                            iddata = IdData(id!!, sex!!,
-                                    Apply_Spinner_Before_Time.selectedItem.toString(),
-                                    Apply_Spinner_After_Time.selectedItem.toString(),
-                                    selectdatstr,
-                                    Apply_Spinner_AverageAge.selectedItem.toString(),
-                                    Apply_Spinner_Average_Drink.selectedItem.toString(),
-                                    Apply_Edittext_Introduction.text.toString())
-                            Log.d("zczc", iddata!!.date)
-
-
-                            //*********************************************여기서 나와 같은 조건의 상대성별 확인
-                            MainActivity.checkapplylist!!.checklist!!.add(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + selectdatstr)
-
-                            ref.child("Account").child(id!!).child("Myapply").setValue(MainActivity.checkapplylist)
-
-
-
-                            Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
-                                    .child(Apply_Spinner_PersonNum.selectedItem.toString())
-                                    .child(sex!!)
-                                    .push().setValue(iddata)
-
-                            Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").addListenerForSingleValueEvent(object: ValueEventListener {
-                                override fun onCancelled(p0: DatabaseError) {
-
-
-                                }
-
-                                override fun onDataChange(p0: DataSnapshot) {
-                                    var cnt: Int? = 0
-                                    if(p0.exists()) {
-                                        cnt = Integer.parseInt(p0.getValue(true).toString())
-                                        cnt++
 
                                     }
-                                    else
-                                    {
-                                       cnt = 1
+
+                                    var selectday: Date? = null
+                                    var selectdatstr: String? = null
+                                    var format2: SimpleDateFormat? = null
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                        format2 = SimpleDateFormat("yyyy-MM-dd")
+                                        if (datee == null) {
+                                            Toast.makeText(this@ApplyActivity, "날짜를 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+
+                                        } else {
+
+                                            selectday = format2.parse(datee)
+                                            selectdatstr = format2.format(selectday)
+                                        }
+
                                     }
-                                        Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").setValue(cnt)
 
+                                    Log.d("aaaaz", "Try 전")
+                                    try {
 
-                                }
-                            })
+                                        var s4: Boolean? = null
 
+                                        if (MainActivity.checkapplylist!!.checklist!!.size > 1) {
 
-
-
-
-                            Applyref.child("SubwayStation/" + Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()).child(oppositesex!!).orderByChild("date").equalTo(selectdatstr).limitToFirst(1).addChildEventListener(object : ChildEventListener {
-                                override fun onCancelled(p0: DatabaseError) {
-                                }
-
-                                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                                }
-
-                                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-
-                                }
-
-                                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                                    //메소드가 find의 개수만큼 실행된다.
-                                    //ex) 3개 있으면 메소드가 3번 실행됨
-
-                                    if (Match == false) {
-                                        var finddate: String? = null
-                                        var findsex: String? = null
-                                        var findfrom: String? = null
-                                        var findto: String? = null
-                                        var findname: String? = null
-
-
-
-
-                                        find = p0.getValue(IdData::class.java)
-                                        finddate = find!!.date!!
-                                        findsex = find!!.sex!!
-                                        findfrom = find!!.from!!
-                                        findto = find!!.to!!
-                                        findname = find!!.name!!
-
-
-                                        if (selectdatstr.equals(finddate)) {
-
-
-                                            if (!findsex.equals(sex))//성이 다르면 add
+                                            Log.d("aaaaz", "1111")
+                                            for (i in 1..MainActivity.checkapplylist!!.checklist!!.size - 1)
+                                            //1부터인 이유 = 0번째는 "초기화"
                                             {
+                                                //이미지난 매칭정보가 존재할 경우
 
 
-                                                if (findfrom!! <= Apply_Spinner_Before_Time.selectedItem.toString() && findto!! >= Apply_Spinner_Before_Time.selectedItem.toString()
-                                                        || findfrom!! <= Apply_Spinner_After_Time.selectedItem.toString() && findto!! >= Apply_Spinner_After_Time.selectedItem.toString()) {
+                                                Log.d("aaaaz", "2222")
+                                                var s1 = MainActivity.checkapplylist!!.checklist!![i].split("/")[0]
+                                                var s2 = MainActivity.checkapplylist!!.checklist!![i].split("/")[1]
+                                                var s3 = MainActivity.checkapplylist!!.checklist!![i].split("/")[2]
+
+                                                if (s3.equals(selectdatstr)) {
+
+                                                    Log.d("aaaaz", "3333")
+                                                    s4 = true
+                                                }
+
+                                                Log.d("aaaaz", "4444")
+
+                                            }
+                                        }
 
 
-                                                    //시간조건이 겹치지 않음.
+                                        if (s4 == true) {
+                                            throw NoSuchMethodException("Already Exist")
+                                        } else if (Store.heart < 10) {
+                                            throw ReflectiveOperationException("Not Enough Heart")
+                                        } else if (Apply_Edittext_Introduction.text.toString().length != 5) {
+                                            throw ArithmeticException("Five Introduction")
+                                        } else if (Apply_Spinner_Before_Time.selectedItem.toString().toInt() + 1 > Apply_Spinner_After_Time.selectedItem.toString().toInt()) {
+
+                                            throw ArrayStoreException("Can't use Time")
+
+                                        } else if (selectdatstr!!.compareTo(strdate!!) <= 0 || selectdatstr.length < 7) {
+                                            throw NoSuchElementException("OverDate")
+                                        } else if (Apply_Textview_Subway.text.toString().equals("")) {
+                                            throw CloneNotSupportedException("Please set Venue")
+                                        } else {
+
+                                            Log.d("aaaaz", "5555")
+
+                                            id = user!!.uid
 
 
-                                                    //시간 조건이 겹침
-
-                                                    if (sex.equals("Man")) {
 
 
-                                                        MainActivity.ChatRoomNum = id + findname
 
-                                                        Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ManId").setValue(id)
-                                                        Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("WomanId").setValue(findname)
+                                            iddata = IdData(id!!, sex!!,
+                                                    Apply_Spinner_Before_Time.selectedItem.toString(),
+                                                    Apply_Spinner_After_Time.selectedItem.toString(),
+                                                    selectdatstr,
+                                                    Apply_Spinner_AverageAge.selectedItem.toString(),
+                                                    Apply_Spinner_Average_Drink.selectedItem.toString(),
+                                                    Apply_Edittext_Introduction.text.toString())
+                                            Log.d("zczc", iddata!!.date)
 
-                                                    } else {
 
-                                                        MainActivity.ChatRoomNum = find!!.name + id
+                                            //*********************************************여기서 나와 같은 조건의 상대성별 확인
+                                            MainActivity.checkapplylist!!.checklist!!.add(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + selectdatstr)
 
-                                                        Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ManId").setValue(findname)
-                                                        Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("WomanId").setValue(id)
+                                            ref.child("Account").child(id!!).child("Myapply").setValue(MainActivity.checkapplylist)
+
+
+
+                                            Applyref.child("SubwayStation").child(Apply_Textview_Subway.text.toString())
+                                                    .child(Apply_Spinner_PersonNum.selectedItem.toString())
+                                                    .child(sex!!)
+                                                    .push().setValue(iddata)
+
+                                            Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").addListenerForSingleValueEvent(object: ValueEventListener {
+                                                override fun onCancelled(p0: DatabaseError) {
+
+
+                                                }
+
+                                                override fun onDataChange(p0: DataSnapshot) {
+                                                    var cnt: Int? = 0
+                                                    if(p0.exists()) {
+                                                        cnt = Integer.parseInt(p0.getValue(true).toString())
+                                                        cnt++
 
                                                     }
+                                                    else
+                                                    {
+                                                        cnt = 1
+                                                    }
+                                                    Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").setValue(cnt)
 
-                                                    ref.child("Account").addListenerForSingleValueEvent(object : ValueEventListener {
-                                                        override fun onCancelled(p0: DatabaseError) {
 
-                                                        }
-
-                                                        override fun onDataChange(p0: DataSnapshot) {
-                                                            if (p0.child(id!!).child("ChatNum").getValue(ChatRoomData::class.java) == null) {
-                                                                MainActivity.crd = ChatRoomData()
-                                                                Log.d("zczc", "나의chatnum이 null")
-                                                            } else {
-                                                                MainActivity.crd = p0.child(id!!).child("ChatNum").getValue(ChatRoomData::class.java)
-                                                                Log.d("zczc", "나의chatnum이 null이 아님")
-
-                                                            }
-                                                            if (p0.child(findname!!).child("ChatNum").getValue(ChatRoomData::class.java) == null) {
-                                                                MainActivity.crdd = ChatRoomData()
-                                                                Log.d("zczc", "상대의chatnum이 null")
-                                                            } else {
-                                                                MainActivity.crdd = p0.child(findname!!).child("ChatNum").getValue(ChatRoomData::class.java)
-                                                                Log.d("zczc", "상대의chatnum이 null이 아님")
-                                                            }
-
-                                                            if (!MainActivity.crd!!.ChatRoom.contains(MainActivity.ChatRoomNum!!)) {
-                                                                Log.d("zczc", "crd의 size : " + MainActivity.crd!!.ChatRoom.size.toString())
-                                                                MainActivity.crd!!.ChatRoom.add(MainActivity.ChatRoomNum!!)
-                                                                MainActivity.crd!!.Token.add(p0.child(findname!!).child("fcmToken").getValue(true).toString())
-                                                                OppositeToken = p0.child(findname!!).child("fcmToken").getValue(true).toString();
-                                                                //내꺼에 상대방꺼 저장
-                                                                ref.child("Account").child(id!!).child("ChatNum").setValue(MainActivity.crd)
-
-                                                                if (!MainActivity.crdd!!.ChatRoom.contains(MainActivity.ChatRoomNum!!)) {
-
-                                                                    MainActivity.crdd!!.ChatRoom.add(MainActivity.ChatRoomNum!!)
-                                                                    MainActivity.crdd!!.Token.add(p0.child(id!!).child("fcmToken").getValue(true).toString())
-                                                                }
-                                                                ref.child("Account").child(findname).child("ChatNum").setValue(MainActivity.crdd)
+                                                }
+                                            })
 
 
 
 
 
-                                                                MainActivity.checkapplylistt = p0.child(findname).child("Myapply").getValue(CheckApplyListData::class.java)!!
+                                            Applyref.child("SubwayStation/" + Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString()).child(oppositesex!!).orderByChild("date").equalTo(selectdatstr).limitToFirst(1).addChildEventListener(object : ChildEventListener {
+                                                override fun onCancelled(p0: DatabaseError) {
+                                                }
 
+                                                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                                                }
 
-                                                                MainActivity.checkapplylistt!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + selectdatstr)
+                                                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
 
-                                                                ref.child("Account").child(findname).child("Myapply").setValue(MainActivity.checkapplylistt)
+                                                }
 
+                                                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                                                    //메소드가 find의 개수만큼 실행된다.
+                                                    //ex) 3개 있으면 메소드가 3번 실행됨
 
-
-
-
-                                                                MainActivity.checkapplylist = p0.child(id!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
-
-                                                                MainActivity.checkapplylist!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + selectdatstr)
-
-                                                                ref.child("Account").child(id!!).child("Myapply").setValue(MainActivity.checkapplylist)
-
-                                                                var cd: ChatData? = ChatData()
-
-                                                                cd!!.message = "언행이 바른자가 미인을 얻는다."
-                                                                cd!!.userName = "Notice"
-                                                                cd!!.time = System.currentTimeMillis()
-
-
-
-
-                                                                if (selectdatstr!!.length > 7) {
-
-                                                                    val cr = ChatRoomListData(Apply_Textview_Subway.text.toString(), Apply_Spinner_PersonNum.selectedItem.toString(), selectdatstr!!, MainActivity.ChatRoomNum.toString(), "언행이 바른자가 미인을 얻는다.")
+                                                    if (Match == false) {
+                                                        var finddate: String? = null
+                                                        var findsex: String? = null
+                                                        var findfrom: String? = null
+                                                        var findto: String? = null
+                                                        var findname: String? = null
 
 
 
-                                                                    Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ChatRoomList").setValue(cr)
-                                                                }
+
+                                                        find = p0.getValue(IdData::class.java)
+                                                        finddate = find!!.date!!
+                                                        findsex = find!!.sex!!
+                                                        findfrom = find!!.from!!
+                                                        findto = find!!.to!!
+                                                        findname = find!!.name!!
 
 
-                                                                Chatref.child(MainActivity.ChatRoomNum.toString()).child("message").push().setValue(cd)
+                                                        if (selectdatstr.equals(finddate)) {
 
 
-                                                                Log.d("zczc", "fcm보내기 전")
-
-                                                                sendPostToFCM()
-
-
-                                                                Log.d("zczc", "fcm보낸 후")
+                                                            if (!findsex.equals(sex))//성이 다르면 add
+                                                            {
 
 
-                                                                Log.d("zczc", Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + id)
-                                                                Log.d("zczc", Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + find!!.name)
-                                                                Log.d("zczc", id + findname)
-                                                                Log.d("zczc", "delete")
+                                                                if (findfrom!! <= Apply_Spinner_Before_Time.selectedItem.toString() && findto!! >= Apply_Spinner_Before_Time.selectedItem.toString()
+                                                                        || findfrom!! <= Apply_Spinner_After_Time.selectedItem.toString() && findto!! >= Apply_Spinner_After_Time.selectedItem.toString()) {
 
 
+                                                                    //시간조건이 겹치지 않음.
 
-                                                                ref.child("Apply").child("SubwayStation").child(Apply_Textview_Subway.text.toString())
-                                                                        .child(Apply_Spinner_PersonNum.selectedItem.toString()).child(sex!!).orderByChild("date").equalTo(selectdatstr).addListenerForSingleValueEvent(object : ValueEventListener {
-                                                                            override fun onCancelled(p0: DatabaseError) {
 
+                                                                    //시간 조건이 겹침
+
+                                                                    if (sex.equals("Man")) {
+
+
+                                                                        MainActivity.ChatRoomNum = id + findname
+
+                                                                        Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ManId").setValue(id)
+                                                                        Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("WomanId").setValue(findname)
+
+                                                                    } else {
+
+                                                                        MainActivity.ChatRoomNum = find!!.name + id
+
+                                                                        Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ManId").setValue(findname)
+                                                                        Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("WomanId").setValue(id)
+
+                                                                    }
+
+                                                                    ref.child("Account").addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                        override fun onCancelled(p0: DatabaseError) {
+
+                                                                        }
+
+                                                                        override fun onDataChange(p0: DataSnapshot) {
+                                                                            if (p0.child(id!!).child("ChatNum").getValue(ChatRoomData::class.java) == null) {
+                                                                                MainActivity.crd = ChatRoomData()
+                                                                                Log.d("zczc", "나의chatnum이 null")
+                                                                            } else {
+                                                                                MainActivity.crd = p0.child(id!!).child("ChatNum").getValue(ChatRoomData::class.java)
+                                                                                Log.d("zczc", "나의chatnum이 null이 아님")
 
                                                                             }
+                                                                            if (p0.child(findname!!).child("ChatNum").getValue(ChatRoomData::class.java) == null) {
+                                                                                MainActivity.crdd = ChatRoomData()
+                                                                                Log.d("zczc", "상대의chatnum이 null")
+                                                                            } else {
+                                                                                MainActivity.crdd = p0.child(findname!!).child("ChatNum").getValue(ChatRoomData::class.java)
+                                                                                Log.d("zczc", "상대의chatnum이 null이 아님")
+                                                                            }
 
-                                                                            override fun onDataChange(p0: DataSnapshot) {
+                                                                            if (!MainActivity.crd!!.ChatRoom.contains(MainActivity.ChatRoomNum!!)) {
+                                                                                Log.d("zczc", "crd의 size : " + MainActivity.crd!!.ChatRoom.size.toString())
+                                                                                MainActivity.crd!!.ChatRoom.add(MainActivity.ChatRoomNum!!)
+                                                                                MainActivity.crd!!.Token.add(p0.child(findname!!).child("fcmToken").getValue(true).toString())
+                                                                                OppositeToken = p0.child(findname!!).child("fcmToken").getValue(true).toString();
+                                                                                //내꺼에 상대방꺼 저장
+                                                                                ref.child("Account").child(id!!).child("ChatNum").setValue(MainActivity.crd)
+
+                                                                                if (!MainActivity.crdd!!.ChatRoom.contains(MainActivity.ChatRoomNum!!)) {
+
+                                                                                    MainActivity.crdd!!.ChatRoom.add(MainActivity.ChatRoomNum!!)
+                                                                                    MainActivity.crdd!!.Token.add(p0.child(id!!).child("fcmToken").getValue(true).toString())
+                                                                                }
+                                                                                ref.child("Account").child(findname).child("ChatNum").setValue(MainActivity.crdd)
 
 
-                                                                                Log.d("zczc", "p0 : " + p0.toString())
 
 
 
-                                                                                for (appleSnapshot in p0.getChildren()) {
+                                                                                MainActivity.checkapplylistt = p0.child(findname).child("Myapply").getValue(CheckApplyListData::class.java)!!
 
-                                                                                    if (appleSnapshot.child("name").getValue(true).toString().equals(id)) {
-                                                                                        Log.d("zczc", "내꺼 삭제")
-                                                                                        appleSnapshot.getRef().removeValue()
+
+                                                                                MainActivity.checkapplylistt!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + selectdatstr)
+
+                                                                                ref.child("Account").child(findname).child("Myapply").setValue(MainActivity.checkapplylistt)
+
+
+
+
+
+                                                                                MainActivity.checkapplylist = p0.child(id!!).child("Myapply").getValue(CheckApplyListData::class.java)!!
+
+                                                                                MainActivity.checkapplylist!!.checklist!!.remove(Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + selectdatstr)
+
+                                                                                ref.child("Account").child(id!!).child("Myapply").setValue(MainActivity.checkapplylist)
+
+                                                                                var cd: ChatData? = ChatData()
+
+                                                                                cd!!.message = "언행이 바른자가 미인을 얻는다."
+                                                                                cd!!.userName = "Notice"
+                                                                                cd!!.time = System.currentTimeMillis()
+
+
+
+
+                                                                                if (selectdatstr!!.length > 7) {
+
+                                                                                    val cr = ChatRoomListData(Apply_Textview_Subway.text.toString(), Apply_Spinner_PersonNum.selectedItem.toString(), selectdatstr!!, MainActivity.ChatRoomNum.toString(), "언행이 바른자가 미인을 얻는다.")
+
+
+
+                                                                                    Chatref.child(MainActivity.ChatRoomNum.toString()).child("Info").child("ChatRoomList").setValue(cr)
+                                                                                }
+
+
+                                                                                Chatref.child(MainActivity.ChatRoomNum.toString()).child("message").push().setValue(cd)
+
+
+                                                                                Log.d("zczc", "fcm보내기 전")
+
+                                                                                sendPostToFCM()
+
+
+                                                                                Log.d("zczc", "fcm보낸 후")
+
+
+                                                                                Log.d("zczc", Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + id)
+                                                                                Log.d("zczc", Apply_Textview_Subway.text.toString() + "/" + Apply_Spinner_PersonNum.selectedItem.toString() + "/" + find!!.name)
+                                                                                Log.d("zczc", id + findname)
+                                                                                Log.d("zczc", "delete")
+
+
+
+                                                                                ref.child("Apply").child("SubwayStation").child(Apply_Textview_Subway.text.toString())
+                                                                                        .child(Apply_Spinner_PersonNum.selectedItem.toString()).child(sex!!).orderByChild("date").equalTo(selectdatstr).addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                                            override fun onCancelled(p0: DatabaseError) {
+
+
+                                                                                            }
+
+                                                                                            override fun onDataChange(p0: DataSnapshot) {
+
+
+                                                                                                Log.d("zczc", "p0 : " + p0.toString())
+
+
+
+                                                                                                for (appleSnapshot in p0.getChildren()) {
+
+                                                                                                    if (appleSnapshot.child("name").getValue(true).toString().equals(id)) {
+                                                                                                        Log.d("zczc", "내꺼 삭제")
+                                                                                                        appleSnapshot.getRef().removeValue()
+
+
+                                                                                                    }
+
+                                                                                                }
+
+
+                                                                                            }
+
+                                                                                        })
+                                                                                ref.child("Apply").child("SubwayStation").child(Apply_Textview_Subway.text.toString())
+                                                                                        .child(Apply_Spinner_PersonNum.selectedItem.toString()).child(oppositesex!!).orderByChild("date").equalTo(selectdatstr).addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                                            override fun onCancelled(p0: DatabaseError) {
+
+
+                                                                                            }
+
+                                                                                            override fun onDataChange(p0: DataSnapshot) {
+
+
+                                                                                                Log.d("zczc", "p0 : " + p0.toString())
+
+
+
+                                                                                                for (appleSnapshot in p0.getChildren()) {
+
+                                                                                                    if (appleSnapshot.child("name").getValue(true).toString().equals(findname)) {
+                                                                                                        Log.d("zczc", "상대꺼 삭제")
+                                                                                                        appleSnapshot.getRef().removeValue()
+
+
+                                                                                                    }
+
+                                                                                                }
+
+
+                                                                                            }
+
+                                                                                        })
+
+
+                                                                                var findheart: Int = Integer.parseInt(p0.child(findname!!).child("heart").getValue(true).toString())
+                                                                                var myheart: Int = Integer.parseInt(p0.child(id!!).child("heart").getValue(true).toString())
+
+                                                                                findheart -= 10
+                                                                                myheart -= 10
+
+                                                                                database.getReference("Account").child(findname).child("heart").setValue(findheart)
+
+                                                                                database.getReference("Account").child(id!!).child("heart").setValue(myheart)
+
+                                                                                Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").addListenerForSingleValueEvent(object: ValueEventListener {
+                                                                                    override fun onCancelled(p0: DatabaseError) {
 
 
                                                                                     }
 
-                                                                                }
+                                                                                    override fun onDataChange(p0: DataSnapshot) {
+
+                                                                                        var cnt : Int = Integer.parseInt(p0.getValue(true).toString())
+
+                                                                                        cnt-=2
 
 
-                                                                            }
-
-                                                                        })
-                                                                ref.child("Apply").child("SubwayStation").child(Apply_Textview_Subway.text.toString())
-                                                                        .child(Apply_Spinner_PersonNum.selectedItem.toString()).child(oppositesex!!).orderByChild("date").equalTo(selectdatstr).addListenerForSingleValueEvent(object : ValueEventListener {
-                                                                            override fun onCancelled(p0: DatabaseError) {
-
-
-                                                                            }
-
-                                                                            override fun onDataChange(p0: DataSnapshot) {
-
-
-                                                                                Log.d("zczc", "p0 : " + p0.toString())
-
-
-
-                                                                                for (appleSnapshot in p0.getChildren()) {
-
-                                                                                    if (appleSnapshot.child("name").getValue(true).toString().equals(findname)) {
-                                                                                        Log.d("zczc", "상대꺼 삭제")
-                                                                                        appleSnapshot.getRef().removeValue()
-
+                                                                                        Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").setValue(cnt)
 
                                                                                     }
+                                                                                })
 
-                                                                                }
 
-
+                                                                                iddata = null
+                                                                                find = null
+                                                                                Match = true
+                                                                                finish()
+                                                                            } else {
                                                                             }
 
-                                                                        })
+
+                                                                        }
+                                                                    })
 
 
-                                                                var findheart: Int = Integer.parseInt(p0.child(findname!!).child("heart").getValue(true).toString())
-                                                                var myheart: Int = Integer.parseInt(p0.child(id!!).child("heart").getValue(true).toString())
-
-                                                                findheart -= 10
-                                                                myheart -= 10
-
-                                                                database.getReference("Account").child(findname).child("heart").setValue(findheart)
-
-                                                                database.getReference("Account").child(id!!).child("heart").setValue(myheart)
-
-                                                                Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").addListenerForSingleValueEvent(object: ValueEventListener {
-                                                                    override fun onCancelled(p0: DatabaseError) {
 
 
-                                                                    }
-
-                                                                    override fun onDataChange(p0: DataSnapshot) {
-
-                                                                        var cnt : Int = Integer.parseInt(p0.getValue(true).toString())
-
-                                                                        cnt-=2
+                                                                    Log.d("zczc", "finish 1번")
 
 
-                                                                        Hotref.child(Apply_Textview_Subway.text.toString()).child("Count").setValue(cnt)
+                                                                } else {
 
-                                                                    }
-                                                                })
+                                                                }
 
 
-                                                                iddata = null
-                                                                find = null
-                                                                Match = true
-                                                                finish()
-                                                            } else {
                                                             }
 
 
                                                         }
-                                                    })
-
-
-
-
-                                                    Log.d("zczc", "finish 1번")
-
-
-                                                } else {
+                                                    }
+                                                }
+                                                override fun onChildRemoved(p0: DataSnapshot) {
 
                                                 }
 
 
-                                            }
+                                            })
+
+                                            finish()
 
 
                                         }
+
+                                    } catch (e: ArithmeticException) {
+
+                                        Toast.makeText(this@ApplyActivity, "5글자를 맞춰주세요.", Toast.LENGTH_SHORT).show()
+                                        Apply_Edittext_Introduction.setText("")
+                                        keyboard.showSoftInput(Apply_Edittext_Introduction, 0)
+
+
+                                    } catch (e: ArrayStoreException) {
+                                        Toast.makeText(this@ApplyActivity, "시간을 설정해주세요.", Toast.LENGTH_SHORT).show()
+
+
+                                    } catch (e: CloneNotSupportedException) {
+                                        Toast.makeText(this@ApplyActivity, "지하철역을 설정해주세요.", Toast.LENGTH_SHORT).show()
+
+                                    } catch (e: NoSuchElementException) {
+                                        Toast.makeText(this@ApplyActivity, "이미 지난 날짜입니다.", Toast.LENGTH_SHORT).show()
+
+                                    } catch (e: NoSuchMethodException) {
+                                        Toast.makeText(this@ApplyActivity, "이미 선택된 날짜로 매칭정보가 이미 존재합니다.", Toast.LENGTH_LONG).show()
+                                    } catch (e: ReflectiveOperationException) {
+                                        Toast.makeText(this@ApplyActivity, "하트 개수가 부족합니다.", Toast.LENGTH_SHORT).show()
+
+                                    } catch (e: Exception) {
+                                        Log.d("aaaaz", e.toString())
+                                        Toast.makeText(this@ApplyActivity, "정보를 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
+
                                     }
+
+
                                 }
-                                    override fun onChildRemoved(p0: DataSnapshot) {
-
-                                    }
 
 
-                            })
-
-                            finish()
 
 
-                        }
-
-                    } catch (e: ArithmeticException) {
-
-                        Toast.makeText(this@ApplyActivity, "5글자를 맞춰주세요.", Toast.LENGTH_SHORT).show()
-                        Apply_Edittext_Introduction.setText("")
-                        keyboard.showSoftInput(Apply_Edittext_Introduction, 0)
+                                }
 
 
-                    } catch (e: ArrayStoreException) {
-                        Toast.makeText(this@ApplyActivity, "시간을 설정해주세요.", Toast.LENGTH_SHORT).show()
 
 
-                    } catch (e: CloneNotSupportedException) {
-                        Toast.makeText(this@ApplyActivity, "지하철역을 설정해주세요.", Toast.LENGTH_SHORT).show()
-
-                    } catch (e: NoSuchElementException) {
-                        Toast.makeText(this@ApplyActivity, "이미 지난 날짜입니다.", Toast.LENGTH_SHORT).show()
-
-                    } catch (e: NoSuchMethodException) {
-                        Toast.makeText(this@ApplyActivity, "이미 선택된 날짜로 매칭정보가 이미 존재합니다.", Toast.LENGTH_LONG).show()
-                    } catch (e: ReflectiveOperationException) {
-                        Toast.makeText(this@ApplyActivity, "하트 개수가 부족합니다.", Toast.LENGTH_SHORT).show()
-
-                    } catch (e: Exception) {
-                        Log.d("aaaaz", e.toString())
-                        Toast.makeText(this@ApplyActivity, "정보를 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
-
-                    }
+                        }).setNegativeButton("아니요", object : DialogInterface.OnClickListener{
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        p0!!.cancel()
+                    }})
+                alt_bld.create().show()
 
 
-                }
+
 
             }
 

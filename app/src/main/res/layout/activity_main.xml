@@ -24,77 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:padding="16dp" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
 
-
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="100dp">
-            <TextView
-                android:id="@+id/Main_text1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-               android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:text="아래의 버튼을 눌러 회원 가입시"
-                android:textSize="15sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/Main_text2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:textStyle="bold"
-
-                    android:textColor="#0051ff"
-                    android:text="이용약관"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:id="@+id/Main_text3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:textColor="#000000"
-                    android:text=" / "
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:id="@+id/Main_text4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-
-                    android:gravity="center"
-                    android:textColor="#0051ff"
-                    android:text="개인정보취급방침"
-                    android:textSize="17sp" />
-
-            </LinearLayout>
-            <TextView
-                android:id="@+id/Main_text5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:text="에 동의한 것이 됩니다."
-                android:textSize="15sp" />
-
-        </LinearLayout>
 
 
 

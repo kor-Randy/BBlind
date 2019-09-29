@@ -13,9 +13,6 @@ import android.support.v7.widget.Toolbar
 import android.telephony.TelephonyManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_account.*
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.spinner_item.*
@@ -28,10 +25,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.support.annotation.NonNull
 import android.support.v4.app.ActivityCompat
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.util.TypedValue
 import android.view.Window
-import android.widget.ToggleButton
+import android.widget.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.*
 import com.google.firebase.iid.FirebaseInstanceId
@@ -47,6 +46,11 @@ class Account : AppCompatActivity()
     var App : String? = null
 
 
+    var tv_license1 : TextView? = null
+    var tv_license2 : TextView? = null
+    var tv1 : TextView? = null
+    var tv2 : TextView? = null
+    var tv3 : TextView? = null
 
 
 
@@ -63,6 +67,39 @@ class Account : AppCompatActivity()
         editor!!.putString("Matching","true")
         editor!!.putString("App","true")
         editor!!.commit()
+
+        tv_license1 = findViewById(R.id.Main_text2)
+        tv_license2 = findViewById(R.id.Main_text4)
+
+        val content : SpannableString = SpannableString("이용약관")
+        content.setSpan(UnderlineSpan(),0,content.length,0)
+        tv_license1!!.setText(content)
+
+        val content1 : SpannableString = SpannableString("개인정보취급방침")
+        content1.setSpan(UnderlineSpan(),0,content1.length,0)
+        tv_license2!!.setText(content1)
+
+        tv1 = findViewById(R.id.Main_text1)
+        tv2 = findViewById(R.id.Main_text3)
+        tv3 = findViewById(R.id.Main_text5)
+        tv_license1!!.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+
+                val intent = Intent(this@Account, license1::class.java)
+
+                startActivity(intent)
+
+            }
+        })
+        tv_license2!!.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+
+                val intent = Intent(this@Account, license2::class.java)
+
+                startActivity(intent)
+
+            }
+        })
 
 
         val id : Array<String> = arrayOf("id1","id2","id3")

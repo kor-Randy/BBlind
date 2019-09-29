@@ -8,259 +8,366 @@
     android:background="#ffffff"
     tools:context=".Account">
     <!--title-->
-    <LinearLayout
-        android:id="@+id/title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linear1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHeight_percent="0.1">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/bmx"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            android:gravity="center"
-            android:text="회원가입"
-            android:textColor="#000000"
-            android:textSize="30sp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.05"
-            android:background="#000000"/>
-    </LinearLayout>
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/Account_Button_Register"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="40dp"
+                    android:layout_marginTop="104dp"
+                    android:background="@android:drawable/editbox_background_normal"
+
+                    android:fontFamily="@font/bmx"
+                    android:text="가입하기"
+                    android:textSize="20sp"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintHorizontal_bias="0.625"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                <LinearLayout
+                    android:id="@+id/linear1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/linear2"
+                    app:layout_constraintHeight_percent="0.16"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+
+                        android:layout_weight="1" />
+
+                    <ToggleButton
+                        android:id="@+id/Account_Toggle_Boy"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:backgroundTint="#3cc1ff"
+                        android:fontFamily="@font/bmx"
+                        android:text="남자"
+                        android:textSize="30sp" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <ToggleButton
+                        android:id="@+id/Account_Toggle_Girl"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:backgroundTint="#f8acff"
+                        android:fontFamily="@font/bmx"
+                        android:text="여자"
+                        android:textSize="30sp" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/linear1"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmx"
+
+                        android:gravity="center"
+                        android:text="회원가입"
+                        android:textColor="#000000"
+                        android:textSize="30sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.05"
+                        android:background="#000000" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/linear3"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear1">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmx"
+                        android:gravity="center_vertical"
+                        android:text="    ⦁ 출생년도"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/Account_Spinner_Year"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+
+                        android:layout_weight="2"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/Account_Button_Register"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmx"
+                        android:gravity="center_vertical"
+                        android:text="    ⦁ 추천인"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/Account_Edit_Inviter"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:layout_weight="2"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:ems="10"
+
+                        android:hint="ex)1081839000"
+                        android:inputType="textPersonName"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear2">
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/Account_Radio_Student"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/bmx"
+                            android:text="학생입니다"
+                            android:textColor="#000000"
+                            android:textSize="18dp" />
+
+                        <RadioButton
+                            android:id="@+id/Account_Radio_NotStudent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/bmx"
+                            android:text="학생이 아닙니다"
+                            android:textColor="#000000"
+                            android:textSize="18dp" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/asdf"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+
+
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/Account_Button_Register"
+                    app:layout_constraintHeight_percent="0.15"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                    <TextView
+                        android:id="@+id/Main_text1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center"
+                        android:text="아래의 버튼을 눌러 회원 가입시"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        tools:layout_editor_absoluteY="387dp">
+
+                        <TextView
+                            android:id="@+id/Main_text2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="이용약관"
+
+                            android:textColor="#0051ff"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/Main_text3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+                            android:text=" / "
+                            android:textColor="#000000"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/Main_text4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+
+                            android:text="개인정보취급방침"
+                            android:textColor="#0051ff"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/Main_text5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center"
+                        android:text="에 동의한 것이 됩니다."
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear3">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmx"
+                        android:gravity="center_vertical"
+
+                        android:text="    ⦁ 닉네임"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/Account_Edit_Nickname"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:layout_weight="2"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:ems="10"
+                        android:hint="사용할 별명을 입력하시오"
+                        android:inputType="textPersonName"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
     <!--남여-->
-    <LinearLayout
-        android:id="@+id/linear1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linear2"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHeight_percent="0.16">
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-
-            android:layout_height="match_parent" />
-
-        <ToggleButton
-            android:id="@+id/Account_Toggle_Boy"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginVertical="10dp"
-            android:layout_weight="3"
-            android:background="@android:drawable/editbox_background_normal"
-            android:backgroundTint="#3cc1ff"
-            android:fontFamily="@font/bmx"
-            android:text="남자"
-            android:textSize="30sp" />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ToggleButton
-            android:id="@+id/Account_Toggle_Girl"
-            android:background="@android:drawable/editbox_background_normal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:backgroundTint="#f8acff"
-            android:layout_marginVertical="10dp"
-            android:fontFamily="@font/bmx"
-            android:text="여자"
-            android:textSize="30sp" />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-    </LinearLayout>
     <!--출생연도-->
-    <LinearLayout
-        android:id="@+id/linear2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linear3"
-        app:layout_constraintTop_toBottomOf="@+id/linear1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHeight_percent="0.1">
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-
-            android:layout_weight="1"
-            android:fontFamily="@font/bmx"
-            android:textColor="#000000"
-            android:gravity="center_vertical"
-            android:text="    ⦁ 출생년도"
-            android:textSize="20sp" />
-
-        <Spinner
-            android:id="@+id/Account_Spinner_Year"
-            android:background="@android:drawable/editbox_background_normal"
-            android:gravity="center"
-            android:layout_width="0dp"
-
-            android:layout_marginVertical="10dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
-
-    </LinearLayout>
     <!--학생-->
-    <LinearLayout
-        android:id="@+id/linear3"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/linear2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHeight_percent="0.1">
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/Account_Radio_Student"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/bmx"
-                android:textColor="#000000"
-                android:textSize="18dp"
-                android:text="학생입니다" />
-
-            <RadioButton
-                android:id="@+id/Account_Radio_NotStudent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/bmx"
-                android:textColor="#000000"
-                android:textSize="18dp"
-                android:text="학생이 아닙니다" />
-        </RadioGroup>
-    </LinearLayout>
     <!--닉네임-->
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linear3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHeight_percent="0.1">
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/bmx"
-            android:textColor="#000000"
-            android:text="    ⦁ 닉네임"
-
-            android:layout_gravity="center"
-            android:gravity="center_vertical"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/Account_Edit_Nickname"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:ems="10"
-            android:layout_marginVertical="10dp"
-            android:textSize="11sp"
-            android:background="@android:drawable/editbox_background_normal"
-            android:hint="사용할 별명을 입력하시오"
-            android:inputType="textPersonName" />
-    </LinearLayout>
     <!--추천인-->
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/Account_Button_Register"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHeight_percent="0.1">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/bmx"
-            android:gravity="center_vertical"
-            android:text="    ⦁ 추천인"
-            android:textColor="#000000"
-            android:textSize="20sp"  />
-
-        <EditText
-            android:id="@+id/Account_Edit_Inviter"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:ems="10"
-            android:layout_marginVertical="10dp"
-            android:textSize="11sp"
-
-            android:background="@android:drawable/editbox_background_normal"
-            android:hint="ex)1081839000"
-            android:inputType="textPersonName" />
-    </LinearLayout>
 
     <!--가입-->
-    <Button
-        android:id="@+id/Account_Button_Register"
-        android:background="@android:drawable/editbox_background_normal"
-        android:fontFamily="@font/bmx"
-        android:layout_marginHorizontal="40dp"
-        android:text="가입하기"
-        android:textSize="20sp"
-
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/blink1"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHeight_percent="0.1" />
-    <ImageView
-        android:id="@+id/blink1"
-        android:layout_width="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Account_Button_Register"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.01"
-        ></ImageView>
 
 </android.support.constraint.ConstraintLayout>
