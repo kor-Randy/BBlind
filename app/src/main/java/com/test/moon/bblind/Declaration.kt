@@ -67,7 +67,7 @@ class Declaration : Activity()
 
 
                 Kind = spinner!!.getSelectedItem().toString()
-                Toast.makeText(this@Declaration, Kind, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@Declaration, Kind, Toast.LENGTH_SHORT).show()
 
                 ref.child("Declaration").child(strdate!!).child(spinner!!.selectedItem.toString()).child(Opposite!!).setValue(Content!!.text.toString())
 

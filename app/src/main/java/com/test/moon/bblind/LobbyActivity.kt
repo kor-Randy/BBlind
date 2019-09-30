@@ -56,7 +56,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         super.onResume()
 
         if(MainActivity.nowAc.equals("apply")) {
-            Toast.makeText(this@LobbyActivity,"Apply종료",Toast.LENGTH_LONG).show()
+            //Toast.makeText(this@LobbyActivity,"Apply종료",Toast.LENGTH_LONG).show()
             MainActivity.applyactivity!!.finish()
         }
         if(MainActivity.Accountactivity!=null)
@@ -75,7 +75,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         navbtn = findViewById(R.id.navbtn)
         heartNum = findViewById(R.id.Lobby_Macaron)
 
-        Toast.makeText(this@LobbyActivity,"LobbyActivityCreate",Toast.LENGTH_LONG).show()
+       // Toast.makeText(this@LobbyActivity,"LobbyActivityCreate",Toast.LENGTH_LONG).show()
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
@@ -93,15 +93,16 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
         tabLayout = findViewById(R.id.tabs)
         tabLayout!!.setupWithViewPager(viewPager)
         setupTabIcons()
-        Toast.makeText(this,"Hi",Toast.LENGTH_LONG).show()
+       // Toast.makeText(this,"Hi",Toast.LENGTH_LONG).show()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if(currentUser != null)
         {
-            Toast.makeText(this,currentUser.uid,Toast.LENGTH_LONG).show()
+          //  Toast.makeText(this,currentUser.uid,Toast.LENGTH_LONG).show()
             //var intent = Intent(this, Loading::class.java)
             //startActivity(intent)
 
-        }else{Toast.makeText(this,"null",Toast.LENGTH_LONG).show()}
+        }else{//Toast.makeText(this,"null",Toast.LENGTH_LONG).show()
+             }
 
         myRef.child("Account").child(MainActivity.Myuid!!).child("heart").addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -155,10 +156,10 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
 
         if (eid == R.id.nav_AppInformation) {
-            Toast.makeText(this,"앱정보",Toast.LENGTH_LONG).show()
+            //Toast.makeText(this,"앱정보",Toast.LENGTH_LONG).show()
             // Handle the camera action
         } else if (eid == R.id.nav_Chat) {
-            Toast.makeText(this,"문의하기",Toast.LENGTH_LONG).show()
+            //Toast.makeText(this,"문의하기",Toast.LENGTH_LONG).show()
 
            val email = Intent(Intent.ACTION_SEND);
             email.setType("plain/Text");
@@ -174,10 +175,11 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
 
         } else if (eid == R.id.nav_Information) {
-            Toast.makeText(this,"이용안내",Toast.LENGTH_LONG).show()
+            val intent = Intent(this@LobbyActivity, license1::class.java)
+            startActivity(intent)
 
         } else if (eid == R.id.Account_Destroy) {
-            Toast.makeText(this,"회원탈퇴",Toast.LENGTH_LONG).show()
+            //Toast.makeText(this,"회원탈퇴",Toast.LENGTH_LONG).show()
 
             if(MainActivity.checkapplylist!!.checklist!!.size>1||MainActivity.crd!!.ChatRoom.size>0||MainActivity.crd!!.Token.size>0)
             {
@@ -232,10 +234,11 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
             val intent = Intent(this@LobbyActivity, AlarmSetting::class.java)
             startActivity(intent)
-            Toast.makeText(this,"알림설정",Toast.LENGTH_LONG).show()
+            //Toast.makeText(this,"알림설정",Toast.LENGTH_LONG).show()
 
         } else if (eid == R.id.nav_QnA) {
-            Toast.makeText(this,"자주묻는질문",Toast.LENGTH_LONG).show()
+            //
+            // Toast.makeText(this,"자주묻는질문",Toast.LENGTH_LONG).show()
             val intent = Intent(this@LobbyActivity, QnA::class.java)
             startActivity(intent)
 
@@ -274,7 +277,7 @@ class LobbyActivity: AppCompatActivity(),NavigationView.OnNavigationItemSelected
                      //handler.post { updateUI() }
                  }
              })*/
-            Toast.makeText(this,"추천인코드적기",Toast.LENGTH_LONG).show()
+            //Toast.makeText(this,"추천인코드적기",Toast.LENGTH_LONG).show()
         }
 
 

@@ -444,7 +444,7 @@ class MainActivity : AppCompatActivity() {
      */
     private inner class KakaoSessionCallback : ISessionCallback {
         override fun onSessionOpened() {
-            Toast.makeText(applicationContext, "Successfully logged in to Kakao. Now creating or updating a Firebase User.", Toast.LENGTH_LONG).show()
+            //Toast.makeText(applicationContext, "Successfully logged in to Kakao. Now creating or updating a Firebase User.", Toast.LENGTH_LONG).show()
             val accessToken = Session.getCurrentSession().accessToken
             getFirebaseJwt(accessToken!!).continueWithTask { task ->
                 val firebaseToken = task.result
@@ -472,7 +472,7 @@ class MainActivity : AppCompatActivity() {
 
                     //updateUI()
                 } else {
-                    Toast.makeText(applicationContext, "Failed to create a Firebase user.", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(applicationContext, "Failed to create a Firebase user.", Toast.LENGTH_LONG).show()
                     if (task.exception != null) {
                     }
                 }

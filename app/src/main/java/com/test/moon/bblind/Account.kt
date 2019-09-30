@@ -126,7 +126,7 @@ class Account : AppCompatActivity()
 
 
                 } else {
-                    Toast.makeText(this, "됐냐", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "됐냐", Toast.LENGTH_SHORT).show()
                 }
             }
         }

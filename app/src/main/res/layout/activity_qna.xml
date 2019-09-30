@@ -63,7 +63,7 @@
                     android:fontFamily="@font/bmx"
                     android:textColor="#000000"
                     android:layout_marginBottom="10dp"
-                    android:text="마카롱을 결제했는데 마카롱이 들어오지 않아요." />
+                    android:text="하트를 결제했는데 마카롱이 들어오지 않아요." />
 
                 <TextView
                     android:id="@+id/qna2"

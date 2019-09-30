@@ -81,14 +81,15 @@ class LoginActivity :AppCompatActivity() {
     }
     private inner class SessionCallback : ISessionCallback {
         override fun onSessionOpened() {
-            Toast.makeText(this@LoginActivity,"세션오픈",Toast.LENGTH_SHORT).show()
+            //.makeText(this@LoginActivity,"세션오픈",Toast.LENGTH_SHORT).show()
             // 사용자 정보를 가져옴, 회원가입 미가입시 자동가입 시킴
             redirectSignupActivity()
         }
 
         override fun onSessionOpenFailed(exception: KakaoException?) {
             if (exception != null) {
-                Toast.makeText(this@LoginActivity,"세션실패",Toast.LENGTH_SHORT).show()
+               //
+                // Toast.makeText(this@LoginActivity,"세션실패",Toast.LENGTH_SHORT).show()
 
                 setContentView(R.layout.activity_login)
             }

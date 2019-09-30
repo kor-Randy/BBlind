@@ -61,7 +61,7 @@ class SubwayPopup : Activity()
 
 
             SubString = parent.getItemAtPosition(position).toString()
-            Toast.makeText(this@SubwayPopup, SubString,Toast.LENGTH_SHORT).show()
+            //.makeText(this@SubwayPopup, SubString,Toast.LENGTH_SHORT).show()
             val Returnintent : Intent = Intent()
             Returnintent.putExtra("result",SubString)
             setResult(RESULT_OK,Returnintent)

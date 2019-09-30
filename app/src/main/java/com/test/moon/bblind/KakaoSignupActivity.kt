@@ -45,27 +45,27 @@ class KakaoSignupActivity : Activity(){
                 if (ErrorCode == ClientErrorCode) {
                     Toast.makeText(this@KakaoSignupActivity, "카카오톡 서버의 네트워크가 불안정합니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this@KakaoSignupActivity,"오류로 로그인 실패", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this@KakaoSignupActivity,"오류로 로그인 실패", Toast.LENGTH_SHORT).show()
                     redirectLoginActivity()
                 }
             }
 
             override fun onSessionClosed(errorResult: ErrorResult) {
-                Toast.makeText(this@KakaoSignupActivity,"오류로 로그인 실패2", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@KakaoSignupActivity,"오류로 로그인 실패2", Toast.LENGTH_SHORT).show()
                 Log.d("TAG", "오류로 카카오로그인 실패 ")
                 redirectLoginActivity()
             }
 
             override fun onSuccess(userProfile: UserProfile) {
 
-                Toast.makeText(this@KakaoSignupActivity,"로그인 성공", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@KakaoSignupActivity,"로그인 성공", Toast.LENGTH_SHORT).show()
                 redirectmainActivity()
 
 
             }
 
             override fun onNotSignedUp() {
-                Toast.makeText(this@KakaoSignupActivity,"동의창", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@KakaoSignupActivity,"동의창", Toast.LENGTH_SHORT).show()
                 // 자동가입이 아닐경우 동의창
                 //redirectAccountActivity()
             }

@@ -498,8 +498,8 @@ class ApplyActivity : AppCompatActivity()
                                                                                 var findheart: Int = Integer.parseInt(p0.child(findname!!).child("heart").getValue(true).toString())
                                                                                 var myheart: Int = Integer.parseInt(p0.child(id!!).child("heart").getValue(true).toString())
 
-                                                                                findheart -= 10
-                                                                                myheart -= 10
+                                                                                findheart -= 0 // for test code
+                                                                                myheart -= 0
 
                                                                                 database.getReference("Account").child(findname).child("heart").setValue(findheart)
 

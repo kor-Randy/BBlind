@@ -55,8 +55,8 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
         //var btn = view.findViewById<Button>(R.id.consume)
         val adapter : StoreAdapter = StoreAdapter(storedata)
         list.adapter = adapter
-        adapter.addItem("하트 - 50","5000원")
-        adapter.addItem("하트 - 100","8000원")
+        //adapter.addItem("하트 50","5000원")
+       //adapter.addItem("하트 100","8000원")
 
 
         list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -70,10 +70,10 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
     }
 
     override fun onPurchaseHistoryRestored() {
-        Toast.makeText(context,"Restored",Toast.LENGTH_LONG).show()
+        //Toast.makeText(context,"Restored",Toast.LENGTH_LONG).show()
     }
     override fun onBillingInitialized() {
-        Toast.makeText(context,"Initialized",Toast.LENGTH_LONG).show()
+        //Toast.makeText(context,"Initialized",Toast.LENGTH_LONG).show()
     }
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
         when(productId){
@@ -82,7 +82,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
 
         }
         myRef.setValue(heart)
-        Toast.makeText(context,"Success",Toast.LENGTH_LONG).show()
+        //Toast.makeText(context,"Success",Toast.LENGTH_LONG).show()
         bp.consumePurchase(productId)
         val builder = AlertDialog.Builder(context!!)
         builder.setMessage("구매 성공 하였습니다.")
@@ -95,7 +95,7 @@ class Store : Fragment(),BillingProcessor.IBillingHandler{
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
-        Toast.makeText(context,errorCode.toString() +"   "+error.toString(),Toast.LENGTH_LONG).show()
+       // Toast.makeText(context,errorCode.toString() +"   "+error.toString(),Toast.LENGTH_LONG).show()
 
     }
 
