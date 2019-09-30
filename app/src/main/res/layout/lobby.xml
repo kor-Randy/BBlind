@@ -47,9 +47,9 @@
             android:background="#fcfcfc"
             android:fontFamily="@font/bmx"
             android:gravity="center"
-            android:text="blabla"
-            android:textColor="#1c1b1b"
-            android:textSize="29sp" />
+            android:text="위팅"
+            android:textColor="#f97272"
+            android:textSize="25sp" />
 
 
 
